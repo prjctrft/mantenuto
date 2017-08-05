@@ -1,0 +1,8 @@
+node_modules
+static/dist/
+webpack-assets.json
+webpack-stats.json
+webpack/dlls/*.json
+*.report.html
+npm-debug.log
+.happypack

@@ -1,0 +1,49 @@
+@import '../../theme/variables.scss';
+
+.success {
+  border-top: $brand-success 2px solid;
+}
+
+.warning {
+  border-top: $brand-success 2px solid;
+}
+
+.embedResponsive {
+  background-color: #000;
+  border-radius: 6px;
+  .LocalPlayer {
+    border: #808080 0.5px solid;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: inherit;
+    top: inherit;
+    margin: 10px;
+  }
+  .CallState {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 100px;
+    color: $brand-gray;
+    font-size: 20px;
+  }
+}
+
+.controlBar {
+  margin: 10px auto;
+}
+
+.BadgeSuccess {
+  background-color: $brand-success;
+}
+
+.BtnBar {
+  display: flex;
+  justify-content: center;
+  button {
+    margin: 0 15px;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Mantenuto",
+  "description": "",
+  "repository": "https://github.com/hdngr/mantenuto.git",
+  "logo": "",
+  "keywords": [
+    "react",
+    "isomorphic",
+    "universal",
+    "webpack",
+    "express",
+    "hot reloading",
+    "react-hot-reloader",
+    "redux",
+    "starter",
+    "boilerplate",
+    "babel"
+  ]
+}
