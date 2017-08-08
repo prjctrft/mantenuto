@@ -19,19 +19,16 @@ import Html from './helpers/Html';
 import getRoutes from './routes';
 
 // remote api
-let targetUrl = config.apiHost;
-if (config.apiPort) {
-  // local api
-  targetUrl = `${targetUrl}:${config.apiPort}`;
-}
-console.log(targetUrl);
+const targetUrl = process.env.API_ENDPOINT;
+
 const pretty = new PrettyError();
 const app = express();
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
-  target: targetUrl,
   ws: true,
-  xfwd: true
+  xfwd: true,
+  changeOrigin: true,
+  secure: false
 });
 
 app.use(compression());
@@ -53,18 +50,19 @@ app.use('/ws', (req, res) => {
 });
 
 server.on('upgrade', (req, socket, head) => {
-  proxy.ws(req, socket, head);
+  proxy.ws(req, socket, head, { target: targetUrl });
 });
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
+  console.log(error);
+  console.log(req);
   if (error.code !== 'ECONNRESET') {
     console.error('proxy error', error);
   }
-  if (!res.headersSent) {
+  if (res && !res.headersSent) {
     res.writeHead(500, { 'content-type': 'application/json' });
   }
-
   const json = { error: 'proxy_error', reason: error.message };
   res.end(JSON.stringify(json));
 });
@@ -126,14 +124,12 @@ app.use((req, res) => {
   });
 });
 
-if (config.port) {
-  server.listen(config.port, err => {
-    if (err) {
-      console.error(err);
-    }
-    console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.apiPort);
-    console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port);
-  });
-} else {
-  console.error('==>     ERROR: No PORT environment variable has been specified');
-}
+const port = process.env.PORT;
+
+server.listen(port, err => {
+  if (err) {
+    console.error(err);
+  }
+  console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.API);
+  console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, port);
+});

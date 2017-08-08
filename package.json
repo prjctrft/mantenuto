@@ -29,7 +29,8 @@
     "start-dev-local": "better-npm-run start-dev-local",
     "start-dev-server-debug": "better-npm-run start-dev-server-debug",
     "watch-client": "better-npm-run watch-client",
-    "debug": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-api-server\"",
+    "start-dev-debug": "better-npm-run start-dev-debug",
+    "debug": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-debug\"",
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
     "test": "karma start",
@@ -42,8 +43,8 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production",
-        "APIPORT": "TODO",
-        "APIHOST": "TODO"
+        "HOST": "localhost",
+        "API_ENDPOINT": "https://api.projectrefit.us"
       }
     },
     "start-dev": {
@@ -51,8 +52,9 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
+        "HOST": "localhost",
+        "API_ENDPOINT": "https://api.projectrefit.us",
         "PORT": 3000,
-        "APIHOST": "http://secure-peak-75290.herokuapp.com",
         "WEBPACK_DLLS": 1
       }
     },
@@ -61,9 +63,20 @@
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
+        "HOST": "localhost",
         "PORT": 3000,
-        "APIPORT": 3030,
-        "APIHOST": "http://localhost",
+        "API_ENDPOINT": "http://localhost:3030",
+        "WEBPACK_DLLS": 1
+      }
+    },
+    "start-dev-debug": {
+      "command": "node --inspect --debug ./bin/server.js",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "HOST": "localhost",
+        "API_ENDPOINT": "https://api.projectrefit.us",
+        "PORT": 3000,
         "WEBPACK_DLLS": 1
       }
     },
