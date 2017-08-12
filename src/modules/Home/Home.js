@@ -46,16 +46,16 @@ export default class Home extends Component {
 
             <h2>Where veterans connect and heal.</h2>
             <div className={styles.pipelineBtns}>
-              <p>
-                <button onClick={this.clickTalk} className='btn btn-lg btn-primary btn-block'>
+              
+                <button onClick={this.clickTalk} className='btn btn-lg btn-primary btn-block btn-circle'>
                   Talk
                 </button>
-              </p>
-              <p>
-                <button onClick={this.clickListen} className='btn btn-lg btn-primary btn-block'>
+              
+              
+                <button onClick={this.clickListen} className='btn btn-lg btn-primary btn-block btn-circle'>
                   Listen
                 </button>
-              </p>
+              
             </div>
           </div>
         </div>
