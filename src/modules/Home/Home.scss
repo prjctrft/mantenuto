@@ -7,13 +7,15 @@
 }
 
 .masthead {
-  background: $brand-black;
+  //background: $brand-black;
+  background: $brand-white;
   padding: 40px 20px;
   color: white;
   text-align: center;
 
   h1 {
-    color: $brand-primary;
+    //color: $brand-primary;
+    color: $brand-black;
     font-size: 4em;
   }
   h2 {
@@ -47,3 +49,5 @@
   max-width: 400px;
   margin: auto;
 }
+
+
