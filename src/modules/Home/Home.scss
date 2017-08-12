@@ -46,6 +46,9 @@
 // }
 
 .pipelineBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   max-width: 400px;
   margin: auto;
 }
