@@ -62,11 +62,21 @@
     &:first-of-type {
       background: $brand-black;
       color: $brand-white;
+
+      &:hover {
+        background: $brand-gray;
+        color: $brand-black;
+      }
     }
 
     &:last-of-type {
       background: $brand-gray;
       color: $brand-black;
+
+      &:hover {
+        background: $brand-black;
+        color: $brand-white;
+      }
     }
   }
 
