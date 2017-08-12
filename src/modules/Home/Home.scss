@@ -49,13 +49,24 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  max-width: 400px;
+  max-width: 50%;
   margin: auto;
 
   button {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
+    border: none;
     border-radius: 50%;
+
+    &:first-of-type {
+      background: $brand-black;
+      color: $brand-white;
+    }
+
+    &:last-of-type {
+      background: $brand-gray;
+      color: $brand-black;
+    }
   }
 }
 
