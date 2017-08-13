@@ -8,10 +8,14 @@
 
 .masthead {
   //background: $brand-black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: $brand-white;
   padding: 40px 20px;
   color: white;
   text-align: center;
+  height: calc(100vh - 50px); // full viewport height minus navbar height
 
   h1 {
     //color: $brand-primary;
@@ -48,8 +52,8 @@
   margin: auto;
 
   button {
-    width: 200px;
-    height: 200px;
+    width: 25rem;
+    height: 25rem;
     border: none;
     border-radius: 50%;
     font-size: 5rem;
@@ -75,7 +79,7 @@
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     flex-direction: row;
   }
 }
