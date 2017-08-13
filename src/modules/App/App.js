@@ -15,6 +15,7 @@ import Notifs from '../Notifs';
 import { push } from 'react-router-redux';
 import config from 'config';
 import { populateUser } from './redux';
+
 // import { asyncConnect } from 'redux-connect';
 
 // @asyncConnect([{
