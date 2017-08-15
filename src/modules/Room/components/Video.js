@@ -32,7 +32,7 @@ export default class Video extends Component {
           {callStarted || callAccepted ?
             <div className={styles.CallState}>
               {callStarted ? <span>... <i className='fa fa-volume-control-phone fa-3x' /></span>: null }
-              {callAccepted ? 'Call Accepted!' : null }
+              {callAccepted ? 'You are connected!' : null }
             </div> : null
           }
 

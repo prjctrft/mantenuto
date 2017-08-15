@@ -13,9 +13,12 @@ export default class RegisterForm extends Component {
   }
 
   validateCode = (value, allValues, props) => {
-    const test = value.toLowerCase();
-    if(props.codes.indexOf(value) === -1) {
-      return 'Wrong code!'
+    if(value === undefined) {
+      return;
+    }
+    const code = value.toLowerCase();
+    if(props.codes.indexOf(code) === -1) {
+      return 'Make sure you type in the correct code.'
     }
   };
 

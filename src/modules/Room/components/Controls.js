@@ -10,6 +10,8 @@ import {
   clearCallState
 } from '../actions';
 
+import ControlButton from './ControlButton';
+
 @connect((state)=> ({
   room: state.rooms.room,
   isTalker: state.rooms.isTalker,
@@ -30,12 +32,17 @@ import {
 export default class Controls extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.defaultState = {
       cameraOn: false,
       audioOn: true,
       receiveCallPrompt: false,
-      remoteDescription: undefined
-    }
+      remoteDescription: undefined,
+      streamOpen: false
+    };
+    this.state = {
+      ...this.defaultState
+    };
+    this.rtcConnection = false;
   }
 
   componentDidMount() {
@@ -48,20 +55,14 @@ export default class Controls extends Component {
 
     this.localRTC.ontrack = (e) => {
       this.remoteStream = e.streams[0];
-      this.props.handleRemoteStream(this.remoteStream);
-      // // if (remoteVideo.srcObject !== e.streams[0]) {
-      // //   remoteVideo.srcObject = e.streams[0];
-      // //   trace('pc2 received remote stream');
-      // // }
-      // debugger;
-      // // if (vid2.srcObject !== e.streams[0]) {
-      // //   vid2.srcObject = e.streams[0];
-      // //   trace('Received remote stream');
-      // // }
+      const videoTracks = this.remoteStream.getVideoTracks();
+      debugger;
+      if(videoTracks.length > 0) {
+        this.props.handleRemoteStream(this.remoteStream);
+      }
     }
 
     this.localRTC.oniceconnectionstatechange = (e) => {
-      // onIceStateChange(pc1, e);
       console.log('ICE state change event: ', this.localRTC.iceConnectionState);
     }
 
@@ -82,71 +83,116 @@ export default class Controls extends Component {
 
     socket.on('call accepted', () => {
       this.props.callAccepted();
-      // if(this.localStream) {
-      this.createOffer();
-      // }
-    });
-
-    socket.on('receive offer', (description) => {
-      this.localRTC.setRemoteDescription(description);
-      this.localRTC.createAnswer().then((description) => {
-        this.localRTC.setLocalDescription(description);
-        socket.emit('send description', description, (foo) => {
-          debugger;
-        });
+      const audio = this.state.audioOn;
+      const video = this.state.videoOn;
+      if(this.localStream) {
+        return this.createOffer({ audio, video });
+      }
+      this.startUserMedia({audioOn: audio, videoOn: video}).then(() => {
+        return this.createOffer({ audio, video });
       });
     });
 
-    socket.on('receive description', (description, cb) => {
-      this.localRTC.setRemoteDescription(description);
-      cb('foo');
+    socket.on('receive offer', (description) => {
+      if(!this.localStream) {
+        this.startUserMedia().then(() => {
+          // const stream = this.localStream;
+          this.localStream.getTracks().forEach(track => {
+            this.localRTC.addTrack(track, this.localStream)
+          });
+        })
+      }
+      this.receiveOffer(description);
+    });
+
+    socket.on('receive description', (description) => {
+      const desc = new RTCSessionDescription(description);
+      this.localRTC.setRemoteDescription(desc);
     });
 
   }
 
-  createOffer = () => {
-    const offerToReceiveAudio = this.state.audioOn ? 1 : 0;
-    const offerToReceiveVideo = this.state.cameraOn ? 1 : 0;
-    if(this.localStream) {
-      this.localStream.getTracks().forEach(track => {
+  createOffer = ({ audio, video }) => {
+    const offerToReceiveAudio = audio ? 1 : 0;
+    const offerToReceiveVideo = video ? 1 : 0;
+    // const offerToReceiveAudio = 1;
+    // const offerToReceiveVideo = 1;
+    this.startUserMedia()
+    .then(() => {
+      this.localStream.getTracks().forEach((track) => {
         this.localRTC.addTrack(track, this.localStream)
-      });
-    }
-    this.localRTC.createOffer({
-      offerToReceiveAudio,
-      offerToReceiveVideo,
-      voiceActivityDetection: false
-    }).then((description) => {
-      this.localRTC.setLocalDescription(description);
+      })
+    })
+    .then(() => {
+      return this.localRTC.createOffer({
+        offerToReceiveAudio,
+        offerToReceiveVideo,
+        voiceActivityDetection: false
+      })
+    })
+    .then((description) => {
+      return this.localRTC.setLocalDescription(description);
+    })
+    .then(() => {
+      const description = this.localRTC.localDescription;
       socket.emit('create offer', description);
     });
   }
 
-  startVideo = () => {
-    this.setState({ ...this.state, cameraOn: true });
-    const audio = this.state.audioOn;
-    navigator.mediaDevices.getUserMedia({
-      video: true,
+  receiveOffer = (description) => {
+    const desc = new RTCSessionDescription(description);
+    this.localRTC.setRemoteDescription(desc).then(() => {
+      return this.startUserMedia({});
+    })
+    .then(() => {
+      return this.localRTC.createAnswer();
+    })
+    .then((description) => {
+      return this.localRTC.setLocalDescription(description);
+    })
+    .then(() => {
+      const description = this.localRTC.localDescription;
+      socket.emit('send description', description);
+    });
+  }
+
+  startUserMedia = ({ audioOn, cameraOn } = {}) => {
+    // pass audioOn and cameraOn as arguments because state was just updated
+    // and this.state.cameraOn and this.state.audioOn will not reflect update from
+    // startVideo and startAudio functions
+    const audio = audioOn || this.state.audioOn;
+    const video = cameraOn || this.state.cameraOn;
+    return navigator.mediaDevices.getUserMedia({
+      video,
       audio
     }).then((stream) => {
       this.props.handleLocalStream(stream);
-      if(!this.localStream) {
-        this.localStream = stream;
-      }
-      stream.getTracks().forEach((track) => {
-        this.localStream.addTrack(track);
-      })
-      if (this.props.wasCallAccepted) {
-        this.createOffer();
-      }
+      this.localStream = stream;
     })
     .catch(function(e) {
       alert('getUserMedia() error: ' + e.name);
     });
   }
 
+  startVideo = () => {
+    const cameraOn = true;
+    const audioOn = this.state.audioOn;
+    const streamOpen = true;
+    this.setState({ cameraOn, streamOpen });
+    this.startUserMedia({ cameraOn })
+      .then(() => {
+        if (this.props.wasCallAccepted) {
+          this.createOffer({ audio: audioOn, video: cameraOn });
+        }
+      });
+  }
+
   stopVideo = () => {
-    this.setState({ cameraOn: false });
+    const nextState = { cameraOn: false };
+    if (!this.state.audioOn) {
+      nextState.streamOpen = false;
+    }
+    this.setState({ ...nextState });
     this.localStream.getVideoTracks()[0].stop()
   }
 
@@ -158,23 +204,25 @@ export default class Controls extends Component {
     this.startVideo();
   }
 
-  startAudio = (e) => {
-    e.preventDefault();
-    navigator.mediaDevices.getUserMedia({
-      audio: true
-    }).then((stream) => {
-      if(!this.localStream) {
-        this.localStream = stream;
-      }
-      this.localStream.addTrack(stream.getTracks()[0]);
-    })
-    .catch(function(e) {
-      alert('getUserMedia() error: ' + e.name);
-    });
+  startAudio = () => {
+    const audioOn = true;
+    const streamOpen = true;
+    const cameraOn = this.state.cameraOn;
+    this.setState({ audioOn, streamOpen });
+    this.startUserMedia({ audioOn })
+      .then(() => {
+        if (this.props.wasCallAccepted) {
+          createOffer({ audio: audioOn, video: cameraOn });
+        }
+      });;
   }
 
   stopAudio = () => {
-    this.setState({ audioOn: false });
+    const nextState = { audioOn: false };
+    if (!this.state.cameraOn) {
+      nextState.streamOpen = false;
+    }
+    this.setState({ ...nextState });
     this.localStream.getAudioTracks()[0].stop()
   }
 
@@ -196,10 +244,8 @@ export default class Controls extends Component {
   acceptCallOnClick = (accept) => {
     return (event) => {
       if(accept) {
-        // this.receiveCall();
         socket.emit('accept call');
       }
-      // return this.rejectCall();
       this.setState({ ...this.state, receiveCallPrompt: false});
     }
   };
@@ -209,40 +255,17 @@ export default class Controls extends Component {
     this.setState({ ...this.state, receiveCallPrompt: false });
   };
 
-  // receiveCallPrompt = () => {
-  //   this.setState({ ...this.state, receiveCallPrompt: true });
-  // }
-
-  // receiveCall = () => {
-  //   // const description = this.state.remoteDescription;
-  //   // this.localRTC.setRemoteDescription(description);
-  //   this.localRTC.createAnswer().then((desc) => {
-  //     // const peer = this.props.peer.user._id;
-  //     // desc.sdp = desc.sdp.replace(/a=recvonly/g, 'a=inactive');
-  //     // desc.type = 'pranswer';
-  //     this.localRTC.setLocalDescription(desc);
-  //     // this.props.updateSignalingState(this.localRTC.signalingState);
-  //     // socket.emit('signal', {
-  //     //   type: 'acceptCall',
-  //     //   peer,
-  //     //   description: desc
-  //     // });
-  //     this.props.callAccepted();
-  //     socket.emit('accept call', desc);
-  //   });
-  //
-  // }
-
   stopCall = () => {
+    this.setState({ ...this.defaultState });
     this.props.clearCallState();
     this.localRTC.close();
   }
 
   disableControlButtons = () => {
-    // if(this.props.wasCallAccepted || this.props.wasCallStarted) {
-    //   return false;
-    // }
-    // return true;
+  //   // if(this.props.wasCallAccepted || this.props.wasCallStarted) {
+  //   //   return false;
+  //   // }
+  //   // return true;
     return false;
   }
 
@@ -257,30 +280,25 @@ export default class Controls extends Component {
     return (
       <div className={`${this.props.styles.controlBar}`}>
         <div className="btn-group btn-group-lg" role="group" aria-label="...">
-          <button onClick={this.toggleVideo} type="button"
-            className={
-              `${this.disableControlButtons() ? 'disabled' : ''}
-              btn btn-default`
-              }>
-            <i className="fa fa-eye" aria-hidden="true"></i>
-          </button>
-          {/* <button
-            onClick={this.startAudio} type="button"
-            className={
-              `${this.props.signal !== 'stable' ? 'disabled' : ''}
-              btn btn-default`
-            }>
-            <i className="fa fa-volume-up" aria-hidden="true"></i>
-          </button> */}
-          <button onClick={this.toggleAudio}
-            type="button"
-            className={
-              `${this.disableControlButtons() ? 'disabled' : ''}
-              btn btn-default`
-            }>
-            <i className="fa fa-microphone" aria-hidden="true"></i>
-          </button>
-          <button onClick={this.startCall}
+          <ControlButton
+            onClick={this.toggleVideo}
+            streamOpen={this.state.streamOpen}
+            controlOn={this.state.cameraOn}
+            faClass={'fa fa-eye'}
+          />
+          <ControlButton
+            onClick={this.toggleAudio}
+            streamOpen={this.state.streamOpen}
+            controlOn={this.state.audioOn}
+            faClass={'fa fa-microphone'}
+          />
+          <ControlButton
+            onClick={this.startCall}
+            streamOpen={this.state.streamOpen}
+            controlOn={this.state.callAccepted}
+            faClass={'fa fa-phone'}
+          />
+          {/* <button onClick={this.startCall}
             type="button"
             className={
               `${this.disableCallButton() ? 'disabled' : ''}
@@ -288,15 +306,21 @@ export default class Controls extends Component {
             }
             >
             <i className='fa fa-phone' aria-hidden='true'></i>
-          </button>
-          <button onClick={this.stopCall}
+          </button> */}
+          <ControlButton
+            onClick={this.stopCall}
+            streamOpen={this.state.callAccepted}
+            controlOn={!this.state.callAccepted}
+            faClass={'fa fa-times'}
+          />
+          {/* <button onClick={this.stopCall}
             type="button"
             className={
               `${this.disableControlButtons() ? 'disabled' : ''}
               btn btn-default`
             }>
             <i className='fa fa-times' aria-hidden='true' />
-          </button>
+          </button> */}
         </div>
          <Modal show={this.state.receiveCallPrompt} onHide={this.close}>
           <Modal.Header closeButton>

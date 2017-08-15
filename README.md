@@ -81,7 +81,7 @@ npm run start
 
 What initially gets run is `bin/server.js`, which does little more than enable ES6 and ES7 awesomeness in the
 server-side node code. It then initiates `server.js`. In `server.js` we proxy any requests to `/api/*` to the
-[API server](#api-server), running at `localhost:3030`. All the data fetching calls from the client go to `/api/*`.
+[API server](#api-server), running at `api.projectrefit.us` or `localhost:3030`. All the data fetching calls from the client go to `/api/*`.
 Aside from serving the favicon and static content from `/static`, the only thing `server.js` does is initiate delegate
 rendering to `react-router`. At the bottom of `server.js`, we listen to port `3000` and initiate the API server.
 
@@ -238,6 +238,4 @@ Although this isn't a library, we recently started versioning to make it easier 
 * [Inline Styles](docs/InlineStyles.md) - CSS is dead
 
 ---
-Thanks for checking this out.
-
-– Erik Rasmussen, [@erikras](https://twitter.com/erikras)
+A big thank you to [@erikras](https://twitter.com/erikras) for the boilerplate.
