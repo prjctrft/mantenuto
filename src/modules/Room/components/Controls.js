@@ -115,8 +115,6 @@ export default class Controls extends Component {
   createOffer = ({ audio, video }) => {
     const offerToReceiveAudio = audio ? 1 : 0;
     const offerToReceiveVideo = video ? 1 : 0;
-    // const offerToReceiveAudio = 1;
-    // const offerToReceiveVideo = 1;
     this.startUserMedia()
     .then(() => {
       this.localStream.getTracks().forEach((track) => {
