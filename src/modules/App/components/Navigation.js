@@ -11,7 +11,7 @@ import NavigationCollapse from './NavigationCollapse';
 
 export default function Navigation(props) {
   
-    const { user, notifs, children } = this.props;
+    const { user, notifs, children } = props;
 
     const styles = require('./Navigation.scss');
     return (
