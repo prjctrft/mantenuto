@@ -7,6 +7,7 @@ import httpProxy from 'http-proxy';
 import path from 'path';
 import PrettyError from 'pretty-error';
 import http from 'http';
+import ssl  from 'express-ssl';
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
@@ -28,13 +29,16 @@ const proxy = httpProxy.createProxyServer({
   ws: true,
   xfwd: true,
   changeOrigin: true,
-  secure: false
+  secure: process.env.NODE_ENV === 'production'
 });
 
 app.use(compression());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
 app.use(express.static(path.join(__dirname, '..', 'static')));
+
+// only active when process.env.NODE_ENV === 'production'
+app.use(ssl());
 
 app.use('/admin', (req, res) => {
   proxy.web(req, res, { target: `${targetUrl}/admin` });
