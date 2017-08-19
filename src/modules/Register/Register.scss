@@ -7,12 +7,27 @@
 	flex-direction: column;
 }
 
+.register form button {
+	width: 50%;
+	max-width: 15rem;
+	margin: auto;
+}
+
+.register input[type="file"] {
+	height: auto;
+}
+
 @media (min-width: 1024px) {
 	.register form {
 		flex-direction: row;
+		flex-wrap: wrap;
 	}
 
 	.register fieldset {
 		width: 50%;
+	}
+
+	.register form button {
+		margin: 0 auto 0 15rem;
 	}
 }
