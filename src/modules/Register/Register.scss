@@ -2,3 +2,17 @@
 	text-align: center;
 }
 
+.register form {
+	display: flex;
+	flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+	.register form {
+		flex-direction: row;
+	}
+
+	.register fieldset {
+		width: 50%;
+	}
+}
