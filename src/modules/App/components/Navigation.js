@@ -8,7 +8,7 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 
 import NavigationHeader from './NavigationHeader';
 
-function Navigation(props) {
+export default function Navigation(props) {
   
     const { user, notifs, children } = this.props;
 
