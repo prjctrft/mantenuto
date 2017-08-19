@@ -6,44 +6,8 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
-export default class Navigation extends Component {
-    static propTypes = {
-      children: PropTypes.object.isRequired,
-      user: PropTypes.object,
-      notifs: PropTypes.object,
-      logout: PropTypes.func.isRequired,
-      pushState: PropTypes.func.isRequired
-  };
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  };
-
-  componentDidMount() {
-    if (!this.props.user && this.props.id) {
-      this.populateUser(this.props);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.user && nextProps.id) {
-      this.populateUser(nextProps);
-    }
-  }
-
-  populateUser = (props) => {
-    props.populateUser(props.id);
-  }
-
-  handleLogout = event => {
-    event.preventDefault();
-    this.props.logout().then(() => {
-      this.props.clearUser();
-      this.props.push('/login');
-    });
-  };
-
-  render() {
+function Navigation(props) {
+  
     const { user, notifs, children } = this.props;
 
     const styles = require('../App.scss');
@@ -87,7 +51,7 @@ export default class Navigation extends Component {
         : null }
       </Navbar>
     )
-  }
+  
 }
 
 

@@ -42,41 +42,41 @@ import Navigation from './components/Navigation';
   // }),
   // { logout, pushState: push })
 export default class App extends Component {
-  // static propTypes = {
-  //   children: PropTypes.object.isRequired,
-  //   user: PropTypes.object,
-  //   notifs: PropTypes.object,
-  //   logout: PropTypes.func.isRequired,
-  //   pushState: PropTypes.func.isRequired
-  // };
+  static propTypes = {
+    children: PropTypes.object.isRequired,
+    user: PropTypes.object,
+    notifs: PropTypes.object,
+    logout: PropTypes.func.isRequired,
+    pushState: PropTypes.func.isRequired
+  };
 
-  // static contextTypes = {
-  //   store: PropTypes.object.isRequired
-  // };
+  static contextTypes = {
+    store: PropTypes.object.isRequired
+  };
 
-  // componentDidMount() {
-  //   if (!this.props.user && this.props.id) {
-  //     this.populateUser(this.props);
-  //   }
-  // }
+  componentDidMount() {
+    if (!this.props.user && this.props.id) {
+      this.populateUser(this.props);
+    }
+  }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (!nextProps.user && nextProps.id) {
-  //     this.populateUser(nextProps);
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.user && nextProps.id) {
+      this.populateUser(nextProps);
+    }
+  }
 
-  // populateUser = (props) => {
-  //   props.populateUser(props.id);
-  // }
+  populateUser = (props) => {
+    props.populateUser(props.id);
+  }
 
-  // handleLogout = event => {
-  //   event.preventDefault();
-  //   this.props.logout().then(() => {
-  //     this.props.clearUser();
-  //     this.props.push('/login');
-  //   });
-  // };
+  handleLogout = event => {
+    event.preventDefault();
+    this.props.logout().then(() => {
+      this.props.clearUser();
+      this.props.push('/login');
+    });
+  };
 
   render() {
     const { user, notifs, children } = this.props;
