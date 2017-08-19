@@ -13,7 +13,8 @@ import {
   Login,
   Room,
   LoginSuccess,
-  NotFound
+  NotFound,
+  Password
 } from 'modules';
 
 export default store => {
@@ -83,6 +84,7 @@ export default store => {
       {/* Routes disallow login */}
       <Route onEnter={requireNotLogged}>
         <Route path="login" component={Login} />
+        {Password}
         <Route path="register" component={Register} />
         <Route path="registered" component={Registered} />
       </Route>

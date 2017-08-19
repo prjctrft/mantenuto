@@ -9,3 +9,4 @@ export Profile from './Profile';
 export Talk from './Talk';
 export Listen from './Listen';
 export Registered from './Registered';
+export Password from './Password';

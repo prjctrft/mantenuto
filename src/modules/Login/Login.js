@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
+import { Link } from 'react-router';
 import LoginForm from './components/LoginForm';
 import FacebookLogin from './components/FacebookLogin';
 import { login } from 'redux/modules/auth';
@@ -65,6 +66,8 @@ export default class Login extends Component {
         <h1>Login</h1>
         <div>
           <LoginForm onSubmit={this.login} />
+          <hr />
+          <Link to={'/login/password'}>Forgot password?</Link>
           {/* <p/>
           <FacebookLogin
             appId="635147529978862"
