@@ -6,6 +6,8 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
+import NavigationHeader from './NavigationHeader';
+
 function Navigation(props) {
   
     const { user, notifs, children } = this.props;
@@ -13,16 +15,7 @@ function Navigation(props) {
     const styles = require('./Navigation.scss');
     return (
       <Navbar fixedTop>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <IndexLink to="/">
-            {/* <IndexLink to="/" activeStyle={{ color: '#33e0ff' }}> */}
-              <div className={styles.brand} />
-            </IndexLink>
-          </Navbar.Brand>
-
-          { user ? <Navbar.Toggle /> : null }
-        </Navbar.Header>
+        <NavigationHeader />
 
         { user ?
           <Navbar.Collapse>
