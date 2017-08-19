@@ -1,3 +1,19 @@
+@import '../../theme/variables.scss';
+
+// .register {
+// 	display: flex;
+// 	flex-direction: column;
+// 	justify-content: center;
+// 	align-items: center;
+// 	//background: url(); insert url for background image
+// }
+
+.register > div {
+	background-color: $brand-gray;
+	opacity: 0.5;
+	border-radius: 10px;
+}
+
 .register h1 {
 	text-align: center;
 }
@@ -5,6 +21,7 @@
 .register form {
 	display: flex;
 	flex-direction: column;
+	padding: 3rem;
 }
 
 .register form button {
@@ -18,13 +35,19 @@
 }
 
 @media (min-width: 1024px) {
+	.register {
+		padding: 3rem 5rem;
+	}
+
 	.register form {
 		flex-direction: row;
 		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
 	}
 
 	.register fieldset {
-		width: 50%;
+		width: 45%;
 	}
 
 	.register form button {

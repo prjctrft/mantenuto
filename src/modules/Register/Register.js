@@ -52,7 +52,7 @@ export default class Register extends Component {
     const styles = require('./Register.scss');
     return (
       <div className={styles.register}>
-        <div className="flexy container">
+        <div className="container">
           <Helmet title="Register" />
           <h1>Register</h1>
           <RegisterForm codes={this.props.codes} onSubmit={this.register} initialValues={this.getInitialValues()} />
