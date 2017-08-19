@@ -31,18 +31,24 @@ export default class RegisterForm extends Component {
 
   render() {
     const { handleSubmit, error } = this.props;
-
+    const styles = require('../Register.scss');
     return (
       <form className="form-horizontal" onSubmit={handleSubmit}>
-        <Field name="email" type="text" component={this.renderInput} label="Email" />
-        <Field validate={this.validateCode} name="code" type="text" component={this.renderInput} label="Registration Code" />
-        <Field name="password" type="password" component={this.renderInput} label="Password" />
-        <Field
-          name="password_confirmation"
-          type="password"
-          component={this.renderInput}
-          label="Password confirmation"
-        />
+        <fieldset className="form-group">
+          <Field name="email" type="text" component={this.renderInput} label="Email" />
+          <Field validate={this.validateCode} name="code" type="text" component={this.renderInput} label="Registration Code" />
+          <Field name="password" type="password" component={this.renderInput} label="Password" />
+          <Field
+            name="password_confirmation"
+            type="password"
+            component={this.renderInput}
+            label="Password confirmation"
+          />
+        </fieldset>
+        <fieldset className="form-group">
+          <Field name="credential" type="file" component={this.renderInput}></Field>
+        </fieldset>
+        
         {error && <p className="text-danger"><strong>{error}</strong></p>}
         <button className="btn btn-success" type="submit">
           <i className="fa fa-sign-in" />{' '}Register
