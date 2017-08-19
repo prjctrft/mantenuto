@@ -10,7 +10,7 @@ function Navigation(props) {
   
     const { user, notifs, children } = this.props;
 
-    const styles = require('../App.scss');
+    const styles = require('./Navigation.scss');
     return (
       <Navbar fixedTop>
         <Navbar.Header>
