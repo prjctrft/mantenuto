@@ -46,7 +46,7 @@ export default class RegisterForm extends Component {
           />
         </fieldset>
         <fieldset className="form-group">
-          <Field name="credential" type="file" component={this.renderInput}></Field>
+          <Field name="credential" type="file" component={this.renderInput} label="Upload DD214"></Field>
         </fieldset>
         
         {error && <p className="text-danger"><strong>{error}</strong></p>}
