@@ -22,8 +22,12 @@
 }
 
 .appContent {
-  margin: 50px 0; // for fixed navbar
+  margin: 5rem 0; // for fixed navbar
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100vh - 14rem); // full viewport height minus footer height
 }
 
 .notifs {

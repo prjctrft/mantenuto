@@ -17,6 +17,7 @@ import config from 'config';
 import { populateUser } from './redux';
 
 import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 // import { asyncConnect } from 'redux-connect';
 
@@ -94,6 +95,7 @@ export default class App extends Component {
           </div>
           { children }
         </div>
+        <Footer />
       </div>
     );
   }

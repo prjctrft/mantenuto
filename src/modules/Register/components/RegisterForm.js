@@ -35,11 +35,30 @@ export default class RegisterForm extends Component {
     return (
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <fieldset className="form-group">
-          <Field name="fullname" type="text" component={this.renderInput} label="Full Name" />
-          <Field name="username" type="text" component={this.renderInput} label="Username" />
-          <Field name="email" type="text" component={this.renderInput} label="Email" />
+          <Field 
+            name="fullname" 
+            type="text" 
+            component={this.renderInput} 
+            label="Full Name" 
+          />
+          <Field 
+            name="username" 
+            type="text" 
+            component={this.renderInput} 
+            label="Username" 
+          />
+          <Field 
+            name="email" 
+            type="email" 
+            component={this.renderInput} 
+            label="Email" 
+          />
           {/*<Field validate={this.validateCode} name="code" type="text" component={this.renderInput} label="Registration Code" />*/}
-          <Field name="password" type="password" component={this.renderInput} label="Password" />
+          <Field 
+            name="password" 
+            type="password" 
+            component={this.renderInput} 
+            label="Password" />
           <Field
             name="password_confirmation"
             type="password"

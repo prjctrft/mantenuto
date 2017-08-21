@@ -1,5 +1,12 @@
 @import '../../../theme/variables.scss';
 
+nav {
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .brand {
     position: absolute;
     $size: 40px;

@@ -59,10 +59,12 @@ export default class Login extends Component {
 
   render() {
     const { logout } = this.props;
+    const styles = require('./Login.scss');
     return (
-      <div className="container">
+      <div className={styles.login}>
         <Helmet title="Login" />
-        <h1>Login</h1>
+        {/*<h1>Login</h1>*/}
+        {/*<img /> put No Longer Fight Alone Graphic here */}
         <div>
           <LoginForm onSubmit={this.login} />
           {/* <p/>
