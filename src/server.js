@@ -34,8 +34,7 @@ const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
   ws: true,
   xfwd: true,
-  changeOrigin: true,
-  secure: process.env.NODE_ENV === 'production'
+  changeOrigin: true
 });
 
 app.use(compression());
