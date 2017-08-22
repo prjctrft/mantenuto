@@ -174,6 +174,9 @@ export default class Room extends Component {
 
   renderStats = (styles) => {
     // const peer = this.props.peer;
+    if (!this.props.peer || !this.props.user) {
+      return null;
+    }
     const peerCheckedIn = this.props.peerCheckedIn;
     let badge;
     if (peerCheckedIn) {
@@ -189,10 +192,10 @@ export default class Room extends Component {
 
   render() {
     const styles = require('./Styles.scss');
-    const { room, user, peer } = this.props;
-    if (!room || !user || !peer) {
-      return null;
-    }
+    // const { room, peer } = this.props;
+    // if (!room || !user || !peer) {
+    //   return null;
+    // }
     return (
       <div className="container">
         <div className='row'>

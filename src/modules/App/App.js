@@ -34,7 +34,8 @@ import { populateUser } from './redux';
   state => ({
     notifs: state.notifs,
     id: state.auth.user,
-    user: state.user.user
+    user: state.user.user,
+    socketAuthenticated: state.auth.socketAuthenticated
   }), { populateUser, logout, clearUser, push })
   // }),
   // { logout, pushState: push })
@@ -52,7 +53,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.user && this.props.id) {
+    if (!this.props.user && this.props.id && this.props.socketAuthenticated) {
       this.populateUser(this.props);
     }
   }

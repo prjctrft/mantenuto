@@ -6,7 +6,6 @@ import { pushMessage, addMessage, loadMessages } from '../actions';
 @connect(state => ({
   messages: state.rooms.messages,
   user: state.user.user,
-  slug: state.rooms.room.slug,
   peer: state.rooms.peer.user,
   roomId: state.rooms.room._id
 }), { pushMessage, addMessage, loadMessages })

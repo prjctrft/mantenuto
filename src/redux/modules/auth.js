@@ -25,7 +25,9 @@ const LOGOUT_FAIL = 'chat/auth/LOGOUT_FAIL';
 
 const initialState = {
   loaded: false,
-  socketAuthenticated: false
+  socketAuthenticated: false,
+  token: undefined,
+  user: undefined
 };
 
 const catchValidation = error => {
@@ -119,9 +121,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOGOUT_SUCCESS:
       return {
         ...state,
-        loggingOut: false,
-        user: null,
-        token: null
+        ...initialState
       };
     case LOGOUT_FAIL:
       return {

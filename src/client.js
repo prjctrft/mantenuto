@@ -52,10 +52,12 @@ if (isOnline) {
   socket.open();
   // wait on client side rendering with socket.io provider
   // until socket has tried authentication
-  socketAuth(store.dispatch)
-    .then(() => render(getRoutes(store)) );;
+  // socketAuth(store.dispatch)
+  //   .then(() => render(getRoutes(store)) );;
+  socketAuth(store.dispatch);
 }
 
+render(getRoutes(store));
 
 if (module.hot) {
   module.hot.accept('./routes', () => {

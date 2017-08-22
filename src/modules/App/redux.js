@@ -20,7 +20,13 @@ const catchValidation = error => {
   return Promise.reject(error);
 };
 
-export function userReducer(state = {userPopulated: false, updatingUser: false}, action = {}) {
+const defaultState = {
+  user: undefined,
+  userPopulated: false,
+  updatingUser: false
+};
+
+export function userReducer(state = defaultState, action = {}) {
   switch (action.type) {
     case POPULATE_USER:
       return {

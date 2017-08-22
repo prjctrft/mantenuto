@@ -334,7 +334,7 @@ export default class Controls extends Component {
         </div>
          <Modal show={this.state.receiveCallPrompt} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Incoming Call from {this.props.peer.user.first}.</Modal.Title>
+            { this.props.peer && this.props.peer.user ? <Modal.Title>Incoming Call from {this.props.peer.user.first}.</Modal.Title> : null }
           </Modal.Header>
           <Modal.Body>
             <h4>Accept Call?</h4>

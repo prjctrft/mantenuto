@@ -6,7 +6,9 @@ const initialState = {
   roomPatched: false,
   messages: [],
   startingCall: false,
-  callAccepted: false
+  callAccepted: false,
+  room: {},
+  peer: {}
 };
 
 export default (state = initialState, action = {}) => {
