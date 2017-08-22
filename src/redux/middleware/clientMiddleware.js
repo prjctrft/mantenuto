@@ -17,9 +17,7 @@ export default function clientMiddleware() {
 
     const { auth } = getState();
 
-    const client = (socket.connected ? app : restApp);
-    // const client = app;
-    // client.setJwtToken(auth.token || null);
+    const client = app;
 
     const actionPromise = promise(client, dispatch);
     actionPromise.then(

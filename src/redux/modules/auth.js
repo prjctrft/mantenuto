@@ -1,6 +1,5 @@
-import app, { restApp, socket } from 'app';
+import app, { socket } from 'app';
 import { SubmissionError } from 'redux-form';
-// import cookies from 'js-cookie';
 import cookie from 'react-cookie';
 
 const LOAD_TOKEN = 'chat/auth/LOAD_TOKEN';
@@ -19,14 +18,14 @@ const OAUTHLOGIN_FAIL = 'chat/auth/OAUTHLOGIN_FAIL';
 const JWT_LOGIN = 'chat/auth/JWT_LOGIN';
 const JWT_LOGIN_SUCCESS = 'chat/auth/JWT_LOGIN_SUCCESS';
 const JWT_LOGIN_FAIL = 'chat/auth/JWT_LOGIN_FAIL';
+const SOCKET_AUTHENTICATED = 'chat/auth/SOCKET_AUTHENTICATED';
 const LOGOUT = 'chat/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'chat/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'chat/auth/LOGOUT_FAIL';
 
-const userService = restApp.service('users');
-
 const initialState = {
-  loaded: false
+  loaded: false,
+  socketAuthenticated: false
 };
 
 const catchValidation = error => {
@@ -91,6 +90,11 @@ export default function reducer(state = initialState, action = {}) {
         token: null,
         loginError: action.error
       };
+    case SOCKET_AUTHENTICATED:
+      return {
+        ...state,
+        socketAuthenticated: action.socketAuthenticated
+      }
     case REGISTER:
       return {
         ...state,
@@ -135,7 +139,7 @@ export function startAuth(dispatch) {
     .then((token) => {
       token = token || cookie.load('feathers-jwt');
       if(token) {
-        return dispatch(restJwtLogin(token))
+        return dispatch(jwtLogin(token))
       }
     })
 }
@@ -146,121 +150,80 @@ function saveAuth(response) {
     .then(payload => {
       const id = payload.userId;
       app.set('token', token); // -> set manually the JWT
+      app.set('user', id); // -> set manually the JWT
       cookie.save('feathers-jwt', token);
-      return {user: id, token};
+      return { user: id, token };
     });
-
-  // const storage = app.get('storage');
-  // if (token) {
-  //   storage.setItem('feathers-jwt', token);
-  // } else {
-  //   storage.removeItem('feathers-jwt');
-  // }
-
-  // app.set('token', token); // -> set manually the JWT
-  // app.set('user', user); // -> set manually the user
-  // restApp.set('token', token);
-  // restApp.set('user', user);
-
-  // console.log(app.get('token')); // -> the JWT
-  // console.log(app.get('user')); // -> the user
 }
 
-// function getToken() {
-//   const storage = app.get('storage');
-//   const token = storage.getItem('feathers-jwt');
-//   app.set('token', token);
-//   return token;
-// }
-
-// function loadToken(token) {
-//   return {
-//     type: LOAD_TOKEN,
-//     token
-//   };
-// }
-
-// export function isLoaded(globalState) {
-//   return globalState.auth && globalState.auth.loaded;
-// }
-
-// export function load(state, dispatch) {
-//   //check if session exists
-//   if(!cookie.get('feathers-session')) {
-//     let token;
-//     if(!state.auth.token) {
-//       token = getToken();
-//     }
-//     if(token) {
-//       dispatch(loadToken(token))
-//       saveAuth({token});
-//       return jwtLogin();
-//     }
-//   }
-//   return {
-//     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-//     promise: client => client.get('/auth/load')
-//   };
-// }
+export function isLoaded(globalState) {
+  return globalState.auth && globalState.auth.loaded;
+}
 
 export function register(data) {
   return {
     types: [REGISTER, REGISTER_SUCCESS, REGISTER_FAIL],
-    promise: () => userService.create(data).catch(catchValidation)
+    promise: () => app.service('users').create(data).catch(catchValidation)
   };
 }
 
 export function login(data) {
-  // const socketId = socket.io.engine.id;
+  const socketId = socket.io.engine.id;
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: () => app.authenticate({
       strategy: 'local',
       email: data.email,
       password: data.password,
-      // socketId
+      socketId
     })
     .then(saveAuth)
     .catch(catchValidation)
   }
 }
 
-export function restJwtLogin(token) {
+export function jwtLogin(token) {
   const accessToken = token;
   return {
     types: [JWT_LOGIN, JWT_LOGIN_SUCCESS, JWT_LOGIN_FAIL],
-    promise: () =>  app.authenticate({
-        strategy: 'jwt',
-        accessToken
-      })
-      .then(saveAuth)
-      .catch(catchValidation)
+    promise: () => app.authenticate({
+      strategy: 'jwt',
+      accessToken
+    })
+    .then(saveAuth)
+    .catch(catchValidation)
   };
 }
 
-export function socketJwtLogin(token) {
-  const accessToken = token;
+export function socketAuth(dispatch) {
+  return app.passport.getJWT()
+    .then((token) => {
+      token = token || cookie.load('feathers-jwt');
+      if(token) {
+        return dispatch(jwtLogin(token))
+          .then((response) => dispatch(socketAuthenticated(response)))
+      }
+    })
+}
+
+function socketAuthenticated(response) {
+  const socketAuthenticated = true;
   return {
-    types: [JWT_LOGIN, JWT_LOGIN_SUCCESS, JWT_LOGIN_FAIL],
-    promise: (client, dispatch) =>  {
-      return app.authenticate({
-        strategy: 'jwt',
-        accessToken
-      })
-      .then(() => {
-        debugger;
-        client;
-        dispatch;
-      })
-      .then(saveAuth)
-      .catch(catchValidation)
-    }
-  };
+    type: SOCKET_AUTHENTICATED,
+    socketAuthenticated
+  }
 }
 
 export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
-    promise: () => (socket.connected ? app : restApp).logout()
+    promise: () => app.logout().then(cleanStorage)
   };
 }
+
+function cleanStorage() {
+  cookie.remove('feathers-jwt');
+  cookie.remove('feathers-session');
+  cookie.remove('io');
+  localStorage.removeItem('feathers-jwt')
+};

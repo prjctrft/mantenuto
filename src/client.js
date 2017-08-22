@@ -11,7 +11,8 @@ import { ReduxAsyncConnect } from 'redux-connect';
 import { AppContainer as HotEnabler } from 'react-hot-loader';
 import { useScroll } from 'react-router-scroll';
 import { socket } from 'app';
-import { jwtLogin } from './redux/modules/auth';
+// import { jwtLogin } from './redux/modules/auth';
+import { socketAuth } from './redux/modules/auth';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
@@ -23,18 +24,6 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 // hoist __mantenuto data to a global with information about the app
 window.mantenuto = window.__data.__mantenuto;
-
-// function initSocket() {
-//   socket.on('news', data => {
-//     console.log(data);
-//     socket.emit('my other event', { my: 'data from client' });
-//   });
-//   socket.on('msg', data => {
-//     console.log(data);
-//   });
-//
-//   return socket;
-// }
 
 const renderRouter = props => <ReduxAsyncConnect
   {...props}
@@ -59,19 +48,14 @@ const render = routes => {
 const isOnline = window.__data;
 
 if (isOnline) {
-  debugger;
   global.socket = socket;
   socket.open();
-  const auth = store.getState().auth;
-  const {token, user} = auth;
-  if (token && user) {
-    // rest authenticated on server
-    // authenticate socket
-    store.dispatch(socketJwtLogin(token));
-  }
+  // wait on client side rendering with socket.io provider
+  // until socket has tried authentication
+  socketAuth(store.dispatch)
+    .then(() => render(getRoutes(store)) );;
 }
 
-render(getRoutes(store));
 
 if (module.hot) {
   module.hot.accept('./routes', () => {

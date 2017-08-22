@@ -58,10 +58,7 @@ export default store => {
     if (!state.auth.user) {
       return startAuth(dispatch).then(() => {
         cb();
-        // const next = nextState.location.query.next;
-        // let route = next ? `?next=${next}` : '/';
-        // dispatch(replace(route));
-      }).catch(() => {
+      }).catch((foo) => {
         cb();
       })
     }

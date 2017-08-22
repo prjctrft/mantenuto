@@ -69,12 +69,9 @@ function saveUser(response) {
 export function populateUser(id) {
   return {
     types: [POPULATE_USER, POPULATE_USER_SUCCESS, POPULATE_FAIL],
-    promise: (client) => {
-      debugger;
-      return client.service('users').get(id)
+    promise: () => app.service('users').get(id)
       .then(saveUser)
       .catch(catchValidation)
-    }
   }
 }
 

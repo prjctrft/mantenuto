@@ -1,7 +1,8 @@
 import feathers from 'feathers/client';
 import hooks from 'feathers-hooks';
 import rest from 'feathers-rest/client';
-import socketio from 'feathers-socketio/client';
+const socketio = require('feathers-socketio-ssr');
+// import socketio from 'feathers-socketio/client';
 import authentication from 'feathers-authentication-client';
 import io from 'socket.io-client';
 import superagent from 'superagent';
@@ -11,8 +12,23 @@ const storage = __SERVER__ ? require('localstorage-memory') : window.localStorag
 
 const host = clientUrl => (__SERVER__ ? `http://${process.env.HOST}:${process.env.PORT}${clientUrl}` : clientUrl);
 
-const configureApp = (transport) => feathers()
-      .configure(transport)
+// const configureApp = (transport) => feathers()
+//       .configure(transport)
+//       .configure(hooks())
+//       .configure(authentication({ storage,
+//         header: 'Authorization', // default
+//         path: '/auth', // the server side authentication service path
+//         jwtStrategy: 'jwt', // default
+//         entity: 'user', // default
+//         service: 'users', // default
+//         storageKey: 'feathers-jwt', // default
+//       }));
+
+export const socket = io('', { path: host('/ws'), autoConnect: false });
+// const app = configureApp(socketio(socket));
+
+const app = feathers()
+      .configure(socketio(socket, __SERVER__, rest(host('/api')).superagent(superagent)))
       .configure(hooks())
       .configure(authentication({ storage,
         header: 'Authorization', // default
@@ -23,9 +39,6 @@ const configureApp = (transport) => feathers()
         storageKey: 'feathers-jwt', // default
       }));
 
-export const socket = io('', { path: host('/ws'), autoConnect: false });
-const app = configureApp(socketio(socket));
-
 export default app;
 
-export const restApp = configureApp(rest(host('/api')).superagent(superagent));
+// export const restApp = configureApp(rest(host('/api')).superagent(superagent));
