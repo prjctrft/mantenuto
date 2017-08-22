@@ -68,7 +68,7 @@ var webpackConfig = module.exports = {
         happy: { id: 'json' },
         test: /\.json$/,
         loader: 'happypack/loader?id=json',
-        include: [path.resolve(__dirname, '../src')]
+        include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../')]
       },
       {
         happy: { id: 'less' },

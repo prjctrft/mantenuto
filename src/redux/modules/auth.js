@@ -1,6 +1,7 @@
 import app, { restApp, socket } from 'app';
 import { SubmissionError } from 'redux-form';
-import cookie from 'js-cookie';
+// import cookies from 'js-cookie';
+import cookie from 'react-cookie';
 
 const LOAD_TOKEN = 'chat/auth/LOAD_TOKEN';
 const LOAD = 'chat/auth/LOAD';
@@ -132,14 +133,11 @@ export default function reducer(state = initialState, action = {}) {
 export function startAuth(dispatch) {
   return app.passport.getJWT()
     .then((token) => {
+      token = token || cookie.load('feathers-jwt');
       if(token) {
-        return dispatch(jwtLogin(token))
+        return dispatch(restJwtLogin(token))
       }
     })
-  // const token = getToken();
-  // if (token) {
-  //   return dispatch(jwtLogin());
-  // }
 }
 
 function saveAuth(response) {
@@ -148,9 +146,9 @@ function saveAuth(response) {
     .then(payload => {
       const id = payload.userId;
       app.set('token', token); // -> set manually the JWT
-      // app.set('user', user); // -> set manually the user
+      cookie.save('feathers-jwt', token);
       return {user: id, token};
-      });
+    });
 
   // const storage = app.get('storage');
   // if (token) {
@@ -182,9 +180,9 @@ function saveAuth(response) {
 //   };
 // }
 
-export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
-}
+// export function isLoaded(globalState) {
+//   return globalState.auth && globalState.auth.loaded;
+// }
 
 // export function load(state, dispatch) {
 //   //check if session exists
@@ -213,42 +211,50 @@ export function register(data) {
 }
 
 export function login(data) {
-  const socketId = socket.io.engine.id;
+  // const socketId = socket.io.engine.id;
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: () => app.authenticate({
       strategy: 'local',
       email: data.email,
       password: data.password,
-      socketId
+      // socketId
     })
     .then(saveAuth)
     .catch(catchValidation)
   }
 }
 
-// export function oauthLogin(provider, data, validation = false) {
-//   const socketId = socket.io.engine.id;
-//   return {
-//     types: [OAUTHLOGIN, OAUTHLOGIN_SUCCESS, OAUTHLOGIN_FAIL],
-//     promise: () => restApp.service(`/auth/${provider}`)
-//       .create({ ...data, socketId })
-//       .then(saveAuth)
-//       .then(setCookie)
-//       .catch(validation ? catchValidation : error => Promise.reject(error))
-//   };
-// }
-
-export function jwtLogin(token) {
+export function restJwtLogin(token) {
   const accessToken = token;
   return {
     types: [JWT_LOGIN, JWT_LOGIN_SUCCESS, JWT_LOGIN_FAIL],
-    promise: () => app.authenticate({
-      strategy: 'jwt',
-      accessToken
-    })
-    .then(saveAuth)
-    .catch(catchValidation)
+    promise: () =>  app.authenticate({
+        strategy: 'jwt',
+        accessToken
+      })
+      .then(saveAuth)
+      .catch(catchValidation)
+  };
+}
+
+export function socketJwtLogin(token) {
+  const accessToken = token;
+  return {
+    types: [JWT_LOGIN, JWT_LOGIN_SUCCESS, JWT_LOGIN_FAIL],
+    promise: (client, dispatch) =>  {
+      return app.authenticate({
+        strategy: 'jwt',
+        accessToken
+      })
+      .then(() => {
+        debugger;
+        client;
+        dispatch;
+      })
+      .then(saveAuth)
+      .catch(catchValidation)
+    }
   };
 }
 

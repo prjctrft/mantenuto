@@ -13,6 +13,8 @@ import register from '../modules/Register/redux';
 
 export default function createReducer(asyncReducers) {
   return combineReducers({
+    // injected on server
+    __mantenuto: (state={}) => (state),
     routing: routerReducer,
     reduxAsyncConnect,
     form,

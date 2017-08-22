@@ -67,7 +67,7 @@ export default class Login extends Component {
         <div>
           <LoginForm onSubmit={this.login} />
           <hr />
-          <Link to={'/login/password'}>Forgot password?</Link>
+          <Link to={'/password/forgot'}>Forgot password?</Link>
           {/* <p/>
           <FacebookLogin
             appId="635147529978862"

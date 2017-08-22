@@ -7,7 +7,11 @@ import {
   updateConnectionState,
   startCall,
   callAccepted,
-  clearCallState
+  clearCallState,
+  localVideoOn,
+  localVideoOff,
+  // remoteVideoOn,
+  // remoteVideoOff
 } from '../actions';
 
 import ControlButton from './ControlButton';
@@ -27,7 +31,9 @@ import ControlButton from './ControlButton';
   updateConnectionState,
   startCall,
   callAccepted,
-  clearCallState
+  clearCallState,
+  localVideoOn,
+  localVideoOff
 })
 export default class Controls extends Component {
   constructor(props) {
@@ -47,24 +53,6 @@ export default class Controls extends Component {
 
   componentDidMount() {
     require('webrtc-adapter');
-    this.localRTC = new RTCPeerConnection(null);
-
-    this.localRTC.onicecandidate = (event) => {
-      socket.emit('ice candidate', event.candidate);
-    }
-
-    this.localRTC.ontrack = (e) => {
-      this.remoteStream = e.streams[0];
-      const videoTracks = this.remoteStream.getVideoTracks();
-      debugger;
-      if(videoTracks.length > 0) {
-        this.props.handleRemoteStream(this.remoteStream);
-      }
-    }
-
-    this.localRTC.oniceconnectionstatechange = (e) => {
-      console.log('ICE state change event: ', this.localRTC.iceConnectionState);
-    }
 
     socket.on('ice candidate', (candidate) => {
       if(candidate) {
@@ -112,7 +100,29 @@ export default class Controls extends Component {
 
   }
 
+  createRTC = () => {
+    this.localRTC = new RTCPeerConnection(null);
+
+    this.localRTC.ontrack = (e) => {
+      this.remoteStream = e.streams[0];
+      const videoTracks = this.remoteStream.getVideoTracks();
+      // debugger;
+      if(videoTracks.length > 0) {
+        this.props.handleRemoteStream(this.remoteStream);
+      }
+    }
+
+    this.localRTC.oniceconnectionstatechange = (e) => {
+      console.log('ICE state change event: ', this.localRTC.iceConnectionState);
+    }
+
+    this.localRTC.onicecandidate = (event) => {
+      socket.emit('ice candidate', event.candidate);
+    }
+  }
+
   createOffer = ({ audio, video }) => {
+    this.createRTC();
     const offerToReceiveAudio = audio ? 1 : 0;
     const offerToReceiveVideo = video ? 1 : 0;
     this.startUserMedia()
@@ -173,6 +183,7 @@ export default class Controls extends Component {
   }
 
   startVideo = () => {
+    this.props.localVideoOn();
     const cameraOn = true;
     const audioOn = this.state.audioOn;
     const streamOpen = true;
@@ -186,12 +197,13 @@ export default class Controls extends Component {
   }
 
   stopVideo = () => {
+    this.props.localVideoOff();
     const nextState = { cameraOn: false };
     if (!this.state.audioOn) {
       nextState.streamOpen = false;
     }
     this.setState({ ...nextState });
-    this.localStream.getVideoTracks()[0].stop()
+    this.localStream.getVideoTracks()[0].stop();
   }
 
   toggleVideo = (e) => {

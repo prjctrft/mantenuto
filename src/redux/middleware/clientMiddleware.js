@@ -1,4 +1,7 @@
-export default function clientMiddleware(client) {
+import React from 'react';
+import app, { restApp } from 'app';
+
+export default function clientMiddleware() {
   return ({ dispatch, getState }) => next => action => {
     if (typeof action === 'function') {
       return action(dispatch, getState);
@@ -14,7 +17,9 @@ export default function clientMiddleware(client) {
 
     const { auth } = getState();
 
-    client.setJwtToken(auth.token || null);
+    const client = (socket.connected ? app : restApp);
+    // const client = app;
+    // client.setJwtToken(auth.token || null);
 
     const actionPromise = promise(client, dispatch);
     actionPromise.then(

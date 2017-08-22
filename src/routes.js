@@ -35,7 +35,7 @@ export default store => {
   const requireNotLogged = (nextState, replace, cb) => {
     const state = store.getState();
     if (state.auth.user) {
-      replace('/');
+      push('/');
     }
     cb();
     // const cond = user => !user;
@@ -44,7 +44,7 @@ export default store => {
   const requireLogin = (nextState, replace, cb) => {
     const state = store.getState();
     if (!state.auth.user) {
-      debugger;
+      // debugger;
       // let next = '/';
       // if ()
       const next = nextState.location.pathname;

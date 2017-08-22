@@ -1,6 +1,8 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
+import cookie from 'react-cookie';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
@@ -18,6 +20,10 @@ import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import getRoutes from './routes';
+// const p = require('../../package.json');
+// const { version } = p;
+
+import { version } from '../package.json';
 
 // remote api
 const targetUrl = process.env.API_ENDPOINT;
@@ -33,6 +39,7 @@ const proxy = httpProxy.createProxyServer({
 });
 
 app.use(compression());
+app.use(cookieParser());
 app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 
 app.use(express.static(path.join(__dirname, '..', 'static')));
@@ -59,8 +66,6 @@ server.on('upgrade', (req, socket, head) => {
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
-  console.log(error);
-  console.log(req);
   if (error.code !== 'ECONNRESET') {
     console.error('proxy error', error);
   }
@@ -71,7 +76,10 @@ proxy.on('error', (error, req, res) => {
   res.end(JSON.stringify(json));
 });
 
+let unplug;
+
 app.use((req, res) => {
+  unplug = cookie.plugToRequest(req, res);
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
@@ -79,7 +87,7 @@ app.use((req, res) => {
   }
   const client = new ApiClient(req);
   const memoryHistory = createHistory(req.originalUrl);
-  const store = createStore(memoryHistory, client);
+  const store = createStore(memoryHistory, client, {__mantenuto: { version }});
   const history = syncHistoryWithStore(memoryHistory, store);
 
   function hydrateOnClient() {
@@ -96,6 +104,7 @@ app.use((req, res) => {
     routes: getRoutes(store),
     location: req.originalUrl
   }, (error, redirectLocation, renderProps) => {
+    console.log(redirectLocation);
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
@@ -121,11 +130,12 @@ app.use((req, res) => {
       }).catch(mountError => {
         console.error('MOUNT ERROR:', pretty.render(mountError));
         res.status(500);
-      });
+      })
     } else {
       res.status(404).send('Not found');
     }
-  });
+  })
+  // unplug();
 });
 
 const port = process.env.PORT;

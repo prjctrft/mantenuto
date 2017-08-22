@@ -11,6 +11,7 @@ import { ReduxAsyncConnect } from 'redux-connect';
 import { AppContainer as HotEnabler } from 'react-hot-loader';
 import { useScroll } from 'react-router-scroll';
 import { socket } from 'app';
+import { jwtLogin } from './redux/modules/auth';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
@@ -19,6 +20,9 @@ const client = new ApiClient();
 const dest = document.getElementById('content');
 const store = createStore(browserHistory, client, window.__data);
 const history = syncHistoryWithStore(browserHistory, store);
+
+// hoist __mantenuto data to a global with information about the app
+window.mantenuto = window.__data.__mantenuto;
 
 // function initSocket() {
 //   socket.on('news', data => {
@@ -55,8 +59,16 @@ const render = routes => {
 const isOnline = window.__data;
 
 if (isOnline) {
+  debugger;
   global.socket = socket;
   socket.open();
+  const auth = store.getState().auth;
+  const {token, user} = auth;
+  if (token && user) {
+    // rest authenticated on server
+    // authenticate socket
+    store.dispatch(socketJwtLogin(token));
+  }
 }
 
 render(getRoutes(store));

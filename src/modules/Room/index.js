@@ -163,10 +163,12 @@ export default class Room extends Component {
   }
 
   handleLocalStream = (stream) => {
+    debugger;
     this.LocalPlayer.srcObject = stream;
   }
 
   handleRemoteStream = (stream) => {
+    debugger;
     this.RemotePlayer.srcObject = stream;
   }
 

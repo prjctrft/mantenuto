@@ -152,6 +152,20 @@ export function clearCallState() {
   }
 }
 
+export function localVideoOn() {
+  return {
+    type: constants.LOCAL_VIDEO_ON,
+    localVideoOn: true
+  }
+}
+
+export function localVideoOff() {
+  return {
+    type: constants.LOCAL_VIDEO_OFF,
+    localVideoOn: false
+  }
+}
+
 // export function parseRoom() {
 //   let peer;
 //   if (nextProps.isTalker) {

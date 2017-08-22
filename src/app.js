@@ -9,7 +9,7 @@ import config from './config';
 
 const storage = __SERVER__ ? require('localstorage-memory') : window.localStorage;
 
-const host = clientUrl => (__SERVER__ ? `http://${config.apiHost}:${config.apiPort}` : clientUrl);
+const host = clientUrl => (__SERVER__ ? `http://${process.env.HOST}:${process.env.PORT}${clientUrl}` : clientUrl);
 
 const configureApp = (transport) => feathers()
       .configure(transport)
@@ -20,7 +20,6 @@ const configureApp = (transport) => feathers()
         jwtStrategy: 'jwt', // default
         entity: 'user', // default
         service: 'users', // default
-        cookie: 'feathers-session', // the name of the cookie to parse the JWT from when cookies are enabled server side
         storageKey: 'feathers-jwt', // default
       }));
 

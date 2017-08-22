@@ -12,6 +12,9 @@
   background-color: #000;
   border-radius: 6px;
   .LocalPlayer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: #808080 0.5px solid;
     height: 100px;
     width: 100px;
@@ -21,6 +24,7 @@
     left: inherit;
     top: inherit;
     margin: 10px;
+    background: black;
   }
   .CallState {
     height: 100%;

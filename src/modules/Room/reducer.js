@@ -123,6 +123,13 @@ export default (state = initialState, action = {}) => {
         callStarted: false,
         callAccepted: false
       }
+    case constants.LOCAL_VIDEO_ON:
+    case constants.LOCAL_VIDEO_OFF:
+      const localVideoOn = action.localVideoOn;
+      return {
+        ...state,
+        localVideoOn
+      }
     case constants.LOAD_MESSAGES:
     case constants.PUSH_MESSAGE_FAIL:
     case constants.PUSH_MESSAGE:

@@ -45,3 +45,6 @@ export const CALL_ACCEPTED = 'rooms/CALL_ACCEPTED';
 // export const RECEIVING_CALL = 'rooms/RECEIVING_CALL';
 
 export const CLEAR_CALL_STATE = 'rooms/CLEAR_CALL_STATE';
+
+export const LOCAL_VIDEO_ON = 'rooms/LOCAL_VIDEO_ON';
+export const LOCAL_VIDEO_OFF = 'rooms/LOCAL_VIDEO_OFF';

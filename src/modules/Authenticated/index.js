@@ -31,7 +31,6 @@ export default class Authenticated extends Component {
       event.preventDefault();
       const linkElement = document.createElement('textarea');
       const roomLink = `${window.location.href}rooms/${slug}`;
-      debugger;
       linkElement.innerText = roomLink;
       document.body.appendChild(linkElement)
       linkElement.select()
@@ -70,7 +69,6 @@ export default class Authenticated extends Component {
     const listenerRooms = [];
     const talkerRooms = [];
     rooms.forEach((room) => {
-      debugger;
       const roomComponent = (
         <div key={room.slug}>
           {/* Room Link: <Link onClick={this.gotoRoom(room.slug)}>{`${window.location.href}rooms/${room.slug}`}</Link> */}

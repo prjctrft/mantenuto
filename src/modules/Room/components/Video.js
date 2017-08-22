@@ -5,7 +5,8 @@ import { clearCallState } from '../actions';
 @connect( state => ({
   callStarted: state.rooms.callStarted,
   callAccepted: state.rooms.callAccepted,
-  connectionState: state.rooms.connectionState
+  connectionState: state.rooms.connectionState,
+  localVideoOn: state.rooms.localVideoOn
 }))
 export default class Video extends Component {
 
@@ -27,7 +28,7 @@ export default class Video extends Component {
         borderStyle = 'default';
     }
     return (
-      <div className={styles[borderStyle]}>
+      <div className={`${styles[borderStyle]}`}>
         <div className={`embed-responsive embed-responsive-4by3 ${styles.embedResponsive}`}>
           {callStarted || callAccepted ?
             <div className={styles.CallState}>
@@ -35,9 +36,14 @@ export default class Video extends Component {
               {callAccepted ? 'You are connected!' : null }
             </div> : null
           }
-
-          <video ref={(video) => this.props.handleRemoteVideo(video)} className='embed-responsive-item' autoPlay muted />
-          <video className={`${styles.LocalPlayer}`} ref={(video) => this.props.handleLocalVideo(video)} autoPlay muted />
+          <div className='embed-responsive-item'>
+            {/* {!this.props.remoteVideoOn ? <i className={`fa fa-5x fa-user ${styles.remoteUserPlaceHolder}`} /> : null} */}
+            <video ref={(video) => this.props.handleRemoteVideo(video)} autoPlay muted />
+          </div>
+          <div className={`${styles.LocalPlayer}`}>
+            <video ref={(video) => this.props.handleLocalVideo(video)} autoPlay muted />
+            {!this.props.localVideoOn ? <i className='fa fa-5x fa-user' /> : null}
+          </div>
         </div>
       </div>
     )

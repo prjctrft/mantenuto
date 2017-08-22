@@ -18,7 +18,6 @@ export default function createStore(history, client, data) {
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
     ];
   }
-
   const finalCreateStore = compose(...enhancers)(_createStore);
   const store = finalCreateStore(createReducer(), data);
 

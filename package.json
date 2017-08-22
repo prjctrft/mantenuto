@@ -1,8 +1,10 @@
 {
   "name": "Mantenuto",
   "description": "",
+  "version": "0.0.1",
   "engines": {
-    "node": "5.6.0"
+    "node": "5.6.0",
+    "npm": "5.2.0"
   },
   "keywords": [
     "react",
@@ -30,7 +32,9 @@
     "start-dev-server-debug": "better-npm-run start-dev-server-debug",
     "watch-client": "better-npm-run watch-client",
     "start-dev-debug": "better-npm-run start-dev-debug",
+    "start-dev-debug-local": "better-npm-run start-dev-debug-local",
     "debug": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-debug\"",
+    "debug-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-debug-local\"",
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
     "test": "karma start",
@@ -76,6 +80,17 @@
         "NODE_ENV": "development",
         "HOST": "localhost",
         "API_ENDPOINT": "https://api.projectrefit.us",
+        "PORT": 3000,
+        "WEBPACK_DLLS": 1
+      }
+    },
+    "start-dev-debug-local": {
+      "command": "node --inspect --debug ./bin/server.js",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "development",
+        "HOST": "localhost",
+        "API_ENDPOINT": "http://localhost:3030",
         "PORT": 3000,
         "WEBPACK_DLLS": 1
       }
