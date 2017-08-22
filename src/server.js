@@ -44,13 +44,14 @@ app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, '..', 'static')));
 
 // Redirect http to https
-app.all('*', function(req,res,next) {
-  if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
-    res.redirect('https://'+ req.hostname + req.url)
-  } else {
-    next()
-  }
-});
+// app.all('*', function(req,res,next) {
+//   if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+//   // if(req.headers['x-forwarded-proto'] !== 'https') {
+//     res.redirect('https://'+ req.hostname + req.url)
+//   } else {
+//     next()
+//   }
+// });
 
 app.use('/admin', (req, res) => {
   proxy.web(req, res, { target: `${targetUrl}/admin` });
