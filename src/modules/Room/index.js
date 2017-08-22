@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import app from 'app';
 import { replace } from 'react-router-redux';
 import { populateUser } from '../App/redux';
-import Chat from './components/Chat';
-import Controls from './components/Controls';
-import Video from './components/Video';
+import Room from './components/Room';
 
 import {
   load,
@@ -52,7 +50,7 @@ const mapStateToProps = (state) => {
   peerCheckOut,
   parsedRoom,
 })
-export default class Room extends Component {
+export default class RoomContainer extends Component {
   static propTypes = {
     user: PropTypes.object,
     room: PropTypes.object,
@@ -154,79 +152,8 @@ export default class Room extends Component {
     socket.emit('leave room');
   }
 
-  handleRemoteVideo = (ref) => {
-    this.RemotePlayer = ref;
-  }
-
-  handleLocalVideo = (ref) => {
-    this.LocalPlayer = ref;
-  }
-
-  handleLocalStream = (stream) => {
-    debugger;
-    this.LocalPlayer.srcObject = stream;
-  }
-
-  handleRemoteStream = (stream) => {
-    debugger;
-    this.RemotePlayer.srcObject = stream;
-  }
-
-  renderStats = (styles) => {
-    // const peer = this.props.peer;
-    if (!this.props.peer || !this.props.user) {
-      return null;
-    }
-    const peerCheckedIn = this.props.peerCheckedIn;
-    let badge;
-    if (peerCheckedIn) {
-      badge = <span className={`badge ${styles.BadgeSuccess}`}>Checkedin!</span>;
-    }
-    if (!peerCheckedIn) {
-      badge = <span className='badge default'>Not Checkedin</span>;
-    }
-    return (
-      <h1>{this.props.peer.user.first}{' '}{badge}</h1>
-    )
-  }
 
   render() {
-    const styles = require('./Styles.scss');
-    // const { room, peer } = this.props;
-    // if (!room || !user || !peer) {
-    //   return null;
-    // }
-    return (
-      <div className="container">
-        <div className='row'>
-          <div className='col-xs-12 text-center'>
-            { this.renderStats(styles) }
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-xs-12 text-center'>
-            <Controls
-              styles={styles}
-              handleRemoteStream={this.handleRemoteStream}
-              handleLocalStream={this.handleLocalStream}
-            />
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-xs-12 text-center'>
-              <Video
-                styles={styles}
-                handleRemoteVideo={this.handleRemoteVideo}
-                handleLocalVideo={this.handleLocalVideo}
-              />
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-xs-12'>
-            <Chat />
-          </div>
-        </div>
-      </div>
-    );
+    return <Room />
   }
 }
