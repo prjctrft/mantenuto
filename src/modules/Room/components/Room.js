@@ -37,7 +37,6 @@ export default (props) => {
       <div className='row'>
         <div className='col-xs-12 text-center'>
           <Stats peer={props.peer} user={props.user} styles={styles}/>
-          // { renderStats(styles, props) }
         </div>
       </div>
       <div className='row'>

@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { clearCallState } from '../actions';
+// import { clearCallState } from '../actions';
 
-@connect( state => ({
-  callStarted: state.rooms.callStarted,
-  callAccepted: state.rooms.callAccepted,
-  connectionState: state.rooms.connectionState,
-  localVideoOn: state.rooms.localVideoOn
-}))
-export default class Video extends Component {
+const Video = (props) => {
 
   // renderCallAccepted = () => {
   //   setTimeout(this.props.clearCallState(), 3000);
   //   return ('Call Accepted!');
   // }
 
-  render() {
-    const { styles, callStarted, callAccepted, connectionState } = this.props;
+  // render() {
+    const { styles, callStarted, callAccepted, connectionState } = props;
     let borderStyle;
     switch (connectionState) {
       case 'connected':
@@ -38,14 +32,23 @@ export default class Video extends Component {
           }
           <div className='embed-responsive-item'>
             {/* {!this.props.remoteVideoOn ? <i className={`fa fa-5x fa-user ${styles.remoteUserPlaceHolder}`} /> : null} */}
-            <video ref={(video) => this.props.handleRemoteVideo(video)} autoPlay muted />
+            <video ref={(video) => props.hoistRemoteVideo(video)} autoPlay muted />
           </div>
           <div className={`${styles.LocalPlayer}`}>
-            <video ref={(video) => this.props.handleLocalVideo(video)} autoPlay muted />
-            {!this.props.localVideoOn ? <i className='fa fa-5x fa-user' /> : null}
+            <video ref={(video) => props.hoistLocalVideo(video)} autoPlay muted />
+            {!props.localVideoOn ? <i className='fa fa-5x fa-user' /> : null}
           </div>
         </div>
       </div>
     )
-  }
+  // }
 }
+
+const mapStateToProps = (state) => state => ({
+  callStarted: state.rooms.callStarted,
+  callAccepted: state.rooms.callAccepted,
+  connectionState: state.rooms.connectionState,
+  localVideoOn: state.rooms.localVideoOn
+});
+
+export default connect(mapStateToProps)(Video);
