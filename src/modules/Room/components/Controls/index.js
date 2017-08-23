@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
-import Modal from 'react-bootstrap/lib/Modal';
 import {
   patchRoom,
   updateConnectionState,
@@ -12,9 +11,9 @@ import {
   localVideoOff,
   // remoteVideoOn,
   // remoteVideoOff
-} from '../actions';
+} from '../../actions';
 
-import ControlButton from './ControlButton';
+import Controls from './Controls';
 
 @connect((state)=> ({
   room: state.rooms.room,
@@ -35,7 +34,7 @@ import ControlButton from './ControlButton';
   localVideoOn,
   localVideoOff
 })
-export default class Controls extends Component {
+export default class ControlsContainer extends Component {
   constructor(props) {
     super(props);
     this.defaultState = {
@@ -287,68 +286,23 @@ export default class Controls extends Component {
   }
 
   render() {
-    return (
-      <div className={`${this.props.styles.controlBar}`}>
-        <div className="btn-group btn-group-lg" role="group" aria-label="...">
-          <ControlButton
-            onClick={this.toggleVideo}
-            streamOpen={this.state.streamOpen}
-            controlOn={this.state.cameraOn}
-            faClass={'fa fa-eye'}
-          />
-          <ControlButton
-            onClick={this.toggleAudio}
-            streamOpen={this.state.streamOpen}
-            controlOn={this.state.audioOn}
-            faClass={'fa fa-microphone'}
-          />
-          <ControlButton
-            onClick={this.startCall}
-            streamOpen={this.state.streamOpen}
-            controlOn={this.state.callAccepted}
-            faClass={'fa fa-phone'}
-          />
-          {/* <button onClick={this.startCall}
-            type="button"
-            className={
-              `${this.disableCallButton() ? 'disabled' : ''}
-              btn btn-default`
-            }
-            >
-            <i className='fa fa-phone' aria-hidden='true'></i>
-          </button> */}
-          <ControlButton
-            onClick={this.stopCall}
-            streamOpen={this.state.callAccepted}
-            controlOn={!this.state.callAccepted}
-            faClass={'fa fa-times'}
-          />
-          {/* <button onClick={this.stopCall}
-            type="button"
-            className={
-              `${this.disableControlButtons() ? 'disabled' : ''}
-              btn btn-default`
-            }>
-            <i className='fa fa-times' aria-hidden='true' />
-          </button> */}
-        </div>
-         <Modal show={this.state.receiveCallPrompt} onHide={this.close}>
-          <Modal.Header closeButton>
-            { this.props.peer && this.props.peer.user ? <Modal.Title>Incoming Call from {this.props.peer.user.first}.</Modal.Title> : null }
-          </Modal.Header>
-          <Modal.Body>
-            <h4>Accept Call?</h4>
-            <hr />
-            <p className={this.props.styles.BtnBar}>
-              <button type='button' onClick={this.acceptCallOnClick(true)} className='btn btn-success'>Accept</button>
-              <button type='button' onClick={this.acceptCallOnClick(false)} className='btn btn-danger'>Don't Accept</button>
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <button className='btn btn-default' onClick={this.close}>Close</button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-    )
+    return <Controls
+      peer={this.props.peer}
+      user={this.props.user}
+
+      toggleVideo={this.toggleVideo}
+      toggleAudio={this.toggleAudio}
+
+      startCall={this.startCall}
+      stopCall={this.stopCall}
+      acceptCallOnClick={this.acceptCallOnClick}
+      close={this.close}
+
+      cameraOn={this.state.cameraOn}
+      audioOn={this.state.audioOn}
+      streamOpen={this.state.streamOpen}
+      wasCallAccepted={this.props.wasCallAccepted}
+
+    />
   }
 }
