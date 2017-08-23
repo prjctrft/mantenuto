@@ -53,19 +53,17 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    if (!this.props.user && this.props.id && this.props.socketAuthenticated) {
-      this.populateUser(this.props);
-    }
+    this.populateUser(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.user && nextProps.id) {
-      this.populateUser(nextProps);
-    }
+    this.populateUser(nextProps);
   }
 
   populateUser = (props) => {
-    props.populateUser(props.id);
+    if (Object.keys(props.user).length === 0 && props.id && props.socketAuthenticated) {
+      props.populateUser(props.id);
+    }
   }
 
   handleLogout = event => {

@@ -21,7 +21,7 @@ const catchValidation = error => {
 };
 
 const defaultState = {
-  user: undefined,
+  user: {},
   userPopulated: false,
   updatingUser: false
 };

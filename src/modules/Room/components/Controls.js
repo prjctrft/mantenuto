@@ -108,7 +108,7 @@ export default class Controls extends Component {
       const videoTracks = this.remoteStream.getVideoTracks();
       // debugger;
       if(videoTracks.length > 0) {
-        this.props.handleRemoteStream(this.remoteStream);
+        this.props.hoistRemoteStream(this.remoteStream);
       }
     }
 
@@ -174,7 +174,7 @@ export default class Controls extends Component {
       video,
       audio
     }).then((stream) => {
-      this.props.handleLocalStream(stream);
+      this.props.hoistLocalStream(stream);
       this.localStream = stream;
     })
     .catch(function(e) {

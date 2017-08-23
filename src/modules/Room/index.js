@@ -89,7 +89,7 @@ export default class RoomContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.isRoomParsed && nextProps.room && nextProps.user) {
+    if (!nextProps.isRoomParsed && nextProps.room && nextProps.user._id) {
       this.props.parsedRoom();
       const user = nextProps.user;
       const room = nextProps.room;

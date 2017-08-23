@@ -1,9 +1,8 @@
 import React from 'react';
 
-export default (props) => {
-  if (!props.peer || !props.user) {
-    return null;
-  }
+import { connect } from 'react-redux';
+
+const Stats = (props) => {
   const peerCheckedIn = props.peerCheckedIn;
   let badge;
   if (peerCheckedIn) {
@@ -13,6 +12,12 @@ export default (props) => {
     badge = <span className='badge default'>Not Checkedin</span>;
   }
   return (
-    <h1>{props.peer.user.first}{' '}{badge}</h1>
+    <h1>{props.peer ? props.peer.first : null}{' '}{badge}</h1>
   )
 }
+
+const mapStateToProps = (state) => ({
+  peer: state.rooms.peer.user
+})
+
+export default connect(mapStateToProps)(Stats);
