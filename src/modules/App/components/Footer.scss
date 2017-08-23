@@ -1,0 +1,32 @@
+@import '../../../theme/variables.scss';
+
+footer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: $brand-black;
+	height: 4rem;
+	padding: 0.5rem 1rem;
+
+	button,
+	span {
+		background-color: $brand-black;
+		color: $brand-white;
+		border: none;
+		margin: 0 1rem;
+	}
+
+	span {
+		margin-right: auto;
+	}
+
+	a {
+		color: $brand-white;
+
+		&:focus,
+		&:hover {
+			text-decoration: underline;
+			color: $brand-gray;
+		}
+	}
+}

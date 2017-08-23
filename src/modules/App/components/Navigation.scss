@@ -1,0 +1,26 @@
+@import '../../../theme/variables.scss';
+
+nav {
+    height: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.brand {
+    position: absolute;
+    $size: 40px;
+    top: 5px;
+    left: 5px;
+    display: inline-block;
+    background: $brand-black url('../../Home/PRlogo.png') no-repeat center center;
+    width: $size;
+    height: $size;
+    background-size: 80%;
+    margin: 0 10px 0 0;
+    border-radius: $size / 2;
+  }
+  nav :global(.fa) {
+    font-size: 2em;
+    line-height: 20px;
+  }

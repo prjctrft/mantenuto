@@ -49,16 +49,20 @@ export default class Register extends Component {
   }
 
   render() {
+    const styles = require('./Register.scss');
     return (
-      <div className="container">
-        <Helmet title="Register" />
-        <h1>Register</h1>
-        <RegisterForm codes={this.props.codes} onSubmit={this.register} initialValues={this.getInitialValues()} />
-        <hr />
-        <h2>Already a member?</h2>
-        <button className='btn btn-default'
-          onClick={(e) => this.props.push(`/login${this.props.location.search}`)}>Login</button>
+      <div className={styles.register}>
+        <div className="container">
+          <Helmet title="Register" />
+          <h1>Register</h1>
+          <RegisterForm codes={this.props.codes} onSubmit={this.register} initialValues={this.getInitialValues()} />
+          {/*<hr />
+          <h2>Already a member?</h2>
+          <button className='btn btn-default'
+            onClick={(e) => this.props.push(`/login${this.props.location.search}`)}>Login</button>*/}
+        </div>
       </div>
+      
     );
   }
 }

@@ -2,6 +2,10 @@
  * Override Bootstrap styles that you can't modify via variables here.
  *
  */
+ .navbar-default {
+ 	background-color: $brand-black;
+ 	border-color: $brand-black;
+ }
 
 .navbar-brand {
   position: relative;

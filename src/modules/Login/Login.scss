@@ -1,0 +1,44 @@
+@import '../../theme/variables.scss';
+
+.login {
+	width: 90%;
+	margin: 0 auto;
+
+	@media (min-width: 1024px) {
+		width: 33%;
+	}
+}
+
+.login form {
+	display: flex;
+	flex-direction: column;
+
+	div { // container for 'forgot password' <a> and button
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+	}
+
+	input {
+		width: 100%;
+		box-shadow: 2px 2px 2px $brand-gray;
+	}
+
+	a {
+		text-weight: bold;
+
+		&:focus,
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+	button {
+		width: 25%;
+		align-self: flex-end;
+	}
+}
+
+
+
+
+

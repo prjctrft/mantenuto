@@ -42,20 +42,20 @@ export default class Home extends Component {
         <Helmet title="Home" />
         <div className={styles.masthead}>
           <div className="container">
-            <h1>Refit Chat</h1>
+            {/*<h1>Refit Chat</h1>
 
-            <h2>Where veterans connect and heal.</h2>
+            <h2>Where veterans connect and heal.</h2>*/}
             <div className={styles.pipelineBtns}>
-              <p>
-                <button onClick={this.clickTalk} className='btn btn-lg btn-primary btn-block'>
+              
+                <button onClick={this.clickTalk} className='btn btn-lg btn-primary btn-block btn-circle'>
                   Talk
                 </button>
-              </p>
-              <p>
-                <button onClick={this.clickListen} className='btn btn-lg btn-primary btn-block'>
+              
+              
+                <button onClick={this.clickListen} className='btn btn-lg btn-primary btn-block btn-circle'>
                   Listen
                 </button>
-              </p>
+              
             </div>
           </div>
         </div>
