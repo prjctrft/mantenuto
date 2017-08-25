@@ -26,7 +26,6 @@ export default class Register extends Component {
 
   register = data => {
     this.props.register(data)
-      // .then(this.props.login(data))
       .then(this.success)
   };
 
@@ -37,11 +36,6 @@ export default class Register extends Component {
       dismissAfter: 5000
     });
     this.props.push('/registered');
-    // let next = '/';
-    // if (this.props.location.query && this.props.location.query.next) {
-    //   next = this.props.location.query.next;
-    // }
-    // this.props.push(next);
   }
 
   render() {
