@@ -1,8 +1,8 @@
 import app from 'app';
 
-const GET_CODES = 'chat/register/GET_CODES';
-const GET_CODES_SUCCESS = 'chat/register/GET_CODES_SUCCESS';
-const GET_CODES_FAIL = 'chat/register/GET_CODES_FAIL';
+const GET_CODES = 'Home/GET_CODES';
+const GET_CODES_SUCCESS = 'Home/GET_CODES_SUCCESS';
+const GET_CODES_FAIL = 'Home/GET_CODES_FAIL';
 
 const initialState = {
   codes: []
@@ -23,8 +23,7 @@ export default function (state = initialState, action = {}) {
   }
 }
 
-export function getCodes(token) {
-  const accessToken = token;
+export function getCodes() {
   return {
     types: [GET_CODES, GET_CODES_SUCCESS, GET_CODES_FAIL],
     promise: () => app.service('speakeasy')

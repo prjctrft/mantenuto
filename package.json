@@ -149,7 +149,6 @@
     "is-promise": "^2.1.0",
     "js-cookie": "^2.1.4",
     "jsonwebtoken": "^7.4.1",
-    "keystone": "4.0.0-beta.4",
     "localstorage-memory": "^1.0.2",
     "lodash.isplainobject": "^4.0.6",
     "lru-memoize": "^1.0.2",

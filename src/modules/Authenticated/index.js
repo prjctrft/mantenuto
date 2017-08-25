@@ -115,3 +115,25 @@ export default class Authenticated extends Component {
     )
   }
 }
+// {/* <div className={styles.home}>
+//   <Helmet title="Home" />
+//   <div className={styles.masthead}>
+//     <div className="container">
+//       {/*<h1>Refit Chat</h1>
+//
+//       <h2>Where veterans connect and heal.</h2>*/}
+//       <div className={styles.pipelineBtns}>
+//
+//           <button onClick={this.clickTalk} className='btn btn-lg btn-primary btn-block btn-circle'>
+//             Talk
+//           </button>
+//
+//
+//           <button onClick={this.clickListen} className='btn btn-lg btn-primary btn-block btn-circle'>
+//             Listen
+//           </button>
+//
+//       </div>
+//     </div>
+//   </div>
+// </div> */}

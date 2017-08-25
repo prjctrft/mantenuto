@@ -1,0 +1,90 @@
+@import '../../theme/variables.scss';
+
+.home {
+  dd {
+    margin-bottom: 15px;
+  }
+}
+
+.masthead {
+  //background: $brand-black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $brand-white;
+  padding: 40px 20px;
+  color: white;
+  text-align: center;
+  
+
+  h1 {
+    //color: $brand-primary;
+    color: $brand-black;
+    font-size: 4em;
+  }
+  h2 {
+    color: #ddd;
+    font-size: 2em;
+    margin: 20px;
+  }
+  a {
+    color: #ddd;
+  }
+  p {
+    margin: 10px;
+  }
+  
+  // .github {
+  //   font-size: 1.5em;
+  // }
+}
+
+// .counterContainer {
+//   text-align: center;
+//   margin: 20px;
+// }
+
+.pipelineBtns {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 60%;
+  margin: auto;
+
+  button {
+    width: 25rem;
+    height: 25rem;
+    border: none;
+    border-radius: 50%;
+    font-size: 5rem;
+
+    &:first-of-type {
+      background: $brand-black;
+      color: $brand-white;
+
+      &:hover {
+        background: $brand-gray;
+        color: $brand-black;
+      }
+    }
+
+    &:last-of-type {
+      background: $brand-gray;
+      color: $brand-black;
+
+      &:hover {
+        background: $brand-black;
+        color: $brand-white;
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+}
+
+
+
+

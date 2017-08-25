@@ -8,26 +8,15 @@ import registerValidation from './registerValidation';
 })
 export default class RegisterForm extends Component {
   static propTypes = {
-    ...propTypes,
-    codes: PropTypes.array
+    ...propTypes
   }
-
-  validateCode = (value, allValues, props) => {
-    if(value === undefined) {
-      return;
-    }
-    const code = value.toLowerCase();
-    if(props.codes.indexOf(code) === -1) {
-      return 'Make sure you type in the correct code.'
-    }
-  };
 
   renderInput = ({ input, label, type, meta: { touched, error } }) =>
     <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
       <label htmlFor={input.name} className="col-sm-12">{label}</label>
       <div className="col-sm-12">
         <input {...input} type={type} className="form-control" />
-        {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
+        {<span className="glyphicon glyphicon-remove form-control-feedback"></span>}
         {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
       </div>
     </div>;
@@ -38,29 +27,28 @@ export default class RegisterForm extends Component {
     return (
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <fieldset className="form-group">
-          <Field 
-            name="fullname" 
-            type="text" 
-            component={this.renderInput} 
-            label="Full Name" 
+          <Field
+            name="fullname"
+            type="text"
+            component={this.renderInput}
+            label="Full Name"
           />
-          <Field 
-            name="username" 
-            type="text" 
-            component={this.renderInput} 
-            label="Username" 
+          <Field
+            name="username"
+            type="text"
+            component={this.renderInput}
+            label="Username"
           />
-          <Field 
-            name="email" 
-            type="email" 
-            component={this.renderInput} 
-            label="Email" 
+          <Field
+            name="email"
+            type="email"
+            component={this.renderInput}
+            label="Email"
           />
-          {/*<Field validate={this.validateCode} name="code" type="text" component={this.renderInput} label="Registration Code" />*/}
-          <Field 
-            name="password" 
-            type="password" 
-            component={this.renderInput} 
+          <Field
+            name="password"
+            type="password"
+            component={this.renderInput}
             label="Password" />
           <Field
             name="password_confirmation"
@@ -72,7 +60,7 @@ export default class RegisterForm extends Component {
         <fieldset className="form-group">
           <Field name="credential" type="file" component={this.renderInput} label="Upload DD214"></Field>
         </fieldset>
-        
+
         {error && <p className="text-danger"><strong>{error}</strong></p>}
         <button className="btn btn-success" type="submit">
           <i className="fa fa-sign-in" />{' '}Register
