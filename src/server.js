@@ -85,6 +85,12 @@ proxy.on('error', (error, req, res) => {
 let unplug;
 
 app.use((req, res) => {
+
+  if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+    return res.redirect('https://'+ req.hostname + req.url)
+  }
+
+
   unplug = cookie.plugToRequest(req, res);
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
