@@ -9,9 +9,9 @@ const LOAD_FAIL = 'chat/auth/LOAD_FAIL';
 const LOGIN = 'chat/auth/LOGIN';
 const LOGIN_SUCCESS = 'chat/auth/LOGIN_SUCCESS';
 const LOGIN_FAIL = 'chat/auth/LOGIN_FAIL';
-const REGISTER = 'chat/auth/REGISTER';
-const REGISTER_SUCCESS = 'chat/auth/REGISTER_SUCCESS';
-const REGISTER_FAIL = 'chat/auth/REGISTER_FAIL';
+// const REGISTER = 'chat/auth/REGISTER';
+// const REGISTER_SUCCESS = 'chat/auth/REGISTER_SUCCESS';
+// const REGISTER_FAIL = 'chat/auth/REGISTER_FAIL';
 const OAUTHLOGIN = 'chat/auth/OAUTHLOGIN';
 const OAUTHLOGIN_SUCCESS = 'chat/auth/OAUTHLOGIN_SUCCESS';
 const OAUTHLOGIN_FAIL = 'chat/auth/OAUTHLOGIN_FAIL';
@@ -97,22 +97,6 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         socketAuthenticated: action.socketAuthenticated
       }
-    case REGISTER:
-      return {
-        ...state,
-        registeringIn: true
-      };
-    case REGISTER_SUCCESS:
-      return {
-        ...state,
-        registeringIn: false
-      };
-    case REGISTER_FAIL:
-      return {
-        ...state,
-        registeringIn: false,
-        registerError: action.error
-      };
     case LOGOUT:
       return {
         ...state,
@@ -158,13 +142,6 @@ function saveAuth(response) {
 
 export function isLoaded(globalState) {
   return globalState.auth && globalState.auth.loaded;
-}
-
-export function register(data) {
-  return {
-    types: [REGISTER, REGISTER_SUCCESS, REGISTER_FAIL],
-    promise: () => app.service('users').create(data).catch(catchValidation)
-  };
 }
 
 export function login(data) {

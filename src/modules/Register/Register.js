@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import RegisterForm from './components/RegisterForm';
-import { register, login } from 'redux/modules/auth';
+import { register, login } from './redux';
 import { notifSend } from '../Notifs/redux';
 // import { getCodes } from './redux';
 
@@ -25,6 +25,9 @@ export default class Register extends Component {
   }
 
   register = data => {
+    debugger;
+    const newUser = data;
+    newUser.verification = data.verification[0];
     this.props.register(data)
       .then(this.success)
   };
@@ -42,14 +45,10 @@ export default class Register extends Component {
     const styles = require('./Register.scss');
     return (
       <div className={styles.register}>
-        <div className="container">
+        <div className={`${styles.background} container`}>
           <Helmet title="Register" />
           <h1>Register</h1>
           <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
-          {/*<hr />
-          <h2>Already a member?</h2>
-          <button className='btn btn-default'
-            onClick={(e) => this.props.push(`/login${this.props.location.search}`)}>Login</button>*/}
         </div>
       </div>
 

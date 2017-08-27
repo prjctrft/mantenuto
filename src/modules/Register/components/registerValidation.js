@@ -6,7 +6,6 @@ const registerValidation = createValidator({
   last: required,
   username: required,
   email: [required, email],
-  password: required,
-  password_confirmation: [required, match('password')]
+  credential: required
 });
 export default memoize(10)(registerValidation);

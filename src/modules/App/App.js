@@ -90,6 +90,7 @@ export default class App extends Component {
         <Navigation handleLogout={this.handleLogout} pathname={pathname} user={user} />
 
         <div className={styles.appContent}>
+          {/* TODO move this to notifs, has no business being in the app component */}
           <div className="container">
             <Notifs className={styles.notifs} />
           </div>
