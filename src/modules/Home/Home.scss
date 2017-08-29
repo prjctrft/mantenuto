@@ -2,4 +2,12 @@
 
 .home {
   background: $brand-white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }

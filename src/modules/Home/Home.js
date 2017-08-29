@@ -31,14 +31,10 @@ export default class Home extends Component {
     return (
       <div className={styles.home}>
         <Helmet title="Home" />
-          <div className='container text-center'>
-            <div className='row'>
-              <div className='col-xs-12'>
-                <h1>Project Refit</h1>
-              </div>
-            </div>
-            {codes.length > 0 ? <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} /> : null}
-          </div>
+        <div className='col-xs-12 col-sm-6 text-center'>
+          <h1>Project Refit</h1>
+          {codes.length > 0 ? <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} /> : null}
+        </div>
       </div>
     );
   }
