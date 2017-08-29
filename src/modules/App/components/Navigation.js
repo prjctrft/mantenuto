@@ -9,20 +9,23 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import NavigationHeader from './NavigationHeader';
 import NavigationCollapse from './NavigationCollapse';
 
-export default function Navigation(props) {
-  
-    const { user, notifs, children } = props;
+// a bit hacky
+const hideNavigation = (props) => {
+  return props.pathname === '/' && !props.user
+}
+
+export default (props) => {
+    if(hideNavigation(props)) {
+      return null;
+    }
+    const { user, notifs, handleLogout } = props;
 
     const styles = require('./Navigation.scss');
     return (
       <Navbar fixedTop>
         <NavigationHeader />
-        { user ? <NavigationCollapse /> : null }
+        { user ? <NavigationCollapse handleLogout /> : null }
       </Navbar>
     )
-  
+
 }
-
-
-
-

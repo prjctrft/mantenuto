@@ -22,18 +22,16 @@
 }
 
 .appContent {
+  // background: $brand-whit;
   margin: 5rem 0; // for fixed navbar
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: calc(100vh - 14rem); // full viewport height minus footer height
+  min-height: calc(100vh - 14rem); // full viewport height minus footer height
 }
 
-.notifs {
-  margin: 15px 0;
-}
+// .notifs {
+//   margin: 15px 0;
+// }
 
-:global(.form-control-feedback) {
-  text-align: inherit;
-}
+// :global(.form-control-feedback) {
+//   text-align: inherit;
+// }

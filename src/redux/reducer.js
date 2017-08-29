@@ -9,6 +9,7 @@ import counter from './modules/counter';
 import info from './modules/info';
 import rooms from '../modules/Room/reducer';
 import { userReducer as user } from '../modules/App/redux';
+import home from '../modules/Home/redux';
 import register from '../modules/Register/redux';
 
 export default function createReducer(asyncReducers) {
@@ -22,6 +23,7 @@ export default function createReducer(asyncReducers) {
     auth,
     user,
     rooms,
+    home,
     register,
     counter: multireducer({
       counter1: counter,

@@ -1,57 +1,74 @@
 @import '../../theme/variables.scss';
 
-// .register {
-// 	display: flex;
-// 	flex-direction: column;
-// 	justify-content: center;
-// 	align-items: center;
-// 	//background: url(); insert url for background image
-// }
-
-.register {
-	padding: 3rem;
+.heading {
+  color: $brand-darker-gray;
 }
 
-.register > div {
-	background-color: $brand-gray;
-	opacity: 0.5;
-	border-radius: 10px;
+.link {
+  color: $brand-darker-gray;
+  font-size: 2rem;
 }
 
-.register h1 {
-	text-align: center;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: url('./assets/soldier_uniform.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
-.register form {
-	display: flex;
-	flex-direction: column;
-	padding: 3rem;
-}
+.masthead {
+  display: flex;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 40px 20px;
+  color: white;
+  text-align: center;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  border-radius: 4px;
+};
 
-.register form button {
-	width: 50%;
-	max-width: 15rem;
-	margin: auto;
-}
+.pipelineBtns {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 60%;
+  margin: auto;
 
+  button {
+    &:first-of-type {
+      background: $brand-black;
+      color: $brand-white;
 
-@media (min-width: 1024px) {
-	.register {
-		padding: 3rem 5rem;
-	}
+      &:hover {
+        background: $brand-gray;
+        color: $brand-black;
+      }
+    }
 
-	.register form {
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		align-items: center;
-	}
+    &:last-of-type {
+      background: $brand-gray;
+      color: $brand-black;
 
-	.register fieldset {
-		width: 45%;
-	}
+      &:hover {
+        background: $brand-black;
+        color: $brand-white;
+      }
+    }
+  }
 
-	.register form button {
-		margin: 0 auto 0 15rem;
-	}
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 }
