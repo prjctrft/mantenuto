@@ -1,57 +1,35 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { Link } from 'react-router';
 import Helmet from 'react-helmet';
-import RegisterForm from './components/RegisterForm';
-import { register, login } from './redux';
-import { notifSend } from '../Notifs/redux';
-// import { getCodes } from './redux';
 
-@connect(null, { push, notifSend, register, login })
-export default class Register extends Component {
-  static propTypes = {
-    location: PropTypes.object,
-    register: PropTypes.func,
-    notifSend: PropTypes.func
-  }
+import CircleButton from 'components';
 
-  componentDidMount() {
-    // this.props.getCodes();
-  }
-
-  getInitialValues = () => {
-    const { location } = this.props;
-    return location.state && location.state.oauth;
-  }
-
-  register = data => {
-    debugger;
-    const newUser = data;
-    newUser.verification = data.verification[0];
-    this.props.register(data)
-      .then(this.success)
-  };
-
-  success = result => {
-    this.props.notifSend({
-      message: 'You\'re now registered !',
-      kind: 'success',
-      dismissAfter: 5000
-    });
-    this.props.push('/registered');
-  }
-
-  render() {
-    const styles = require('./Register.scss');
-    return (
-      <div className={styles.register}>
-        <div className={`${styles.background} container`}>
-          <Helmet title="Register" />
-          <h1>Register</h1>
-          <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
-        </div>
-      </div>
-
-    );
+const next = (route, props) => {
+  return (e) => {
+    e.preventDefault();
+    props.push(`/register/${route}`);
   }
 }
+
+const Register = (props) => {
+  const styles = require('./Register.scss');
+  return (
+      <div className={styles.wrapper}>
+          <Helmet title="Register" />
+          <div className={styles.masthead}>
+            <div className="container">
+              <h1 className={styles.heading}>Register</h1>
+              <div className={styles.pipelineBtns}>
+                  <CircleButton onClick={next('veteran', props)} content='Veteran' />
+                  <CircleButton onClick={next('active', props)} content='Active' />
+              </div>
+              <Link className={styles.link} to={'/register/provider'}>Mental health professional?</Link>
+            </div>
+          </div>
+      </div>
+  );
+}
+
+export default connect(null, { push })(Register);

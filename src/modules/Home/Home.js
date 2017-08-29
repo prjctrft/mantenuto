@@ -22,10 +22,9 @@ export default class Home extends Component {
   }
 
   goToRegister = (form) => {
-    debugger;
     this.props.push('/register');
   }
-  
+
   render() {
     const styles = require('./Home.scss');
     const { codes } = this.props;

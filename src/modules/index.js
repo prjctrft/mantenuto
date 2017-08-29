@@ -3,7 +3,7 @@ export Home from './Home';
 export Login from './Login/Login';
 export LoginSuccess from './LoginSuccess/LoginSuccess';
 export NotFound from './NotFound/NotFound';
-export Register from './Register/Register';
+export Register from './Register';
 export Room from './Room';
 export Profile from './Profile';
 export Talk from './Talk';

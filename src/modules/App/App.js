@@ -88,12 +88,8 @@ export default class App extends Component {
       <div className={styles.app}>
         <Helmet {...config.app.head} />
         <Navigation handleLogout={this.handleLogout} pathname={pathname} user={user} />
-
+        <Notifs className={styles.notifs} />
         <div className={styles.appContent}>
-          {/* TODO move this to notifs, has no business being in the app component */}
-          <div className="container">
-            <Notifs className={styles.notifs} />
-          </div>
           { children }
         </div>
         <Footer />
