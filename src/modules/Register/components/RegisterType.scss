@@ -1,0 +1,14 @@
+@import '../../../theme/variables.scss';
+
+.register {
+	padding: 3rem;
+	.background {
+		background-color: $brand-white;
+		opacity: 0.5;
+		border-radius: 10px;
+	}
+}
+
+.register h1 {
+	text-align: center;
+}

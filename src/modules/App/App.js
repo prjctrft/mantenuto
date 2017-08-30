@@ -49,7 +49,7 @@ export default class App extends Component {
     user: PropTypes.object,
     notifs: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -79,19 +79,17 @@ export default class App extends Component {
   };
 
   render() {
-    const { user, notifs, children } = this.props;
-
+    const { notifs, children } = this.props;
+    const { user } = this.props.user
+    const { pathname } = this.props.location;
     const styles = require('./App.scss');
 
     return (
       <div className={styles.app}>
         <Helmet {...config.app.head} />
-        <Navigation />
-
+        <Navigation handleLogout={this.handleLogout} pathname={pathname} user={user} />
+        <Notifs className={styles.notifs} />
         <div className={styles.appContent}>
-          <div className="container">
-            <Notifs className={styles.notifs} />
-          </div>
           { children }
         </div>
         <Footer />

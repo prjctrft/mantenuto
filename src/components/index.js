@@ -5,10 +5,7 @@
  *
  */
 
-export CounterButton from './CounterButton/CounterButton';
-// export FacebookLogin from './FacebookLogin/FacebookLogin';
-export GithubButton from './GithubButton/GithubButton';
+export default from './CircleButton';
+
+// TODO keep for now so that tests pass
 export InfoBar from './InfoBar/InfoBar';
-// export LoginForm from './LoginForm/LoginForm';
-// export Notifs from './Notifs/Notifs';
-// export RegisterForm from './RegisterForm/RegisterForm';
