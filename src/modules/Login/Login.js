@@ -6,7 +6,6 @@ import { Link } from 'react-router';
 import { SubmissionError } from 'redux-form';
 
 import LoginForm from './components/LoginForm';
-import FacebookLogin from './components/FacebookLogin';
 import { login } from 'redux/modules/auth';
 import { notifSend } from '../Notifs/redux';
 
@@ -23,20 +22,6 @@ export default class Login extends Component {
   static contextTypes = {
     router: PropTypes.object
   }
-
-  // onFacebookLogin = (err, data) => {
-  //   if (err) return;
-  //   this.props.oauthLogin('facebook', data)
-  //     .then(this.successLogin)
-  //     .catch(error => {
-  //       if (error.message === 'Incomplete oauth registration') {
-  //         this.context.router.push({
-  //           pathname: '/register',
-  //           state: { oauth: error.data }
-  //         });
-  //       }
-  //     });
-  // };
 
   login = (data) => {
     return this.props.login(data)
@@ -57,7 +42,7 @@ export default class Login extends Component {
     this.props.push(next);
   };
 
-  fail = foo => {
+  fail = () => {
     throw new SubmissionError({password: 'Incorrect password.'})
   }
 

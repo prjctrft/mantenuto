@@ -20,10 +20,9 @@ export default (props) => {
     }
     const { user, notifs, handleLogout } = props;
 
-    const styles = require('./Navigation.scss');
     return (
-      <Navbar className={styles.navbar} fixedTop>
-        <NavigationHeader />
+      <Navbar fixedTop>
+        <NavigationHeader user={user} />
         { user ? <NavigationCollapse handleLogout={handleLogout} /> : null }
       </Navbar>
     )

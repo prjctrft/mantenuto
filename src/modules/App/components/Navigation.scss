@@ -1,13 +1,5 @@
 @import '../../../theme/variables.scss';
 
-// TODO make comment on change from nav
-.navbar {
-    height: 5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 .brand {
     position: absolute;
     $size: 40px;

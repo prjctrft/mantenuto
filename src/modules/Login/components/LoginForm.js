@@ -28,7 +28,7 @@ export default class LoginForm extends Component {
         <Field name="password" type="password" component={this.renderInput} label="Password" placeholder="Password..." />
         {error && <p className="text-danger"><strong>{error}</strong></p>}
         <div className={styles.buttonWrapper}>
-          <button className="btn btn-success" type="submit">
+          <button className="btn btn-default" type="submit">
             <i className="fa fa-sign-in" />{' '}Log In
           </button>
           <hr />

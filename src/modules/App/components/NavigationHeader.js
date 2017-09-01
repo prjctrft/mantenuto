@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
-export default function NavigationHeader(props) {
+export default (props) => {
 	const styles = require('./Navigation.scss');
   const { user } = props;
 	return (
