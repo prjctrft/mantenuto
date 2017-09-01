@@ -10,21 +10,25 @@ import { populateRooms } from '../App/redux';
   state => ({
     user: state.user.user,
     id: state.auth.user,
-    rooms: state.user.rooms
+    rooms: state.user.rooms,
+    socketAuthenticated: state.auth.socketAuthenticated
   }), { push, populateRooms })
 export default class Authenticated extends Component {
 
-  componentDidMount() {
-    if (!this.props.rooms) {
-      this.props.populateRooms(this.props.id);
-    }
-  }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if(nextProps.id && !this.props.rooms) {
-  //     this.props.populateRooms(nextProps.id, 'talker');
+  // componentDidMount() {
+  //   if (!this.props.rooms) {
+  //     this.props.populateRooms(this.props.id);
   //   }
   // }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.rooms && nextProps.socketAuthenticated) {
+      this.props.populateRooms(this.props.id);
+    }
+    // if(nextProps.id && !this.props.rooms) {
+    //   this.props.populateRooms(nextProps.id, 'talker');
+    // }
+  }
 
   copyRoomLink = (slug) => {
     return (event) => {
@@ -96,21 +100,24 @@ export default class Authenticated extends Component {
   }
 
   render() {
+    const styles = require('./Authenticated.scss');
     return (
-      <div className='container'>
-        { this.renderWelcome() }
-        <hr />
-        { this.renderRooms() }
-        {/* { this.props.rooms ?
-          this.props.rooms.map(room => (
-            <div className='row'>
-              <h1>Room with slug {room.slug}</h1>
-              <h1>Room with talker {room.talker.user}</h1>
-              <h1>Room with listener {room.listener.user}</h1>
-            </div> )
-          )
-          : null
-      } */}
+      <div className={styles.Authenticated}>
+        <div className='container'>
+          { this.renderWelcome() }
+          <hr />
+          { this.renderRooms() }
+          {/* { this.props.rooms ?
+            this.props.rooms.map(room => (
+              <div className='row'>
+                <h1>Room with slug {room.slug}</h1>
+                <h1>Room with talker {room.talker.user}</h1>
+                <h1>Room with listener {room.listener.user}</h1>
+              </div> )
+            )
+            : null
+        } */}
+        </div>
       </div>
     )
   }

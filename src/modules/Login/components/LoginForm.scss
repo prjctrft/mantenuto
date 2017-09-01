@@ -1,0 +1,17 @@
+@import '../../../theme/variables.scss';
+
+.LoginForm {
+	display: flex;
+	flex-direction: column;
+	
+	input {
+		width: 100%;
+		box-shadow: 2px 2px 2px $brand-gray;
+	}
+
+	a {
+		text-weight: bold;
+		align-self: flex-start;
+		text-decoration: none;
+		}
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Authenticated from 'modules/Authenticated';
 import Home from './Home';
 
 const HomeContainer = (props) => {

@@ -20,8 +20,8 @@ export default function NavigationCollapse(props) {
         {/* {!user && <LinkContainer to="/register">
           <NavItem eventKey={6}>Register</NavItem>
         </LinkContainer>} */}
-        <LinkContainer to="/logout">
-          <NavItem eventKey={1} className="logout-link" onClick={handleLogout}> 
+        <LinkContainer>
+          <NavItem eventKey={1} className="logout-link" onClick={handleLogout}>
             Logout
           </NavItem>
         </LinkContainer>

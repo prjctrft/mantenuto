@@ -22,9 +22,9 @@ export default (props) => {
 
     const styles = require('./Navigation.scss');
     return (
-      <Navbar fixedTop>
+      <Navbar className={styles.navbar} fixedTop>
         <NavigationHeader />
-        { user ? <NavigationCollapse handleLogout /> : null }
+        { user ? <NavigationCollapse handleLogout={handleLogout} /> : null }
       </Navbar>
     )
 
