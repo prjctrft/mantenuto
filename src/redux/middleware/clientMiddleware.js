@@ -15,9 +15,7 @@ export default function clientMiddleware() {
     const [REQUEST, SUCCESS, FAILURE] = types;
     next({ ...rest, type: REQUEST });
 
-    const { auth } = getState();
-
-    const client = app;
+    const client = app.io.authenticated ? app : restApp;
 
     const actionPromise = promise(client, dispatch);
     actionPromise.then(

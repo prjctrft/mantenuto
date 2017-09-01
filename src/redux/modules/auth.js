@@ -27,7 +27,7 @@ const initialState = {
   loaded: false,
   socketAuthenticated: false,
   token: undefined,
-  user: undefined
+  user: undefined,
 };
 
 const catchValidation = error => {
@@ -147,7 +147,7 @@ export function login(data) {
   const socketId = socket.io.engine.id;
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: () => app.authenticate({
+    promise: (client) => client.authenticate({
       strategy: 'local',
       email: data.email,
       password: data.password,
@@ -162,7 +162,7 @@ export function jwtLogin(token) {
   const accessToken = token;
   return {
     types: [JWT_LOGIN, JWT_LOGIN_SUCCESS, JWT_LOGIN_FAIL],
-    promise: () => app.authenticate({
+    promise: (client) => client.authenticate({
       strategy: 'jwt',
       accessToken
     })
@@ -176,8 +176,11 @@ export function socketAuth(dispatch) {
     .then((token) => {
       token = token || cookie.load('feathers-jwt');
       if(token) {
-        return dispatch(jwtLogin(token))
-          .then((response) => dispatch(socketAuthenticated(response)))
+        return app.authenticate({
+          strategy: 'jwt',
+          accessToken: token
+        })
+        .then((response) => dispatch(socketAuthenticated(response)))
       }
     })
 }
@@ -193,7 +196,7 @@ function socketAuthenticated(response) {
 export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
-    promise: () => app.logout().then(cleanStorage)
+    promise: (client) => client.logout().then(cleanStorage)
   };
 }
 

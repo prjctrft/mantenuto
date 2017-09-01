@@ -11,7 +11,7 @@ import NavigationCollapse from './NavigationCollapse';
 
 // a bit hacky
 const hideNavigation = (props) => {
-  return props.pathname === '/' && !props.user
+  return props.pathname === '/' && !props.authenticated
 }
 
 export default (props) => {
