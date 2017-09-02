@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router';
+import { SubmissionError } from 'redux-form';
+
 import LoginForm from './components/LoginForm';
-import FacebookLogin from './components/FacebookLogin';
 import { login } from 'redux/modules/auth';
 import { notifSend } from '../Notifs/redux';
 
@@ -22,22 +23,10 @@ export default class Login extends Component {
     router: PropTypes.object
   }
 
-  // onFacebookLogin = (err, data) => {
-  //   if (err) return;
-  //   this.props.oauthLogin('facebook', data)
-  //     .then(this.successLogin)
-  //     .catch(error => {
-  //       if (error.message === 'Incomplete oauth registration') {
-  //         this.context.router.push({
-  //           pathname: '/register',
-  //           state: { oauth: error.data }
-  //         });
-  //       }
-  //     });
-  // };
-
   login = (data) => {
-    this.props.login(data).then(this.success)
+    return this.props.login(data)
+      .then(this.success)
+      .catch(this.fail)
   };
 
   success = data => {
@@ -53,10 +42,9 @@ export default class Login extends Component {
     this.props.push(next);
   };
 
-  // FacebookLoginButton = ({ facebookLogin }) =>
-  //   <button className="btn btn-primary" onClick={facebookLogin}>
-  //     Login with <i className="fa fa-facebook-f" />
-  //   </button>;
+  fail = () => {
+    throw new SubmissionError({password: 'Incorrect password.'})
+  }
 
   render() {
     const { logout } = this.props;
@@ -64,20 +52,12 @@ export default class Login extends Component {
     return (
       <div className={styles.login}>
         <Helmet title="Login" />
-        {/*<h1>Login</h1>*/}
-        {/*<img /> put No Longer Fight Alone Graphic here */}
-        <div>
-          <LoginForm onSubmit={this.login} />
-          <hr />
-          <Link to={'/password/forgot'}>Forgot password?</Link>
-          {/* <p/>
-          <FacebookLogin
-            appId="635147529978862"
-            autoLoad={true}
-            fields="name,email,picture"
-            onLogin={this.onFacebookLogin}
-            component={this.FacebookLoginButton}
-          /> */}
+        <div className='container'>
+          {/* <img /> put No Longer Fight Alone Graphic here */}
+          <div className='text-center'>
+            <h1>Login</h1>
+            <LoginForm onSubmit={this.login} />
+          </div>
         </div>
       </div>
     );

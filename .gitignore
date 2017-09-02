@@ -6,4 +6,5 @@ webpack/dlls/*.json
 *.report.html
 npm-debug.log
 .happypack
+.DS_Store
 .TODOS

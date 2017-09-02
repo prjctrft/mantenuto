@@ -7,8 +7,9 @@ import config from 'config';
 import Helmet from 'react-helmet';
 import { getCodes } from './redux';
 
-import Authenticated from '../Authenticated';
 import SpeakeasyForm from './components/SpeakeasyForm';
+
+import gunners from './assets/ic_already_member.png';
 
 @connect(
   state => ({
@@ -31,6 +32,12 @@ export default class Home extends Component {
     return (
       <div className={styles.home}>
         <Helmet title="Home" />
+        <div className={styles.alreadyMember}>
+          <Link to={'/login'}>
+            <img src={gunners} />
+            Already a member?
+          </Link>
+        </div>
         <div className='col-xs-12 col-sm-6 text-center'>
           <h1>Project Refit</h1>
           {codes.length > 0 ? <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} /> : null}

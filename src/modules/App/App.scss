@@ -1,37 +1,6 @@
 @import '../../theme/variables.scss';
 
-.app {
-  // THESE STYLES MOVED TO NAVIGATION.SCSS
-  // .brand {
-  //   position: absolute;
-  //   $size: 40px;
-  //   top: 5px;
-  //   left: 5px;
-  //   display: inline-block;
-  //   background: $brand-black url('../Home/PRlogo.png') no-repeat center center;
-  //   width: $size;
-  //   height: $size;
-  //   background-size: 80%;
-  //   margin: 0 10px 0 0;
-  //   border-radius: $size / 2;
-  // }
-  // nav :global(.fa) {
-  //   font-size: 2em;
-  //   line-height: 20px;
-  // }
-}
-
 .appContent {
-  // background: $brand-whit;
-  margin: 5rem 0; // for fixed navbar
   position: relative;
-  min-height: calc(100vh - 14rem); // full viewport height minus footer height
+  min-height: 95vh;
 }
-
-// .notifs {
-//   margin: 15px 0;
-// }
-
-// :global(.form-control-feedback) {
-//   text-align: inherit;
-// }

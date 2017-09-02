@@ -40,7 +40,7 @@ export function userReducer(state = defaultState, action = {}) {
         populatingUser: false,
         updatingUser: false,
         userPopulated: true,
-        user: action.result.user
+        user: action.result
       };
     case POPULATE_ROOMS:
       return {
@@ -57,6 +57,8 @@ export function userReducer(state = defaultState, action = {}) {
       };
     case CLEAR_USER:
       return {};
+    case POPULATE_FAIL:
+      debugger;
     default:
       return state;
     }
@@ -75,7 +77,7 @@ function saveUser(response) {
 export function populateUser(id) {
   return {
     types: [POPULATE_USER, POPULATE_USER_SUCCESS, POPULATE_FAIL],
-    promise: () => app.service('users').get(id)
+    promise: (client) => client.service('users').get(id)
       .then(saveUser)
       .catch(catchValidation)
   }
@@ -84,7 +86,7 @@ export function populateUser(id) {
 export function updateUser(id, data) {
   return {
     types: [UPDATE_USER, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL],
-    promise: () => app.service('users').patch(id, data)
+    promise: (client) => client.service('users').patch(id, data)
       .then(saveUser)
       .catch(catchValidation)
   }

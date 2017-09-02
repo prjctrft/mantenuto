@@ -13,16 +13,16 @@ export default class RegisterForm extends Component {
 
   renderInput = ({ input, label, type, meta: { touched, error } }) => {
     return (
-      <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
-        <div className='col-xs-12'>
-          <label htmlFor={input.name}>{label}</label>
-        </div>
-        <div className='col-xs-12'>
+      <div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
+        {/* <div className='col-xs-12'> */}
+          <label className='control-label' htmlFor={input.name}>{label}</label>
+        {/* </div>
+        <div className='col-xs-12'> */}
           <input {...input} type={type} className="form-control" />
           {error === 'Required' && !touched && <span className="text-success form-control-feedback">*</span>}
           {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
           {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
-        </div>
+        {/* </div> */}
       </div>
     );
   }
@@ -30,7 +30,7 @@ export default class RegisterForm extends Component {
   renderVerification = ({ styles, input, label, type, meta: { touched, error } }) => {
     const icUpload = require('../assets/ic_upload.png');
     return (
-      <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
+      <div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
         <div className='col-xs-12'>
           <div className={styles.credentialBox}>
             <div className={`${styles.labelWrapper}`}>

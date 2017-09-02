@@ -1,5 +1,20 @@
 @import '../../theme/variables.scss';
 
+.Authenticated {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.talk {
+  background-color: $brand-darker-gray;
+}
+
+.listen {
+  background-color: $brand-gray;
+}
+
 .home {
   dd {
     margin-bottom: 15px;

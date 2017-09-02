@@ -35,7 +35,7 @@ export default store => {
   const requireNotLogged = (nextState, replace, cb) => {
     const state = store.getState();
     if (state.auth.user) {
-      push('/');
+      store.dispatch(push('/'));
     }
     cb();
     // const cond = user => !user;

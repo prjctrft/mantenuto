@@ -38,8 +38,7 @@ import Footer from './components/Footer';
   state => ({
     notifs: state.notifs,
     id: state.auth.user,
-    user: state.user.user,
-    socketAuthenticated: state.auth.socketAuthenticated
+    user: state.user.user
   }), { populateUser, logout, clearUser, push })
   // }),
   // { logout, pushState: push })
@@ -65,7 +64,7 @@ export default class App extends Component {
   }
 
   populateUser = (props) => {
-    if (Object.keys(props.user).length === 0 && props.id && props.socketAuthenticated) {
+    if (Object.keys(props.user).length === 0 && props.id) {
       props.populateUser(props.id);
     }
   }
@@ -80,6 +79,7 @@ export default class App extends Component {
 
   render() {
     const { notifs, children } = this.props;
+    const authenticated = this.props.id;
     const { user } = this.props.user
     const { pathname } = this.props.location;
     const styles = require('./App.scss');
@@ -87,7 +87,7 @@ export default class App extends Component {
     return (
       <div className={styles.app}>
         <Helmet {...config.app.head} />
-        <Navigation handleLogout={this.handleLogout} pathname={pathname} user={user} />
+        <Navigation authenticated={authenticated} handleLogout={this.handleLogout} pathname={pathname} user={user} />
         <Notifs className={styles.notifs} />
         <div className={styles.appContent}>
           { children }
