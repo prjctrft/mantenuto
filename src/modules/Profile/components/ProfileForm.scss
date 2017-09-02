@@ -1,7 +1,22 @@
-//@import '../../../theme/variables.scss';
+@import '../../../theme/variables.scss';
 
 .ProfileForm {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 	width: 90%;
+
+	input {
+		box-shadow: $box-shadow;
+	}
+
+	button {
+		align-self: center;
+		width: $button-width;
+		box-shadow: $box-shadow;
+		background-color: $brand-gray;
+		border-radius: 5px;
+	}
 
 	@media (min-width: 768px) {
 		width: 50%;
