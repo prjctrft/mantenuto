@@ -1,0 +1,12 @@
+//@import '../../../theme/variables.scss';
+
+.ProfileForm {
+	width: 90%;
+
+	@media (min-width: 768px) {
+		width: 50%;
+	}
+	@media (min-width: 1024px) {
+		width: 33%;
+	}
+}

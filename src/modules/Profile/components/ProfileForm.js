@@ -63,8 +63,8 @@ export default class ProfileForm extends Component {
     }
     return (
       <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
-        <label htmlFor={input.name} className="col-sm-2">{label}</label>
-        <div className="col-sm-10">
+        <label htmlFor={input.name} className="col-sm-12">{label}</label>
+        <div className="col-sm-12">
           <input {...input} type={type} className="form-control" />
           {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
           {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
@@ -75,8 +75,9 @@ export default class ProfileForm extends Component {
 
   render() {
     const { user, pristine, submitting, handleSubmit, error, initialValues } = this.props;
+    const styles = require('./ProfileForm.scss')
     return (
-      <form className="form-horizontal" onSubmit={handleSubmit}>
+      <form className={styles.ProfileForm} onSubmit={handleSubmit}>
         {
           this.constructor.fields.map((field) => {
             return (

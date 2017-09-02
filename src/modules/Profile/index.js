@@ -37,15 +37,18 @@ export default class Profile extends Component {
   }
 
   render() {
+    const styles = require('./Profile.scss');
     const { user } = this.props;
     if (user) {
       user.confirmEmail = user.email;
     }
     return (
-      <div className='container'>
-        <h1>Edit Your Profile</h1>
-        { user ? <ProfileForm initialValues={user} onSubmit={this.updateProfile} /> : null }
-      </div>
+        <div className={styles.profile}>
+          <h1>Profile</h1>
+          { user ? <ProfileForm initialValues={user} onSubmit={this.updateProfile} /> : null }
+        </div>
+      
+      
     )
   }
 }
