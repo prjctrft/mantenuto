@@ -75,9 +75,9 @@ proxy.on('error', (error, req, res) => {
   if (error.code !== 'ECONNRESET') {
     console.error('proxy error', error);
   }
-  if (res && !res.headersSent) {
-    res.writeHead(500, { 'content-type': 'application/json' });
-  }
+  // if (res && !res.headersSent) {
+  //   res.writeHead(500, { 'content-type': 'application/json' });
+  // }
   const json = { error: 'proxy_error', reason: error.message };
   res.end(JSON.stringify(json));
 });

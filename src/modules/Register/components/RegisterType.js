@@ -8,7 +8,7 @@ import { notifSend } from '../../Notifs/redux';
 // import { getCodes } from './redux';
 
 @connect(null, { push, notifSend, register, login })
-export default class Register extends Component {
+export default class RegisterType extends Component {
   static propTypes = {
     location: PropTypes.object,
     register: PropTypes.func,
@@ -44,14 +44,15 @@ export default class Register extends Component {
   render() {
     const styles = require('./RegisterType.scss');
     return (
-      <div className={styles.register}>
-        <div className={`${styles.background} container`}>
+        <div className={styles.wrapper}>
           <Helmet title="Register" />
-          <h1>Register</h1>
-          <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
+          <div className={styles.masthead}>
+            <div className={styles.width}>
+              <h1 className={styles.heading}>Register</h1>
+              <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
+            </div>
+          </div>
         </div>
-      </div>
-
     );
   }
 }

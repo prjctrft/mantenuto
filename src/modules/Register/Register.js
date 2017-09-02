@@ -22,8 +22,8 @@ const Register = (props) => {
             <div className="container">
               <h1 className={styles.heading}>Register</h1>
               <div className={styles.pipelineBtns}>
-                  <CircleButton onClick={next('veteran', props)} content='Veteran' />
-                  <CircleButton onClick={next('active', props)} content='Active' />
+                <CircleButton onClick={next('veteran', props)} content='Veteran' />
+                <CircleButton onClick={next('active', props)} content='Active' />
               </div>
               <Link className={styles.link} to={'/register/provider'}>Mental health professional?</Link>
             </div>

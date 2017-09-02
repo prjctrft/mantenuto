@@ -11,7 +11,7 @@ import NavigationCollapse from './NavigationCollapse';
 
 // a bit hacky
 const hideNavigation = (props) => {
-  return props.pathname === '/' && !props.user
+  return props.pathname === '/' && !props.authenticated
 }
 
 export default (props) => {
@@ -20,11 +20,10 @@ export default (props) => {
     }
     const { user, notifs, handleLogout } = props;
 
-    const styles = require('./Navigation.scss');
     return (
       <Navbar fixedTop>
-        <NavigationHeader />
-        { user ? <NavigationCollapse handleLogout /> : null }
+        <NavigationHeader user={user} />
+        { user ? <NavigationCollapse handleLogout={handleLogout} /> : null }
       </Navbar>
     )
 
