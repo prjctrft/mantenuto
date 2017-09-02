@@ -42,7 +42,7 @@ export default class AuthenticatedContainer extends Component {
       this.props.push(`/rooms/${slug}`);
     }
   }
-
+  
   // renderWelcome = () => {
   //   const { user } = this.props;
   //   if (!user) {
