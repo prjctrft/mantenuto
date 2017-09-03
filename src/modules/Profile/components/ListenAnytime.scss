@@ -17,7 +17,7 @@
 		width: $button-width;
 		border: none;
 		box-shadow: $box-shadow;
-		border-radius: 5px;
+		border-radius: $button-border-radius;
 		background-color: $button-on;
 		color: $brand-white;
 	}

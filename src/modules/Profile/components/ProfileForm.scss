@@ -15,7 +15,7 @@
 		width: $button-width;
 		box-shadow: $box-shadow;
 		background-color: $brand-gray;
-		border-radius: 5px;
+		border-radius: $button-border-radius;
 	}
 
 	@media (min-width: 768px) {
