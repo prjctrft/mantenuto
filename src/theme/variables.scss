@@ -8,7 +8,7 @@
 
 // Custom Colors
 $brand-black: #000;
-// $brand-black: #2d2d2d
+// $brand-black: #2d2d2d;
 $brand-gray: #ccc;
 $brand-darker-gray: #2C2D2F;
 $brand-white: #fff;
@@ -27,5 +27,12 @@ $font-size-base: 14px;
 // $font-family-sans-serif: "Helvetica Neue", Helvetica, sans-serif;
 // $font-family-sans-serif: 'Inconsolata', monospace;
 $font-family-sans-serif: 'Roboto', sans-serif;
+
+// Form Variables
+$button-width: 150px;
+$button-border-radius: 5px;
+$button-on: #85E9B0;
+$button-off: #E98585;
+$box-shadow: 2px 2px 2px $brand-gray;
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
