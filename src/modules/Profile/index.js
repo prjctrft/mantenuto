@@ -6,6 +6,7 @@ import { updateUser } from '../App/redux';
 import { notifSend } from '../Notifs/redux';
 
 import ProfileForm from './components/ProfileForm';
+import ListenAnytime from './components/ListenAnytime';
 
 @connect(
   state => ({
@@ -46,6 +47,7 @@ export default class Profile extends Component {
         <div className={styles.profile}>
           <h1>Profile</h1>
           { user ? <ProfileForm initialValues={user} onSubmit={this.updateProfile} /> : null }
+          <ListenAnytime />
         </div>
       
       

@@ -1,0 +1,24 @@
+@import '../../../theme/variables.scss';
+
+.ListenAnytime {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	border-top: 2px solid $brand-black;
+	margin: 2rem;
+	width: 90%;
+
+	h2 {
+		margin: 2rem 0;
+	}
+
+	button {
+		width: $button-width;
+		border: none;
+		box-shadow: $box-shadow;
+		border-radius: 5px;
+		background-color: $button-on;
+		color: $brand-white;
+	}
+}
