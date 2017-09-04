@@ -3,16 +3,14 @@ import { connect } from 'react-redux';
 import { reduxForm, Field, propTypes } from 'redux-form';
 import profileValidation from './profileValidation';
 
+@connect(state => ({
+  profile: state.form.profile
+}))
 @reduxForm({
   form: 'profile',
   validate: profileValidation,
   enableReinitialize: true
 })
-@connect(
-  state => ({
-    profile: state.form.profile // pull initial values from account reducer
-  })
-)
 export default class ProfileForm extends Component {
   // constructor(props) {
   //   super(props);
@@ -58,6 +56,9 @@ export default class ProfileForm extends Component {
   renderInput = ({ input, label, type, meta: { touched, error, dirty, initial, pristine } }) => {
     // only display confirm email when 'email' is dirty
     if (input.name === 'confirmEmail') {
+      if (!this.props.profile) {
+        return null;
+      }
       // make sure fields exist in state
       if (!this.props.profile.fields || !this.props.profile.fields.email) {
         return null;
