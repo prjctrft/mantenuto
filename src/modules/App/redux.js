@@ -25,7 +25,7 @@ const defaultState = {
   userPopulated: false,
   updatingUser: false
 };
-
+// TODO: test user state shape
 export function userReducer(state = defaultState, action = {}) {
   switch (action.type) {
     case POPULATE_USER:
@@ -71,7 +71,7 @@ export function clearUser() {
 }
 
 function saveUser(response) {
-  return { user: response };
+  return response;
 }
 
 export function populateUser(id) {
