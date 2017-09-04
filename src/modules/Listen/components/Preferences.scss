@@ -1,0 +1,26 @@
+@import '../../../theme/variables.scss';
+
+//
+// .btns {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   align-items: center;
+//   max-width: 60%;
+//   margin: auto;
+//   margin-bottom: 1rem;
+// };
+.noWrap {
+  white-space: nowrap;
+}
+.marginAuto {
+  margin: auto;
+}
+
+.anytime {
+  background-color: $brand-success;
+}
+
+.now {
+  background-color: $brand-danger;
+}
