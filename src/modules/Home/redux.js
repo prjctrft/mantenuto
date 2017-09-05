@@ -26,7 +26,7 @@ export default function (state = initialState, action = {}) {
 export function getCodes() {
   return {
     types: [GET_CODES, GET_CODES_SUCCESS, GET_CODES_FAIL],
-    promise: () => app.service('speakeasy')
+    promise: (client) => client.service('speakeasy')
       .find()
   };
 }

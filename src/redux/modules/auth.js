@@ -196,8 +196,11 @@ function socketAuthenticated(response) {
 export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
-    promise: (client) => client.logout().then(cleanStorage)
-  };
+    promise: () => {
+      return Promise.all([ app.logout(), restApp.logout() ])
+        .then(cleanStorage);
+    }
+  }
 }
 
 function cleanStorage() {
