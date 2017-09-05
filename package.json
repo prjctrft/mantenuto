@@ -26,7 +26,7 @@
     "build": "better-npm-run build",
     "build-dlls": "webpack --verbose --colors --display-error-details --config webpack/vendor.config.js",
     "postinstall": "concurrently \"npm run build\" \"npm run build-dlls\"",
-    "lint": "eslint -c .eslintrc api src",
+    "lint": "eslint -c .eslintrc src",
     "start-dev": "better-npm-run start-dev",
     "start-dev-local": "better-npm-run start-dev-local",
     "start-dev-server-debug": "better-npm-run start-dev-server-debug",
@@ -37,7 +37,8 @@
     "debug-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-debug-local\"",
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
-    "test": "karma start",
+    "test": "jest $(find src -name '*.test.js')",
+    "tdd": "jest --watch $(find src -name '*.test.js')",
     "test-node": "jest $(find api -name '*-test.js') --compilers js:babel-core/register",
     "test-node-watch": "jest $(find api -name '*-test.js') --compilers js:babel-core/register --watch"
   },
@@ -112,6 +113,23 @@
       }
     }
   },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "globals": {
+      "__CLIENT__": true,
+      "__SERVER__": false,
+      "__DEVELOPMENT__": true,
+      "__DEVTOOLS__": false,
+      "__DLLS__": "process.env.WEBPACK_DLLS === '1'"
+    },
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    }
+  },
   "dependencies": {
     "async": "^2.4.1",
     "babel-core": "^6.25.0",
@@ -130,6 +148,7 @@
     "compression": "^1.6.2",
     "concurrently": "^3.5.0",
     "cookie-parser": "^1.4.3",
+    "domkit": "github:hdngr/domkit",
     "express": "^4.14.0",
     "express-session": "^1.15.3",
     "feathers": "^2.1.4",
@@ -159,6 +178,7 @@
     "passport-facebook": "^2.1.1",
     "passport-facebook-token": "^3.3.0",
     "pretty-error": "^2.1.1",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-bootstrap": "^0.30.10",
     "react-cookie": "^0.4.9",
@@ -169,6 +189,7 @@
     "react-router-bootstrap": "^0.23.3",
     "react-router-redux": "^4.0.8",
     "react-router-scroll": "^0.4.2",
+    "react-spinners": "0.0.30",
     "redux": "^3.7.0",
     "redux-connect": "^3.0.0",
     "redux-form": "^6.8.0",
@@ -194,6 +215,7 @@
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.26.4",
+    "enzyme": "^2.9.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-loader": "^1.8.0",
@@ -206,22 +228,14 @@
     "font-awesome-webpack": "0.0.4",
     "happypack": "^3.1.0",
     "html-webpack-plugin": "^2.28.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^17.0.3",
     "json-loader": "^0.5.4",
-    "karma": "^1.7.0",
-    "karma-cli": "^1.0.1",
-    "karma-mocha": "^1.3.0",
-    "karma-mocha-reporter": "^2.2.3",
-    "karma-phantomjs-launcher": "^1.0.4",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.8.1",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
     "lighthouse": "^1.6.5",
     "mocha": "^3.4.2",
     "node-sass": "^3.13.1",
-    "phantomjs-polyfill": "0.0.2",
-    "phantomjs-prebuilt": "^2.1.14",
     "piping": "^1.0.0-rc.4",
     "react-a11y": "^0.3.4",
     "react-addons-test-utils": "^15.6.0",

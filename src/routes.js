@@ -72,8 +72,10 @@ export default store => {
       {/* Routes requiring login */}
       <Route onEnter={requireLogin}>
         <Route path="profile" component={Profile} />
-        <Route path="talk" component={Talk} />
-        <Route path="listen" component={Listen} />
+        { Talk }
+        { Listen }
+        {/* <Route path="talk" component={Talk} />
+        <Route path="listen" component={Listen} /> */}
         <Route path="rooms/:slug" component={Room} />
         {/* <Route path="loginSuccess" component={LoginSuccess} /> */}
       </Route>

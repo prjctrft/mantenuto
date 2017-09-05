@@ -10,13 +10,13 @@ import ListenAnytime from './components/ListenAnytime';
 
 @connect(
   state => ({
-    user: state.user.user
+    user: state.user
   }), { updateUser, notifSend }
 )
 export default class Profile extends Component {
 
   updateProfile = (data) => {
-    const initial = this.props.user;
+    const initial = this.props.user.user;
     const patch =  {};
     for(let key in data) {
       const d = data[key];
@@ -40,17 +40,16 @@ export default class Profile extends Component {
   render() {
     const styles = require('./Profile.scss');
     const { user } = this.props;
-    if (user) {
-      user.confirmEmail = user.email;
-    }
+    // user is initialized as an empty object, so this will ALWAYS be true
+    // let's move this concern to the form itself
     return (
         <div className={styles.profile}>
           <h1>Profile</h1>
-          { user ? <ProfileForm initialValues={user} onSubmit={this.updateProfile} /> : null }
+          { user.userPopulated ? <ProfileForm initialValues={user.user} onSubmit={this.updateProfile} /> : null }
           <ListenAnytime />
         </div>
-      
-      
+
+
     )
   }
 }

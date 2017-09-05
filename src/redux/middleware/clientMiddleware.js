@@ -17,6 +17,12 @@ export default function clientMiddleware() {
 
     const client = app.io && app.io.authenticated ? app : restApp;
 
+    if (!client.get('accessToken')) {
+      const token = getState().auth.token;
+      if(token) {
+        client.set('accessToken', token);
+      }
+    }
     const actionPromise = promise(client, dispatch);
     actionPromise.then(
       result => next({ ...rest, result, type: SUCCESS }),

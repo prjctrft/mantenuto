@@ -12,22 +12,20 @@ import { notifSend } from '../Notifs/redux';
 @connect(null, { notifSend, login, push })
 export default class Login extends Component {
   static propTypes = {
-    user: PropTypes.object,
-    login: PropTypes.func,
-    // oauthLogin: PropTypes.func,
-    logout: PropTypes.func,
-    notifSend: PropTypes.func
+    notifSend: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
     router: PropTypes.object
   }
 
-  login = (data) => {
-    return this.props.login(data)
-      .then(this.success)
-      .catch(this.fail)
-  };
+  // login = (data) => {
+  //   return this.props.login(data)
+  //     .then(this.success)
+  //     .catch(this.fail)
+  // };
 
   success = data => {
     this.props.notifSend({
@@ -43,6 +41,7 @@ export default class Login extends Component {
   };
 
   fail = () => {
+    // TODO - better feedback here, what if username does not exist?
     throw new SubmissionError({password: 'Incorrect password.'})
   }
 

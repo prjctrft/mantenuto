@@ -80,7 +80,7 @@ export default class App extends Component {
   render() {
     const { notifs, children } = this.props;
     const authenticated = this.props.id;
-    const { user } = this.props.user
+    const user = this.props.user
     const { pathname } = this.props.location;
     const styles = require('./App.scss');
 
