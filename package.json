@@ -38,9 +38,7 @@
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
     "test": "jest $(find src -name '*.test.js')",
-    "tdd": "jest --watch $(find src -name '*.test.js')",
-    "test-node": "jest $(find api -name '*-test.js') --compilers js:babel-core/register",
-    "test-node-watch": "jest $(find api -name '*-test.js') --compilers js:babel-core/register --watch"
+    "tdd": "jest --watch $(find src -name '*.test.js')"
   },
   "betterScripts": {
     "start-prod": {
