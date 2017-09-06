@@ -8,14 +8,14 @@ const Authenticated = (props) => {
   const styles = require('./Authenticated.scss');
   return (
     <div className={styles.Authenticated}>
-      <div className='col-sm-3'>
+      <div className={styles.CircleButtonContainer}>
         <CircleButton
           onClick={() => props.push('/talk')}
           className={styles.talk}
           content={'Talk'}
         />
       </div>
-      <div className='col-sm-3'>
+      <div className={styles.CircleButtonContainer}>
         <CircleButton
           onClick={() => props.push('/listen')}
           className={styles.listen}
