@@ -21,11 +21,11 @@ export default class Login extends Component {
     router: PropTypes.object
   }
 
-  // login = (data) => {
-  //   return this.props.login(data)
-  //     .then(this.success)
-  //     .catch(this.fail)
-  // };
+  login = (data) => {
+    return this.props.login(data)
+      .then(this.success)
+      .catch(this.fail)
+  };
 
   success = data => {
     this.props.notifSend({
