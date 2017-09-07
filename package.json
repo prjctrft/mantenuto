@@ -236,7 +236,7 @@
     "less-loader": "^2.2.3",
     "lighthouse": "^1.6.5",
     "mocha": "^3.4.2",
-    "node-sass": "^4.5.3",
+    "node-sass": "^3.13.1",
     "piping": "^1.0.0-rc.4",
     "react-a11y": "^0.3.4",
     "react-addons-test-utils": "^15.6.0",

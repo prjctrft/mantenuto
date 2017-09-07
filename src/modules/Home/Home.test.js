@@ -1,8 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Home from './Home';
-import SpeakeasyForm from './components/SpeakeasyForm';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -27,7 +26,9 @@ describe('<Home />', () => {
   it('should render correctly', () => {expect(component.exists()).to.be.true});
 
   it('should render div with class home', () => {
-    expect(component.find('.home')).to.have.length(1);
+    const home = component.find('.home');
+    expect(home).to.have.length(1);
+    expect(home.name()).to.equal('div');
   });
 
   it('should render image', () => {
