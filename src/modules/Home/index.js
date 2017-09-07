@@ -1,21 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import chai from 'chai'
+import chaiEnzyme from 'chai-enzyme'
+import chaiJsx from 'chai-jsx'
+import {jsdom} from 'jsdom'
 
-import Authenticated from 'modules/Authenticated';
-import Home from './Home';
+chai.use(chaiEnzyme())
+chai.use(chaiJsx)
 
-const HomeContainer = (props) => {
-  if (props.user) {
-    return (
-      <Authenticated />
-    );
-  }
-  return (
-    <Home />
-  );
-}
-
-export default connect(state => ({
-    user: state.auth.user
-  })
-)(HomeContainer)
+global.document = jsdom('<!doctype html><html><body></body></html>')
+global.window = document.defaultView
+global.navigator = global.window.navigator
