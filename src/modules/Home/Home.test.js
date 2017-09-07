@@ -41,8 +41,4 @@ describe('<Home />', () => {
   it('should render h1 element', () => {
     expect(component.find('h1')).to.have.length(1);
   });
-
-  it('should render proper text in h1 element', () => {
-    expect(component.find('h1').text()).to.equal('Project Refit');
-  });
 });
