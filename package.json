@@ -207,6 +207,7 @@
     "babel-jest": "^17.0.2",
     "babel-loader": "^6.4.1",
     "babel-plugin-typecheck": "^3.9.0",
+    "babel-preset-airbnb": "^2.4.0",
     "babel-preset-es2017": "^6.24.1",
     "better-npm-run": "0.0.11",
     "bootstrap-sass": "^3.3.7",
