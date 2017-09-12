@@ -27,15 +27,42 @@ export default class Notifs extends Component {
   // }
 
   render() {
-    const { notifs } = this.props.notifs;
-    if (!notifs) {
-      return null;
-    }
+    const styles = require('./Notifs.scss');
+    //const { notifs } = this.props.notifs;
+    const notifs = [
+      {
+        message: 'The greatest success ever',
+        kind: 'success'
+      },
+      {
+        message: 'The greatest warning ever',
+        kind: 'warning'
+      },
+      {
+        message: 'The greatest danger ever',
+        kind: 'danger'
+      },
+      {
+        message: 'The greatest info ever',
+        kind: 'info'
+      }
+    ]
+    // if (!notifs) {
+    //   return null;
+    // }
 
 
     return (
       <div className={`notif-container ${this.props.className}`}>
-        {notifs.map(notif => <Alert key={notif.id} bsStyle={notif.kind}>{notif.message}</Alert>)}
+
+        {notifs.map(notif =>
+          <Alert 
+            key={notif.id}
+            bsClass={styles.notification}
+            className={styles[notif.kind]}
+          >
+            {notif.message}
+          </Alert>)}
       </div>
     );
   }
