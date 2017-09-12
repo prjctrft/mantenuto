@@ -28,28 +28,28 @@ export default class Notifs extends Component {
 
   render() {
     const styles = require('./Notifs.scss');
-    //const { notifs } = this.props.notifs;
-    const notifs = [
-      {
-        message: 'The greatest success ever',
-        kind: 'success'
-      },
-      {
-        message: 'The greatest warning ever',
-        kind: 'warning'
-      },
-      {
-        message: 'The greatest danger ever',
-        kind: 'danger'
-      },
-      {
-        message: 'The greatest info ever',
-        kind: 'info'
-      }
-    ]
-    // if (!notifs) {
-    //   return null;
-    // }
+    const { notifs } = this.props.notifs;
+    // const notifs = [
+    //   {
+    //     message: 'The greatest success ever',
+    //     kind: 'success'
+    //   },
+    //   {
+    //     message: 'The greatest warning ever',
+    //     kind: 'warning'
+    //   },
+    //   {
+    //     message: 'The greatest danger ever',
+    //     kind: 'danger'
+    //   },
+    //   {
+    //     message: 'The greatest info ever',
+    //     kind: 'info'
+    //   }
+    // ]
+    if (!notifs) {
+      return null;
+    }
 
 
     return (
