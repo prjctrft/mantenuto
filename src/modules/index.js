@@ -4,7 +4,7 @@ export Login from './Login/Login';
 export LoginSuccess from './LoginSuccess/LoginSuccess';
 export NotFound from './NotFound/NotFound';
 export Register from './Register';
-export Room from './Room';
+export Rooms from './Rooms';
 export Profile from './Profile';
 export Talk from './Talk';
 export Listen from './Listen';
