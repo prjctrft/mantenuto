@@ -29,7 +29,7 @@ Lines should not exceed 100 characters. This allows the message to be easier to 
  #463  chore(webpack): update to isomorphic tools v2
  #494  fix(babel): correct dependencies and polyfills
  #510  feat(app): add react-bootstrap responsive navbar
-``` 
+```
 
 #### Type
 
@@ -57,3 +57,7 @@ The subject contains succinct description of the change:
 * use the imperative, present tense: "change" not "changed" nor "changes"
 * don't capitalize first letter
 * no dot (.) at the end
+
+### Branching Strategy
+
+After a PR is complete and you've submitted it for review, delete the branch you submitted a PR from.  Create a new branch from `master`, and hack away.
