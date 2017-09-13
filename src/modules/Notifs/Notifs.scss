@@ -1,0 +1,24 @@
+@import '../../theme/variables.scss';
+
+.notification {
+	padding: 15px;
+	margin-bottom: 20px;
+	border-radius: 4px;
+	color: $brand-white;
+}
+
+.success {
+	background-color: $brand-success;
+}
+
+.warning {
+	background-color: $brand-warning;
+}
+
+.danger {
+	background-color: $brand-danger;
+}
+
+.info {
+	background-color: $brand-info;
+}
