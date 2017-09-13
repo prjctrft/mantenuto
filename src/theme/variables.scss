@@ -13,12 +13,15 @@ $brand-gray: #ccc;
 $brand-darker-gray: #2C2D2F;
 $brand-white: #fff;
 
+$brand-success: #85E9B0;
+$brand-danger: #E98585;
+
 // Bootstrap Variables
 $brand-primary: #55acf6;
 $brand-secondary: #e25139;
-$brand-success: #5cb85c;
+//$brand-success: #5cb85c;
 $brand-warning: #f0ad4e;
-$brand-danger: #d9534f;
+//$brand-danger: #d9534f;
 $brand-info: #5bc0de;
 
 $text-color: #333;
@@ -31,8 +34,8 @@ $font-family-sans-serif: 'Roboto', sans-serif;
 // Form Variables
 $button-width: 150px;
 $button-border-radius: 5px;
-$button-on: #85E9B0;
-$button-off: #E98585;
+$button-on: $brand-success;
+$button-off: $brand-danger;
 $box-shadow: 2px 2px 2px $brand-gray;
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
