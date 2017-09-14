@@ -10,6 +10,9 @@ Please make sure that there aren't existing pull requests attempting to address 
 * Develop in a topic branch, not master
 * Squash your commits
 
+### Testing
+Please read the documentation on how to write tests for socket event listeners, UI, and redux actions.
+
 ### Linting
 
 Please check your code using `npm run lint` before submitting your pull requests, as the CI build will fail if `eslint` fails.
