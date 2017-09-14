@@ -10,6 +10,9 @@ Please make sure that there aren't existing pull requests attempting to address 
 * Develop in a topic branch, not master
 * Squash your commits
 
+### Testing
+Please read the documentation on how to write tests for socket event listeners, UI, and redux actions.
+
 ### Linting
 
 Please check your code using `npm run lint` before submitting your pull requests, as the CI build will fail if `eslint` fails.
@@ -29,7 +32,7 @@ Lines should not exceed 100 characters. This allows the message to be easier to 
  #463  chore(webpack): update to isomorphic tools v2
  #494  fix(babel): correct dependencies and polyfills
  #510  feat(app): add react-bootstrap responsive navbar
-``` 
+```
 
 #### Type
 
@@ -57,3 +60,7 @@ The subject contains succinct description of the change:
 * use the imperative, present tense: "change" not "changed" nor "changes"
 * don't capitalize first letter
 * no dot (.) at the end
+
+### Branching Strategy
+
+After a PR is complete and you've submitted it for review, delete the branch you submitted a PR from.  Create a new branch from `master`, and hack away.
