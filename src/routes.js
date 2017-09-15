@@ -11,7 +11,7 @@ import {
   Register,
   Registered,
   Login,
-  Room,
+  Rooms,
   LoginSuccess,
   NotFound,
   Password
@@ -76,7 +76,8 @@ export default store => {
         { Listen }
         {/* <Route path="talk" component={Talk} />
         <Route path="listen" component={Listen} /> */}
-        <Route path="rooms/:slug" component={Room} />
+        { Rooms }
+        {/* <Route path="rooms/:slug" component={Room} /> */}
         {/* <Route path="loginSuccess" component={LoginSuccess} /> */}
       </Route>
 

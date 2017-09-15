@@ -196,7 +196,6 @@
     "redux-thunk": "^2.2.0",
     "serialize-javascript": "^1.3.0",
     "serve-favicon": "^2.4.3",
-    "socket.io": "^1.7.4",
     "socket.io-client": "^1.7.4",
     "superagent": "^3.5.2",
     "webrtc-adapter": "^4.2.1"
@@ -247,6 +246,7 @@
     "redux-devtools-log-monitor": "^1.3.0",
     "sass-loader": "^4.1.1",
     "sinon": "^3.2.1",
+    "socket.io": "^1.7.4",
     "strip-loader": "^0.1.2",
     "style-loader": "^0.13.2",
     "sw-precache-webpack-plugin": "^0.6.3",

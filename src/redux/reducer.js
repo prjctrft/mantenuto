@@ -4,13 +4,13 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 import { reducer as form } from 'redux-form';
 import auth from './modules/auth';
-import notifs from '../modules/Notifs/redux';
+import notifs from 'modules/Notifs/redux';
 import counter from './modules/counter';
 import info from './modules/info';
-import rooms from '../modules/Room/reducer';
-import { userReducer as user } from '../modules/App/redux';
-import home from '../modules/Home/redux';
-import register from '../modules/Register/redux';
+import rooms from 'modules/Rooms/reducer';
+import { userReducer as user } from 'modules/App/redux';
+import home from 'modules/Home/redux';
+import register from 'modules/Register/redux';
 
 export default function createReducer(asyncReducers) {
   return combineReducers({
