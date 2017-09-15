@@ -1,10 +1,10 @@
 import feathers from 'feathers/client';
 import hooks from 'feathers-hooks';
-import rest from 'feathers-rest/client';
-const socketio = require('feathers-socketio-ssr');
-// import socketio from 'feathers-socketio/client';
-import authentication from 'feathers-authentication-client';
 import io from 'socket.io-client';
+import rest from 'feathers-rest/client';
+// const socketio = require('feathers-socketio/client');
+import socketio from 'feathers-socketio/client';
+import authentication from 'feathers-authentication-client';
 import superagent from 'superagent';
 import config from './config';
 
@@ -26,6 +26,6 @@ const configureApp = (transport) => feathers()
         storageKey: 'feathers-jwt', // default
       }));
 
-export default configureApp(socketio(socket, __SERVER__, rest(host('/api')).superagent(superagent)));
+export default configureApp(socketio(socket));
 
 export const restApp = configureApp(rest(host('/api')).superagent(superagent));

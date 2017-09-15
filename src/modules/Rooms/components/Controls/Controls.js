@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/lib/Modal';
 
 import ControlButton from './ControlButton';
 
-const styles = require('./Controls.scss');
+import styles from './Controls.scss';
 
 export default (props) => {
   return (

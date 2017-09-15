@@ -15,9 +15,11 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
+
+import client from './app';
 import config from './config';
 import createStore from './redux/create';
-import ApiClient from './helpers/ApiClient';
+// import ApiClient from './helpers/ApiClient';
 import Html from './helpers/Html';
 import getRoutes from './routes';
 // const p = require('../../package.json');
@@ -97,7 +99,7 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh();
   }
-  const client = new ApiClient(req);
+  // const client = new ApiClient(req);
   const memoryHistory = createHistory(req.originalUrl);
   const store = createStore(memoryHistory, client, {__mantenuto: { version }});
   const history = syncHistoryWithStore(memoryHistory, store);

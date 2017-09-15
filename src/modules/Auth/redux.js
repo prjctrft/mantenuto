@@ -22,11 +22,18 @@ const SOCKET_AUTHENTICATED = 'chat/auth/SOCKET_AUTHENTICATED';
 const LOGOUT = 'chat/auth/LOGOUT';
 const LOGOUT_SUCCESS = 'chat/auth/LOGOUT_SUCCESS';
 const LOGOUT_FAIL = 'chat/auth/LOGOUT_FAIL';
+const TRIED_AUTH = 'chat/auth/TRIED_AUTH';
+const TRIED_SOCKET_AUTH = 'chat/auth/TRIED_SOCKET_AUTH';
+const TRYING_AUTH = 'chat/auth/TRYING_AUTH';
+const TOKEN_NOT_FOUND = 'chat/auth/TOKEN_NOT_FOUND';
 
 const initialState = {
+  triedAuth: false,
+  tryingAuth: false,
   loaded: false,
+  triedSocketAuth: false,
   socketAuthenticated: false,
-  token: undefined,
+  token: null,
   user: undefined,
 };
 
@@ -40,8 +47,28 @@ const catchValidation = error => {
   return Promise.reject(error);
 };
 
-export default function reducer(state = initialState, action = {}) {
+export function authReducer(state = initialState, action = {}) {
   switch (action.type) {
+    case TOKEN_NOT_FOUND:
+      return {
+        ...state,
+        triedAuth: true
+      }
+    case TRYING_AUTH:
+      return {
+        ...state,
+        tryingAuth: true
+      }
+    case TRIED_AUTH:
+      return {
+        ...state,
+        triedAuth: true
+      }
+    case TRIED_SOCKET_AUTH:
+      return {
+        ...state,
+        triedSocketAuth: true
+      }
     case LOAD_TOKEN:
       return {
         ...state,
@@ -81,7 +108,9 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loggingIn: false,
         token: action.result.token,
-        user: action.result.user
+        user: action.result.user,
+        tryingAuth: false,
+        triedAuth: true
       };
     case JWT_LOGIN_FAIL:
     case LOGIN_FAIL:
@@ -90,7 +119,9 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loggingIn: false,
         token: null,
-        loginError: action.error
+        loginError: action.error,
+        tryingAuth: false,
+        triedAuth: true
       };
     case SOCKET_AUTHENTICATED:
       return {
@@ -117,14 +148,27 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function startAuth(dispatch) {
-  return app.passport.getJWT()
-    .then((token) => {
-      token = token || cookie.load('feathers-jwt');
-      if(token) {
-        return dispatch(jwtLogin(token))
-      }
-    })
+export function tryRestAuth() {
+  return (dispatch, getState) => {
+    const token = getState().auth.token || cookie.load('feathers-jwt');
+    if(token) {
+      dispatch({ type: TRYING_AUTH });
+      return dispatch(jwtLogin(token, restApp));
+    }
+    return dispatch({ type: TOKEN_NOT_FOUND });
+  }
+}
+
+export function socketAuth() {
+  return (dispatch, getState) => {
+    // socketAuth will only be tried on the client
+    // and will always run AFTER rest client has been authenticated
+    const token = getState().auth.token;
+    dispatch({ type: TRIED_SOCKET_AUTH });
+    return dispatch(jwtLogin(token, app))//.then(() => {
+      //debugger;
+    //});
+  }
 }
 
 function saveAuth(response) {
@@ -132,15 +176,11 @@ function saveAuth(response) {
   return app.passport.verifyJWT(token)
     .then(payload => {
       const id = payload.userId;
-      app.set('accessToken', token); // -> set manually the JWT
-      restApp.set('accessToken', token);
+      // app.set('accessToken', token); // -> set manually the JWT
+      // restApp.set('accessToken', token);
       cookie.save('feathers-jwt', token);
       return { user: id, token };
     });
-}
-
-export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
 }
 
 export function login(data) {
@@ -158,31 +198,16 @@ export function login(data) {
   }
 }
 
-export function jwtLogin(token) {
-  const accessToken = token;
+export function jwtLogin(token, client) {
   return {
     types: [JWT_LOGIN, JWT_LOGIN_SUCCESS, JWT_LOGIN_FAIL],
-    promise: (client) => client.authenticate({
+    promise: () => client.authenticate({
       strategy: 'jwt',
-      accessToken
+      accessToken: token
     })
     .then(saveAuth)
     .catch(catchValidation)
   };
-}
-
-export function socketAuth(dispatch) {
-  return app.passport.getJWT()
-    .then((token) => {
-      token = token || cookie.load('feathers-jwt');
-      if(token) {
-        return app.authenticate({
-          strategy: 'jwt',
-          accessToken: token
-        })
-        .then((response) => dispatch(socketAuthenticated(response)))
-      }
-    })
 }
 
 function socketAuthenticated(response) {

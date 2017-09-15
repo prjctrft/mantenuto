@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import Home from './Home';
+import { Home } from './Home';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -14,10 +14,15 @@ describe('<Home />', () => {
   const mockStore = {
   };
 
+  const props = {
+    getCodes: jest.fn(),
+    codes: []
+  }
+
   const store = createStore(browserHistory, client, mockStore);
   const connectedComponent = mount(
     <Provider store={store} key="provider">
-      <Home />
+      <Home {...props} />
     </Provider>
   );
 

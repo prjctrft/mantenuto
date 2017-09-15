@@ -11,13 +11,9 @@ import { ReduxAsyncConnect } from 'redux-connect';
 import { AppContainer as HotEnabler } from 'react-hot-loader';
 import { useScroll } from 'react-router-scroll';
 import { socket } from 'app';
-// import { jwtLogin } from './redux/modules/auth';
-import { socketAuth } from './redux/modules/auth';
 import createStore from './redux/create';
-import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
-
-const client = new ApiClient();
+import client from './app';
 const dest = document.getElementById('content');
 const store = createStore(browserHistory, client, window.__data);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -50,11 +46,6 @@ const isOnline = window.__data;
 if (isOnline) {
   global.socket = socket;
   socket.open();
-  // wait on client side rendering with socket.io provider
-  // until socket has tried authentication
-  // socketAuth(store.dispatch)
-  //   .then(() => render(getRoutes(store)) );;
-  socketAuth(store.dispatch);
 }
 
 render(getRoutes(store));
