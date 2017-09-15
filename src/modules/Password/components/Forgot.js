@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 function Main(props) {	
 	const styles = require('../Password.scss');
 	const sendEmailButton = function () {
-		//do logic
+		//check if email entered is a valid email and is within the database
 	};
 
 	return (
@@ -13,7 +13,7 @@ function Main(props) {
       <p>No problem!</p>
 
       <form action="/password/CheckEmail">
-	      <input className="form-control" name="emailInput" placeholder="E-mail" />
+	      <input className="form-control" type="email" name="emailInput" placeholder="E-mail" />
 	      <button type="submit" onClick={ sendEmailButton }>Send</button>
       </form>
     </div>
