@@ -11,12 +11,7 @@ import SpeakeasyForm from './components/SpeakeasyForm';
 
 import gunners from './assets/ic_already_member.png';
 
-@connect(
-  state => ({
-    user: state.auth.user,
-    codes: state.home.codes
-  }), { push, getCodes })
-export default class Home extends Component {
+export class Home extends Component {
 
   componentDidMount() {
     this.props.getCodes();
@@ -46,3 +41,8 @@ export default class Home extends Component {
     );
   }
 }
+
+export default connect( state => ({
+    user: state.auth.user,
+    codes: state.home.codes
+  }), { push, getCodes })(Home);
