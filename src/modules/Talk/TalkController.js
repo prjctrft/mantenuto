@@ -14,15 +14,15 @@ export class TalkController extends Component {
 
   componentDidMount() {
     // start looking for listener
-    this.registerListeners();
+    this.registerSocketListeners();
   }
 
-  registerListeners = () => {
+  registerSocketListeners = () => {
     // event: listener found
     socket.on('listener found', this.listenerFound);
       // TODO in Talk action: 'We've found someone for you to talk with!'
     // event: room ready (created OR found)
-    socket.on('room ready', this.roomReady)
+    socket.on('room ready', this.roomReady);
       // action: 'Headed to your chat room now!'
     // event: listener not found
     socket.on('listener not found', this.listenerNotFound);

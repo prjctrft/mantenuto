@@ -6,8 +6,8 @@ import { Link } from 'react-router';
 import { SubmissionError } from 'redux-form';
 
 import LoginForm from './components/LoginForm';
-import { login } from 'redux/modules/auth';
-import { notifSend } from '../Notifs/redux';
+import { login } from 'modules/Auth/redux';
+import { notifSend } from 'modules/Notifs/redux';
 
 @connect(null, { notifSend, login, push })
 export default class Login extends Component {
@@ -46,7 +46,6 @@ export default class Login extends Component {
   }
 
   render() {
-    const { logout } = this.props;
     const styles = require('./Login.scss');
     return (
       <div className={styles.login}>

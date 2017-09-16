@@ -1,7 +1,6 @@
 import app, { socket } from 'app';
 import * as constants from './constants';
 
-const roomService = app.service('rooms');
 const messageService = app.service('messages');
 
 export function load(slug, user) {
@@ -11,7 +10,10 @@ export function load(slug, user) {
       constants.LOAD_ROOM_SUCCESS,
       constants.LOAD_ROOM_FAIL
     ],
-    promise: () => roomService.get(slug, {query: { $populate: 'listener.user talker.user' } })
+    promise: (client) => {
+      debugger;
+      return client.service('rooms').get(slug, {query: { $populate: 'listener.user talker.user' } })
+    }
   };
 }
 

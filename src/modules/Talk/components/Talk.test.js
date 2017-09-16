@@ -7,7 +7,6 @@ import Talk from './Talk';
 describe('Talk', () => {
 
   it('should render <Looking /> when "props.pipeline" is "looking"', () => {
-    debugger;
     const component = shallow(<Talk pipeline='looking' />);
     expect(component.find('Looking')).to.have.length(1);
   })
