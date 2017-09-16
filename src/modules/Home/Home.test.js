@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { Home } from './Home';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
-
+import routes from './';
 import createStore from 'redux/create';
 import ApiClient from 'helpers/ApiClient';
 const client = new ApiClient();
@@ -27,13 +27,17 @@ describe('<Home />', () => {
   );
 
   const component = connectedComponent.find(Home);
-
+  
   it('should render correctly', () => {expect(component.exists()).to.be.true});
 
   it('should render div with class home', () => {
     const home = component.find('.home');
     expect(home).to.have.length(1);
     expect(home.name()).to.equal('div');
+  });
+
+  it('should render div with class `alreadyMember`', () => {
+    expect(component.find('.alreadyMember')).to.have.length(1);
   });
 
   it('should render image', () => {
