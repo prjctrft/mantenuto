@@ -8,9 +8,7 @@ import { tryRestAuth, socketAuth } from './redux'
 // Client and Already Authenticated -> 1) socket -> tryAuth
 //                                     2) rest -> tryAuth
 
-
-@connect((state) => ({ ...state.auth }), { tryRestAuth, socketAuth })
-class TryAuth extends Component {
+export class TryAuth extends Component {
   constructor(props) {
     super(props);
     if(__SERVER__) {
@@ -19,17 +17,22 @@ class TryAuth extends Component {
     if(__CLIENT__) {
       this.props.tryRestAuth();
       const self = this;
-      socket.on('connect', () => {
-        if(this.props.user && !this.props.triedSocketAuth) {
-          this.props.socketAuth();
-        };
-      })
+      socket.on('connect', this.trySocketAuth)
     }
   }
+
+  trySocketAuth = () => {
+    if(this.props.user && !this.props.triedSocketAuth) {
+      this.props.socketAuth();
+    };
+  };
 
   render() {
     return <div>{this.props.children}</div>
   }
 };
 
-export default TryAuth;
+export default connect((state) => ({ ...state.auth }), {
+  tryRestAuth,
+  socketAuth
+})(TryAuth);

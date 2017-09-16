@@ -2,35 +2,24 @@ import app, { restApp, socket } from 'app';
 import { SubmissionError } from 'redux-form';
 import cookie from 'react-cookie';
 
-const LOAD_TOKEN = 'chat/auth/LOAD_TOKEN';
-const LOAD = 'chat/auth/LOAD';
-const LOAD_SUCCESS = 'chat/auth/LOAD_SUCCESS';
-const LOAD_FAIL = 'chat/auth/LOAD_FAIL';
-const LOGIN = 'chat/auth/LOGIN';
-const LOGIN_SUCCESS = 'chat/auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'chat/auth/LOGIN_FAIL';
-// const REGISTER = 'chat/auth/REGISTER';
-// const REGISTER_SUCCESS = 'chat/auth/REGISTER_SUCCESS';
-// const REGISTER_FAIL = 'chat/auth/REGISTER_FAIL';
-const OAUTHLOGIN = 'chat/auth/OAUTHLOGIN';
-const OAUTHLOGIN_SUCCESS = 'chat/auth/OAUTHLOGIN_SUCCESS';
-const OAUTHLOGIN_FAIL = 'chat/auth/OAUTHLOGIN_FAIL';
-const JWT_LOGIN = 'chat/auth/JWT_LOGIN';
-const JWT_LOGIN_SUCCESS = 'chat/auth/JWT_LOGIN_SUCCESS';
-const JWT_LOGIN_FAIL = 'chat/auth/JWT_LOGIN_FAIL';
-const SOCKET_AUTHENTICATED = 'chat/auth/SOCKET_AUTHENTICATED';
-const LOGOUT = 'chat/auth/LOGOUT';
-const LOGOUT_SUCCESS = 'chat/auth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'chat/auth/LOGOUT_FAIL';
-const TRIED_AUTH = 'chat/auth/TRIED_AUTH';
-const TRIED_SOCKET_AUTH = 'chat/auth/TRIED_SOCKET_AUTH';
-const TRYING_AUTH = 'chat/auth/TRYING_AUTH';
-const TOKEN_NOT_FOUND = 'chat/auth/TOKEN_NOT_FOUND';
+export const LOGIN = 'chat/auth/LOGIN';
+export const LOGIN_SUCCESS = 'chat/auth/LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'chat/auth/LOGIN_FAIL';
+export const JWT_LOGIN = 'chat/auth/JWT_LOGIN';
+export const JWT_LOGIN_SUCCESS = 'chat/auth/JWT_LOGIN_SUCCESS';
+export const JWT_LOGIN_FAIL = 'chat/auth/JWT_LOGIN_FAIL';
+export const SOCKET_AUTHENTICATED = 'chat/auth/SOCKET_AUTHENTICATED';
+export const LOGOUT = 'chat/auth/LOGOUT';
+export const LOGOUT_SUCCESS = 'chat/auth/LOGOUT_SUCCESS';
+export const LOGOUT_FAIL = 'chat/auth/LOGOUT_FAIL';
+export const TRIED_AUTH = 'chat/auth/TRIED_AUTH';
+export const TRIED_SOCKET_AUTH = 'chat/auth/TRIED_SOCKET_AUTH';
+export const TRYING_AUTH = 'chat/auth/TRYING_AUTH';
+export const TOKEN_NOT_FOUND = 'chat/auth/TOKEN_NOT_FOUND';
 
 const initialState = {
   triedAuth: false,
   tryingAuth: false,
-  loaded: false,
   triedSocketAuth: false,
   socketAuthenticated: false,
   token: null,
@@ -69,44 +58,10 @@ export function authReducer(state = initialState, action = {}) {
         ...state,
         triedSocketAuth: true
       }
-    case LOAD_TOKEN:
-      return {
-        ...state,
-        token: action.token
-      }
-    case LOAD:
-      return {
-        ...state,
-        loading: true
-      };
-    case LOAD_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        token: action.result.token,
-        user: action.result.user
-      };
-    case LOAD_FAIL:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error: action.error
-      };
-    case JWT_LOGIN:
-    case LOGIN:
-    case OAUTHLOGIN:
-      return {
-        ...state,
-        loggingIn: true
-      };
     case JWT_LOGIN_SUCCESS:
     case LOGIN_SUCCESS:
-    case OAUTHLOGIN_SUCCESS:
       return {
         ...state,
-        loggingIn: false,
         token: action.result.token,
         user: action.result.user,
         tryingAuth: false,
@@ -114,10 +69,8 @@ export function authReducer(state = initialState, action = {}) {
       };
     case JWT_LOGIN_FAIL:
     case LOGIN_FAIL:
-    case OAUTHLOGIN_FAIL:
       return {
         ...state,
-        loggingIn: false,
         token: null,
         loginError: action.error,
         tryingAuth: false,
@@ -126,13 +79,8 @@ export function authReducer(state = initialState, action = {}) {
     case SOCKET_AUTHENTICATED:
       return {
         ...state,
-        socketAuthenticated: action.socketAuthenticated
+        socketAuthenticated: true
       }
-    case LOGOUT:
-      return {
-        ...state,
-        loggingOut: true
-      };
     case LOGOUT_SUCCESS:
       return {
         ...initialState
@@ -140,9 +88,11 @@ export function authReducer(state = initialState, action = {}) {
     case LOGOUT_FAIL:
       return {
         ...state,
-        loggingOut: false,
         logoutError: action.error
       };
+    case LOGOUT:
+    case JWT_LOGIN:
+    case LOGIN:
     default:
       return state;
   }
@@ -165,9 +115,7 @@ export function socketAuth() {
     // and will always run AFTER rest client has been authenticated
     const token = getState().auth.token;
     dispatch({ type: TRIED_SOCKET_AUTH });
-    return dispatch(jwtLogin(token, app))//.then(() => {
-      //debugger;
-    //});
+    return dispatch(jwtLogin(token, app));
   }
 }
 
@@ -210,11 +158,9 @@ export function jwtLogin(token, client) {
   };
 }
 
-function socketAuthenticated(response) {
-  const socketAuthenticated = true;
+function socketAuthenticated() {
   return {
-    type: SOCKET_AUTHENTICATED,
-    socketAuthenticated
+    type: SOCKET_AUTHENTICATED
   }
 }
 

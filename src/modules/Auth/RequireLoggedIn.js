@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router';
 
-class RequireLoggedIn extends Component {
+export class RequireLoggedIn extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.tryingAuth || nextProps.authenticated) {
       return;
     }
     if (nextProps.triedAuth) {
-      return this.props.push('/');
+      return this.props.push('/login');
     }
   }
 

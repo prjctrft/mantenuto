@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-class RequireNotLoggedIn extends Component {
+export class RequireNotLoggedIn extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.tryingAuth || nextProps.authenticated) {
@@ -16,9 +16,9 @@ class RequireNotLoggedIn extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { tryingAuth, triedAuth } = state.auth;
+  const tryingAuth = state.auth.tryingAuth;
   const authenticated = state.auth.user;
-  return { tryingAuth, triedAuth, authenticated }
+  return { tryingAuth, authenticated }
 }
 
 export default connect(mapStateToProps, { push })(RequireNotLoggedIn);
