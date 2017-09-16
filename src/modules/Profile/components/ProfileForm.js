@@ -32,6 +32,16 @@ export default class ProfileForm extends Component {
       field: 'last'
     },
     {
+      label: 'MOS',
+      type: 'text',
+      field: 'mos'
+    },
+    {
+      label: 'Username',
+      type: 'text',
+      field: 'username'
+    },
+    {
       label: 'Email',
       type: 'email',
       field: 'email'
@@ -40,16 +50,6 @@ export default class ProfileForm extends Component {
       label: 'Confirm Email',
       type: 'email',
       field: 'confirmEmail'
-    },
-     {
-      label: 'Password',
-      type: 'password',
-      field: 'password'
-    },
-    {
-      label: 'Confirm Password',
-      type: 'password',
-      field: 'confirmPassword'
     }
   ]
 
@@ -72,22 +72,7 @@ export default class ProfileForm extends Component {
         return null;
       }
     }
-    // only display confirm password when 'password' is dirty
-    // this does not work
-    // if (input.name === 'confirmPassword') {
-    //   // make sure fields exist in state
-    //   if (!this.props.profile.fields || !this.props.profile.fields.password) {
-    //     return null;
-    //   }
-    //   // if password has not been touched
-    //   if (!this.props.profile.fields.password.visited) {
-    //     return null;
-    //   }
-    //   // if password has been touched but its value is the original value
-    //   if (this.props.profile.values.password === this.props.profile.initial.password) {
-    //     return null;
-    //   }
-    // }
+   
     return (
       <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
         <label htmlFor={input.name} className="col-sm-12">{label}</label>
@@ -113,6 +98,9 @@ export default class ProfileForm extends Component {
           })
         }
         {error && <p className="text-danger"><strong>{error}</strong></p>}
+        <button className={styles.password} type="button">
+          Change Password
+        </button>
         <button disabled={pristine || submitting} /*className="btn btn-success"*/ type="submit">
           Done{' '}<i className="fa fa-check-circle-o" />
         </button>

@@ -10,6 +10,8 @@
 //   margin: auto;
 //   margin-bottom: 1rem;
 // };
+
+
 .noWrap {
   white-space: nowrap;
 }
@@ -19,6 +21,7 @@
 
 .anytime {
   background-color: $brand-success;
+  padding: 0; // to allow longer button text to be centered
 }
 
 .now {
