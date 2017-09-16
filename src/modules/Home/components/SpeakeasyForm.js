@@ -11,7 +11,8 @@ const speakeasyValidation = memoize(10)(createValidator({
 
 @reduxForm({
   form: 'register',
-  validate: speakeasyValidation
+  validate: speakeasyValidation,
+  onSubmit: () => {}
 })
 export default class RegisterForm extends Component {
   static propTypes = {
