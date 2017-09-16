@@ -9,8 +9,7 @@ import LoginForm from './components/LoginForm';
 import { login } from 'modules/Auth/redux';
 import { notifSend } from 'modules/Notifs/redux';
 
-@connect(null, { notifSend, login, push })
-export default class Login extends Component {
+export class Login extends Component {
   static propTypes = {
     notifSend: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
@@ -61,3 +60,5 @@ export default class Login extends Component {
     );
   }
 }
+
+export default connect(null, { notifSend, login, push })(Login)

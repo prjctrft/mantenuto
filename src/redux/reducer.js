@@ -3,10 +3,9 @@ import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 import { reducer as form } from 'redux-form';
+
 import { authReducer as auth } from 'modules/Auth/redux';
 import notifs from 'modules/Notifs/redux';
-import counter from './modules/counter';
-import info from './modules/info';
 import rooms from 'modules/Rooms/reducer';
 import { userReducer as user } from 'modules/App/redux';
 import home from 'modules/Home/redux';
@@ -25,12 +24,6 @@ export default function createReducer(asyncReducers) {
     rooms,
     home,
     register,
-    counter: multireducer({
-      counter1: counter,
-      counter2: counter,
-      counter3: counter
-    }),
-    info,
     ...asyncReducers
   });
 }
