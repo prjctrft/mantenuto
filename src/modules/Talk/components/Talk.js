@@ -5,9 +5,8 @@ import ListenerFound from './ListenerFound';
 import RoomReady from './RoomReady';
 import ListenerNotFound from './ListenerNotFound';
 
-import styles from './Talk.scss';
-
 const Talk = (props) => {
+  const styles = require('./Talk.scss');
   return (
     <div className={styles.talk}>
       <div className='container'>

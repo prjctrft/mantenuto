@@ -3,7 +3,7 @@ import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 import { reducer as form } from 'redux-form';
-import auth from './modules/auth';
+import { authReducer as auth } from 'modules/Auth/redux';
 import notifs from 'modules/Notifs/redux';
 import counter from './modules/counter';
 import info from './modules/info';

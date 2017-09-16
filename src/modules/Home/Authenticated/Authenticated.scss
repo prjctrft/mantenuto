@@ -1,4 +1,4 @@
-@import '../../theme/variables.scss';
+@import '~theme/variables.scss';
 
 .Authenticated {
   min-height: 100vh;
@@ -67,6 +67,3 @@
   //   font-size: 1.5em;
   // }
 }
-
-
-

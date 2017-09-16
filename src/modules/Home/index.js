@@ -1,21 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Authenticated from 'modules/Authenticated';
+import Authenticated from './Authenticated';
 import Home from './Home';
 
 const HomeContainer = (props) => {
-  if (props.user) {
+  // NOTE: if we want more routes that allow a logged in version
+  // and a no logged in version, we can abstract this logic to
+  // /modules/Auth
+  if (props.tryingAuth || !props.triedAuth) {
+    // TODO: replace with spinner
+    return null;
+  }
+  if (props.authenticated) {
     return (
       <Authenticated />
     );
   }
-  return (
-    <Home />
-  );
+  if (props.triedAuth) {
+    return (
+      <Home />
+    );
+  }
 }
 
 export default connect(state => ({
-    user: state.auth.user
+    authenticated: state.auth.user,
+    tryingAuth: state.auth.tryingAuth,
+    triedAuth: state.auth.triedAuth
   })
 )(HomeContainer)

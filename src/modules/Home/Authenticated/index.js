@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { push } from 'react-router-redux';
 
-import { populateRooms } from '../App/redux';
+// TODO, move this to user actions?
+import { populateRooms } from 'modules/App/redux';
 
 import Authenticated from './Authenticated';
 
@@ -42,7 +43,7 @@ export default class AuthenticatedContainer extends Component {
       this.props.push(`/rooms/${slug}`);
     }
   }
-  
+
   // renderWelcome = () => {
   //   const { user } = this.props;
   //   if (!user) {

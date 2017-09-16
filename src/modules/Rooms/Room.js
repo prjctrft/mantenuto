@@ -28,11 +28,12 @@ const mapStateToProps = (state) => {
     isListener,
     peer,
     isRoomParsed,
-    peerCheckedIn
+    peerCheckedIn,
+    loaded
   } = state.rooms;
   const id = state.auth.user;
   const { user } = state.user;
-  return { peerCheckedIn, peer, user, room, checkedIn, isTalker, isListener, isRoomParsed };
+  return { loaded, peerCheckedIn, peer, user, room, checkedIn, isTalker, isListener, isRoomParsed };
 };
 
 @connect(mapStateToProps, {
@@ -89,7 +90,7 @@ export default class RoomContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.isRoomParsed && nextProps.room && nextProps.user._id) {
+    if (!nextProps.isRoomParsed && nextProps.loaded && nextProps.user._id) {
       this.props.parsedRoom();
       const user = nextProps.user;
       const room = nextProps.room;
