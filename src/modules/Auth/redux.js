@@ -124,8 +124,6 @@ function saveAuth(response) {
   return app.passport.verifyJWT(token)
     .then(payload => {
       const id = payload.userId;
-      // app.set('accessToken', token); // -> set manually the JWT
-      // restApp.set('accessToken', token);
       cookie.save('feathers-jwt', token);
       return { user: id, token };
     });

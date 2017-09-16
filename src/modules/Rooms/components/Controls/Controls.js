@@ -3,9 +3,10 @@ import Modal from 'react-bootstrap/lib/Modal';
 
 import ControlButton from './ControlButton';
 
-import styles from './Controls.scss';
-
 export default (props) => {
+
+  const styles = require('./Controls.scss');
+
   return (
     <div className={`${styles.controlBar}`}>
       <div className="btn-group btn-group-lg" role="group" aria-label="...">
