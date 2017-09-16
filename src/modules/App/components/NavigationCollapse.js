@@ -7,12 +7,12 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 
 export default function NavigationCollapse(props) {
   const { user, handleLogout } = props;
-
+  const styles = require('./Navigation.scss');
 	return (
 		<Navbar.Collapse>
       <Nav navbar pullRight>
-        <LinkContainer to="/profile">
-          <NavItem eventKey={0}>Profile</NavItem>
+        <LinkContainer to="/profile" >
+          <NavItem eventKey={0} >Profile</NavItem>
         </LinkContainer>
         {/* {!user && <LinkContainer to="/login">
           <NavItem eventKey={5}>Login</NavItem>

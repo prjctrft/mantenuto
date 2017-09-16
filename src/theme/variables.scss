@@ -7,14 +7,20 @@
  */
 
 // Custom Colors
-$brand-black: #000;
-// $brand-black: #2d2d2d;
+$brand-black: #100c2e; 
 $brand-gray: #ccc;
-$brand-darker-gray: #2C2D2F;
+$brand-darker-gray: #2c2d2f;
 $brand-white: #fff;
 
-$brand-success: #85E9B0;
-$brand-danger: #E98585;
+$brand-success: #85e9b0;
+$brand-danger: #e98585;
+
+$text-color-light: #c2c3c6;
+$text-color-dark: #67676a;
+$chat-color-light: #389abc;
+$chat-color-dark: #1739af;
+
+$brand-light-blue: #3AC9E3;
 
 // Bootstrap Variables
 $brand-primary: #55acf6;
@@ -26,6 +32,7 @@ $brand-info: #5bc0de;
 
 $text-color: #333;
 
+
 $font-size-base: 14px;
 // $font-family-sans-serif: "Helvetica Neue", Helvetica, sans-serif;
 // $font-family-sans-serif: 'Inconsolata', monospace;
@@ -33,6 +40,7 @@ $font-family-sans-serif: 'Roboto', sans-serif;
 
 // Form Variables
 $button-width: 150px;
+$button-height: 25px;
 $button-border-radius: 5px;
 $button-on: $brand-success;
 $button-off: $brand-danger;
