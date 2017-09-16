@@ -13,9 +13,19 @@
 	button {
 		align-self: center;
 		width: $button-width;
+		height: $button-height;
 		box-shadow: $box-shadow;
 		background-color: $brand-gray;
 		border-radius: $button-border-radius;
+	}
+
+	button.password {
+		width: $button-width * 1.5;
+		height: $button-height * 1.5;
+		background-color: $brand-light-blue;
+		color: $brand-white;
+		border: none;
+		margin: 1rem auto 3rem auto;
 	}
 
 	@media (min-width: 768px) {

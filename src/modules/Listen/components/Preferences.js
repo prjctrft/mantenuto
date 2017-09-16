@@ -18,7 +18,7 @@ export default (props) => {
             <h3>Or</h3>
           </div>
           <div className={`col-sm-5 ${styles.noWrap}`}>
-            <h3>Can you only listen now!</h3>
+            <h3>Can you only listen now?</h3>
             <CircleButton className={`${styles.marginAuto} ${styles.now}`} onClick={props.handleNow} content='Now' />
           </div>
         </div>
