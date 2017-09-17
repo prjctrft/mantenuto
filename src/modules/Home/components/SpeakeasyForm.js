@@ -34,7 +34,7 @@ export default class RegisterForm extends Component {
       <div className="col-sm-12">
         <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
           <input {...input} placeholder={placeholder} type={type} className="form-control" />
-          {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
+          {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
           {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
         </div>
       </div>

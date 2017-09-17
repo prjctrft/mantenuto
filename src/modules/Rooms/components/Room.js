@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 
 // Todo
@@ -36,7 +37,7 @@ export default (props) => {
     <div className="container">
       <div className='row'>
         <div className='col-xs-12 text-center'>
-          <Stats peer={props.peer} user={props.user} styles={styles}/>
+          <Stats peer={props.peer} user={props.user} styles={styles} />
         </div>
       </div>
       <div className='row'>
@@ -50,11 +51,11 @@ export default (props) => {
       </div>
       <div className='row'>
         <div className='col-xs-12 text-center'>
-            <Video
-              styles={styles}
-              hoistRemoteVideo={hoistRemoteVideo}
-              hoistLocalVideo={hoistLocalVideo}
-            />
+          <Video
+            styles={styles}
+            hoistRemoteVideo={hoistRemoteVideo}
+            hoistLocalVideo={hoistLocalVideo}
+          />
         </div>
       </div>
       <div className='row'>

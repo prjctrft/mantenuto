@@ -1,4 +1,4 @@
-import app, { restApp, socket } from 'app';
+import { SubmissionError } from 'redux-form';
 
 const POPULATE_USER = 'chat/user/POPULATE_USER';
 const POPULATE_USER_SUCCESS = 'chat/user/POPULATE_SUCCESS';
@@ -48,17 +48,15 @@ export function userReducer(state = defaultState, action = {}) {
         populatingRooms: true
       };
     case POPULATE_ROOMS_SUCCESS:
-      const rooms = state.rooms || [];
       return {
         ...state,
         populatingRooms: false,
         roomsPopulated: true,
-        rooms: [...action.result.rooms, ...rooms]
+        rooms: [...action.result.rooms, ...(state.rooms || [])]
       };
     case CLEAR_USER:
       return {};
     case POPULATE_FAIL:
-      debugger;
     default:
       return state;
     }
@@ -92,32 +90,32 @@ export function updateUser(id, data) {
   }
 }
 
-function saveRooms(response) {
-  return { rooms: response.data };
-}
+// function saveRooms(response) {
+//   return { rooms: response.data };
+// }
 
-export function populateRooms(id, roomType) {
-  const query = {
-    $or: [
-      { 'talker.user': id },
-      { 'listener.user': id }
-    ],
-    $select: [
-      'slug',
-      'talker',
-      'listener'
-    ],
-    $populate: [
-      'talker.user',
-      'listener.user'
-    ]
-  };
-  // e.g. 'talker.user' or 'listener.user'
-  // query[`${roomType}.user`] = id;
-  return {
-    types: [POPULATE_ROOMS, POPULATE_ROOMS_SUCCESS, POPULATE_FAIL],
-    promise: () => app.service('rooms').find({query})
-      .then(saveRooms)
-      .catch(catchValidation)
-  }
-}
+// export function populateRooms(id, roomType) {
+//   const query = {
+//     $or: [
+//       { 'talker.user': id },
+//       { 'listener.user': id }
+//     ],
+//     $select: [
+//       'slug',
+//       'talker',
+//       'listener'
+//     ],
+//     $populate: [
+//       'talker.user',
+//       'listener.user'
+//     ]
+//   };
+//   // e.g. 'talker.user' or 'listener.user'
+//   // query[`${roomType}.user`] = id;
+//   return {
+//     types: [POPULATE_ROOMS, POPULATE_ROOMS_SUCCESS, POPULATE_FAIL],
+//     promise: () => app.service('rooms').find({query})
+//       .then(saveRooms)
+//       .catch(catchValidation)
+//   }
+// }

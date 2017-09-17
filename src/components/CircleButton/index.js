@@ -6,8 +6,8 @@ const CircleButton = (props) => {
     <button
       onClick={props.onClick}
       className={
-        `btn btn-lg btn-primary btn-block btn-circle ${styles.CircleButton} ${props.className}`
-      }>
+        `btn btn-lg btn-primary btn-block btn-circle ${styles.CircleButton} ${props.className}`}
+    >
       {props.content}
     </button>
   );
@@ -15,7 +15,12 @@ const CircleButton = (props) => {
 
 CircleButton.propTypes = {
   content: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
+
+CircleButton.defaultProps = {
+  className: ''
+}
 
 export default CircleButton

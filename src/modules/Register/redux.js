@@ -6,7 +6,7 @@ const REGISTER_FAIL = 'chat/register/REGISTER_FAIL';
 
 const initialState = {};
 
-export default function reducer(state = initialState, action = {}) {
+export function registerReducer(state = initialState, action = {}) {
   switch (action.type) {
     case REGISTER:
       return {
@@ -34,8 +34,8 @@ export function register(data) {
     types: [REGISTER, REGISTER_SUCCESS, REGISTER_FAIL],
     promise: () => app.service('users')
       .create(data)
-      .catch((error) => {
-        debugger;
+      .catch(() => {
+
       })
   };
 }

@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 import React from 'react';
-import { IndexRoute, IndexRedirect, Route } from 'react-router';
+import { IndexRedirect, Route } from 'react-router';
 
 import Forgot from './components/Forgot';
 import Token from './components/Token';
@@ -27,8 +26,3 @@ const routes = (
     <Route path=':token' component={Token} />
   </Route>
 );
-
-export default routes;
-=======
-export default from './routes';
->>>>>>> cleanup

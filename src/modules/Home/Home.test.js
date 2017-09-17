@@ -1,32 +1,19 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { Home } from './Home';
-import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router';
-
-import createStore from 'redux/create';
-import ApiClient from 'helpers/ApiClient';
-const client = new ApiClient();
 
 describe('<Home />', () => {
-
-  const mockStore = {
-  };
+  let component;
 
   const props = {
     getCodes: jest.fn(),
     codes: []
   }
 
-  const store = createStore(browserHistory, client, mockStore);
-  const connectedComponent = mount(
-    <Provider store={store} key="provider">
-      <Home {...props} />
-    </Provider>
-  );
-
-  const component = connectedComponent.find(Home);
+  beforeEach(() => {
+    component = shallow(<Home {...props} />);
+  })
 
   it('should render correctly', () => {expect(component.exists()).to.be.true});
 
@@ -41,7 +28,7 @@ describe('<Home />', () => {
   });
 
   it('should render proper text under image', () => {
-    expect(component.find('a').text()).to.equal('Already a member?');
+    expect(component.find('Link').children().nodes[1]).to.equal('Already a member?');
   });
 
   it('should render h1 element', () => {

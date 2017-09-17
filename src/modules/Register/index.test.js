@@ -1,13 +1,6 @@
-import React from 'react';
 import { expect } from 'chai';
 
 import routes from './'
-
-
-  // <Route path='register'>
-  //   <IndexRoute component={Register} />
-  //   <Route path=':type' component={RegisterType} />
-  // </Route>
 
 describe('register routes', () => {
 

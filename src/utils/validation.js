@@ -37,8 +37,8 @@ export function integer(value) {
 }
 
 export function oneOf(enumeration) {
-  return value => {
-    if (!~enumeration.indexOf(value)) {
+  return (value) => {
+    if (enumeration.indexOf(value) < 0) {
       return `Must be one of: ${enumeration.join(', ')}`;
     }
   };

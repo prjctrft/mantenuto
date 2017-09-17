@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Authenticated from './Authenticated';
-import Home from './Home';
+import ConnectHome from './Home';
 
 const HomeContainer = (props) => {
   // NOTE: if we want more routes that allow a logged in version
@@ -19,13 +19,19 @@ const HomeContainer = (props) => {
   }
   if (props.triedAuth) {
     return (
-      <Home />
+      <ConnectHome />
     );
   }
 }
 
+HomeContainer.propTypes = {
+  tryingAuth: PropTypes.bool.isRequired,
+  triedAuth: PropTypes.bool.isRequired,
+  authenticated: PropTypes.bool.isRequired
+}
+
 export default connect(state => ({
-    authenticated: state.auth.user,
+    authenticated: !!state.auth.user,
     tryingAuth: state.auth.tryingAuth,
     triedAuth: state.auth.triedAuth
   })

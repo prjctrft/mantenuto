@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -24,6 +24,10 @@ const Authenticated = (props) => {
       </div>
     </div>
   )
+}
+
+Authenticated.propTypes = {
+  push: PropTypes.func.isRequired
 }
 
 export default connect(null, { push })(Authenticated);

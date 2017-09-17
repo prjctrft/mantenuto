@@ -23,7 +23,7 @@ const initialState = {
   triedSocketAuth: false,
   socketAuthenticated: false,
   token: null,
-  user: undefined,
+  user: null,
 };
 
 const catchValidation = error => {
@@ -156,11 +156,11 @@ export function jwtLogin(token, client) {
   };
 }
 
-function socketAuthenticated() {
-  return {
-    type: SOCKET_AUTHENTICATED
-  }
-}
+// function socketAuthenticated() {
+//   return {
+//     type: SOCKET_AUTHENTICATED
+//   }
+// }
 
 export function logout() {
   return {
@@ -177,4 +177,4 @@ function cleanStorage() {
   cookie.remove('feathers-session');
   cookie.remove('io');
   localStorage.removeItem('feathers-jwt')
-};
+}

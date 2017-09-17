@@ -1,8 +1,7 @@
-import React from 'react';
 import { expect } from 'chai';
-import { authReducer } from './redux';
 
 import {
+  authReducer,
   TOKEN_NOT_FOUND,
   TRYING_AUTH,
   TRIED_AUTH,
@@ -22,7 +21,7 @@ const initialState = {
   triedSocketAuth: false,
   socketAuthenticated: false,
   token: null,
-  user: undefined,
+  user: null,
 }
 
 describe('auth reducer', () => {

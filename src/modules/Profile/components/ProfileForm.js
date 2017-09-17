@@ -53,7 +53,7 @@ export default class ProfileForm extends Component {
     }
   ]
 
-  renderInput = ({ input, label, type, meta: { touched, error, dirty, initial, pristine } }) => {
+  renderInput = ({ input, label, type, meta: { touched, error, dirty, initial, pristine } }) => { //eslint-disable-line no-unused-vars
     // only display confirm email when 'email' is dirty
     if (input.name === 'confirmEmail') {
       if (!this.props.profile) {
@@ -72,13 +72,13 @@ export default class ProfileForm extends Component {
         return null;
       }
     }
-   
+
     return (
       <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
         <label htmlFor={input.name} className="col-sm-12">{label}</label>
         <div className="col-sm-12">
           <input {...input} type={type} className="form-control" />
-          {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
+          {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
           {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
         </div>
       </div>
@@ -86,7 +86,7 @@ export default class ProfileForm extends Component {
   }
 
   render() {
-    const { user, pristine, submitting, handleSubmit, error, initialValues } = this.props;
+    const { user, pristine, submitting, handleSubmit, error, initialValues } = this.props; //eslint-disable-line no-unused-vars
     const styles = require('./ProfileForm.scss')
     return (
       <form className={styles.ProfileForm} onSubmit={handleSubmit}>

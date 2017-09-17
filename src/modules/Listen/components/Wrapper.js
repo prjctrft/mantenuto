@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 // TODO - extract this component to be used
 // across app
-export default (props) => {
+const Wrapper = (props) => {
   const styles = require('./Wrapper.scss');
   return (
     <div className={styles.Wrapper}>
@@ -10,3 +10,9 @@ export default (props) => {
     </div>
   )
 }
+
+Wrapper.propTypes = {
+  children: PropTypes.array.isRequired
+}
+
+export default Wrapper;

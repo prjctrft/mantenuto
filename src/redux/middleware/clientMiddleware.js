@@ -1,4 +1,3 @@
-import React from 'react';
 import app, { restApp } from 'app';
 
 export default function clientMiddleware() {
@@ -17,20 +16,13 @@ export default function clientMiddleware() {
 
     const client = app.io && app.io.authenticated ? app : restApp;
 
-    // if (!client.get('accessToken')) {
-    //   const token = getState().auth.token;
-    //   if(token) {
-    //     client.set('accessToken', token);
-    //   }
-    // }
-
     const actionPromise = promise(client, dispatch);
 
     actionPromise.then(
       result => next({ ...rest, result, type: SUCCESS }),
       error => next({ ...rest, error, type: FAILURE })
     ).catch(error => {
-      console.error('MIDDLEWARE ERROR:', error);
+      // console.error('MIDDLEWARE ERROR:', error);
       next({ ...rest, error, type: FAILURE });
     });
 

@@ -75,12 +75,6 @@ export default (state = initialState, action = {}) => {
         isListener: true,
         isTalker: false
       }
-    case constants.SET_IS_LISTENER:
-      return {
-        ...state,
-        isListener: true,
-        isTalker: false
-      }
     case constants.SET_PEER:
       return {
         ...state,
@@ -92,10 +86,9 @@ export default (state = initialState, action = {}) => {
         isRoomParsed: true
       }
     case constants.ADD_MESSAGE:
-      const nextMessages = state.messages.concat(action.message);
       return {
         ...state,
-        messages: nextMessages
+        messages: state.messages.concat(action.message)
       }
     case constants.LOAD_MESSAGES_SUCCESS:
       return {
@@ -127,10 +120,9 @@ export default (state = initialState, action = {}) => {
       }
     case constants.LOCAL_VIDEO_ON:
     case constants.LOCAL_VIDEO_OFF:
-      const localVideoOn = action.localVideoOn;
       return {
         ...state,
-        localVideoOn
+        localVideoOn: action.localVideoOn
       }
     case constants.LOAD_MESSAGES:
     case constants.PUSH_MESSAGE_FAIL:

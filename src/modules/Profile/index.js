@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import { updateUser } from '../App/redux';
@@ -14,6 +14,13 @@ import ListenAnytime from './components/ListenAnytime';
   }), { updateUser, notifSend }
 )
 export default class Profile extends Component {
+  static propTypes = {
+    updateUser: PropTypes.func.isRequired,
+    notifSend: PropTypes.func.isRequired,
+    user: PropTypes.object
+    // handleSubmit: PropTypes.func.isRequired,
+    // error: PropTypes.string
+  }
 
   updateProfile = (data) => {
     const initial = this.props.user.user;
@@ -29,7 +36,7 @@ export default class Profile extends Component {
     }
   }
 
-  success = (updatedUser) => {
+  success = () => {
     const notif = {
       kind: 'success',
       message: 'You successfully updated your profile!'
@@ -43,11 +50,11 @@ export default class Profile extends Component {
     // user is initialized as an empty object, so this will ALWAYS be true
     // let's move this concern to the form itself
     return (
-        <div className={styles.profile}>
-          <h1>Profile</h1>
-          { user.userPopulated ? <ProfileForm initialValues={user.user} onSubmit={this.updateProfile} /> : null }
-          <ListenAnytime />
-        </div>
+      <div className={styles.profile}>
+        <h1>Profile</h1>
+        { user.userPopulated ? <ProfileForm initialValues={user.user} onSubmit={this.updateProfile} /> : null }
+        <ListenAnytime />
+      </div>
 
 
     )

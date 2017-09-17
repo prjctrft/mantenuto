@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import Modal from 'react-bootstrap/lib/Modal';
 
@@ -52,7 +53,7 @@ export default (props) => {
           <i className='fa fa-times' aria-hidden='true' />
         </button> */}
       </div>
-       <Modal show={props.receiveCallPrompt} onHide={props.close}>
+      <Modal show={props.receiveCallPrompt} onHide={props.close}>
         <Modal.Header closeButton>
           { props.peer && props.peer.user ? <Modal.Title>Incoming Call from {props.peer.user.first}.</Modal.Title> : null }
         </Modal.Header>

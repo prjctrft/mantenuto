@@ -1,8 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { push } from 'react-router';
+import { push } from 'react-router-redux';
 
-export class RequireLoggedIn extends Component {
+export class RequireLoggedInComponent extends Component {
+
+  static propTypes = {
+    tryingAuth: PropTypes.bool.isRequired,
+    authenticated: PropTypes.bool.isRequired,
+    triedAuth: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+    push: PropTypes.func.isRequired
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.tryingAuth || nextProps.authenticated) {
@@ -20,8 +28,8 @@ export class RequireLoggedIn extends Component {
 
 const mapStateToProps = (state) => {
   const { tryingAuth, triedAuth } = state.auth;
-  const authenticated = state.auth.user;
+  const authenticated = !!state.auth.user;
   return { tryingAuth, triedAuth, authenticated }
 }
 
-export default connect(mapStateToProps, { push })(RequireLoggedIn);
+export default connect(mapStateToProps, { push })(RequireLoggedInComponent);

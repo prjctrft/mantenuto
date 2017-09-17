@@ -1,10 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-
-import { IndexLink } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
+import React, { PropTypes } from 'react';
 import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
 
 import NavigationHeader from './NavigationHeader';
 import NavigationCollapse from './NavigationCollapse';
@@ -14,17 +9,23 @@ const hideNavigation = (props) => {
   return props.pathname === '/' && !props.authenticated
 }
 
-export default (props) => {
+const Navigation = (props) => {
     if(hideNavigation(props)) {
       return null;
     }
-    const { user, notifs, handleLogout } = props;
 
     return (
       <Navbar fixedTop>
-        <NavigationHeader user={user} />
-        { user ? <NavigationCollapse handleLogout={handleLogout} /> : null }
+        <NavigationHeader user={props.user} />
+        { props.user ? <NavigationCollapse handleLogout={props.handleLogout} /> : null }
       </Navbar>
     )
 
 }
+
+Navigation.propTypes = {
+  user: PropTypes.object,
+  handleLogout: PropTypes.func.isRequired
+}
+
+export default Navigation

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { ClipLoader } from 'react-spinners';
 
 import Wrapper from './Wrapper';
 
-export default (props) => {
+const Connecting = () => {
   const styles = require('./Connecting.scss');
   return (
     <Wrapper>
@@ -14,7 +14,7 @@ export default (props) => {
             <h2>Finding someone that needs your ears now!</h2>
             <ClipLoader
               color={styles.brandPrimary}
-              loading={true}
+              loading
               size={100}
             />
           </div>
@@ -23,3 +23,5 @@ export default (props) => {
     </Wrapper>
   )
 };
+
+export default Connecting;

@@ -10,5 +10,5 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export default (
-  <Route path='listen' component={ Listen } />
+  <Route path='listen' component={Listen} />
 );

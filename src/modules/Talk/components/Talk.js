@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Looking from './Looking';
 import ListenerFound from './ListenerFound';
@@ -22,5 +22,9 @@ const Talk = (props) => {
     </div>
   )
 };
+
+Talk.propTypes = {
+  pipeline: PropTypes.string.isRequired
+}
 
 export default Talk;
