@@ -1,53 +1,32 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-// import { IndexLink } from 'react-router';
-// import { LinkContainer } from 'react-router-bootstrap';
-// import Navbar from 'react-bootstrap/lib/Navbar';
-// import Nav from 'react-bootstrap/lib/Nav';
-// import NavItem from 'react-bootstrap/lib/NavItem';
-import Alert from 'react-bootstrap/lib/Alert';
 import Helmet from 'react-helmet';
-import { logout } from 'modules/Auth/redux';
-import { clearUser } from './redux';
-// import { Notifs, InfoBar } from 'components';
-import Notifs from '../Notifs';
+import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import config from 'config';
-import { populateUser } from './redux';
+import { logout } from 'modules/Auth/redux';
+import { clearUser, populateUser } from './redux';
+import Notifs from '../Notifs';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 
-// import { asyncConnect } from 'redux-connect';
-
-// @asyncConnect([{
-//   promise: ({ store: { dispatch, getState } }) => {
-//     const promises = [];
-//     const state = getState();
-//     if (!isAuthLoaded(state)) {
-//       promises.push(dispatch(loadAuth(state, dispatch)));
-//     }
-//     if (!isInfoLoaded(state)) {
-//       promises.push(dispatch(loadInfo()));
-//     }
-//     return Promise.all(promises);
-//   }
-// }])
 @connect(
   state => ({
-    notifs: state.notifs,
     id: state.auth.user,
+    authenticated: !!state.auth.user,
     user: state.user.user
   }), { populateUser, logout, clearUser, push })
-  // }),
-  // { logout, pushState: push })
 export default class App extends Component {
   static propTypes = {
-    children: PropTypes.object.isRequired,
-    user: PropTypes.object,
+    children: PropTypes.node.isRequired,
+    user: PropTypes.object.isRequired,
     notifs: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired,
+    clearUser: PropTypes.func.isRequired,
+    authenticated: PropTypes.bool.isRequired,
+    id: PropTypes.string,
+    location: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -55,6 +34,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    // TODO move this to Auth
     this.populateUser(this.props);
   }
 
@@ -63,7 +43,8 @@ export default class App extends Component {
   }
 
   populateUser = (props) => {
-    if (Object.keys(props.user).length === 0 && props.id) {
+    // TODO move this to Auth
+    if (Object.keys(props.user).length === 0 && props.authenticated) {
       props.populateUser(props.id);
     }
   }
@@ -77,9 +58,8 @@ export default class App extends Component {
   };
 
   render() {
-    const { notifs, children } = this.props;
-    const authenticated = this.props.id;
-    const user = this.props.user
+    const authenticated = this.props.authenticated;
+    const user = this.props.user;
     const { pathname } = this.props.location;
     const styles = require('./App.scss');
 
@@ -87,9 +67,9 @@ export default class App extends Component {
       <div className={styles.app}>
         <Helmet {...config.app.head} />
         <Navigation authenticated={authenticated} handleLogout={this.handleLogout} pathname={pathname} user={user} />
-        <Notifs className={styles.notifs} />
+        <Notifs />
         <div className={styles.appContent}>
-          { children }
+          { this.props.children }
         </div>
         <Footer />
       </div>

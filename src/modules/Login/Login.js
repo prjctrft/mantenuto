@@ -2,18 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router';
 import { SubmissionError } from 'redux-form';
 
-import LoginForm from './components/LoginForm';
 import { login } from 'modules/Auth/redux';
 import { notifSend } from 'modules/Notifs/redux';
+import LoginForm from './components/LoginForm';
 
 export class Login extends Component {
   static propTypes = {
     notifSend: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     push: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
   }
 
   static contextTypes = {
@@ -26,7 +26,7 @@ export class Login extends Component {
       .catch(this.fail)
   };
 
-  success = data => {
+  success = () => {
     this.props.notifSend({
       message: 'You\'re logged !',
       kind: 'success',
@@ -41,14 +41,14 @@ export class Login extends Component {
 
   fail = () => {
     // TODO - better feedback here, what if username does not exist?
-    throw new SubmissionError({password: 'Incorrect password.'})
+    throw new SubmissionError({ password: 'Incorrect password.' });
   }
 
   render() {
     const styles = require('./Login.scss');
     return (
       <div className={styles.login}>
-        <Helmet title="Login" />
+        <Helmet title='Login' />
         <div className='container'>
           {/* <img /> put No Longer Fight Alone Graphic here */}
           <div className='text-center'>
@@ -61,4 +61,4 @@ export class Login extends Component {
   }
 }
 
-export default connect(null, { notifSend, login, push })(Login)
+export default connect(null, { notifSend, login, push })(Login);

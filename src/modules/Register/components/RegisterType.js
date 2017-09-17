@@ -10,9 +10,10 @@ import { notifSend } from '../../Notifs/redux';
 @connect(null, { push, notifSend, register, login })
 export default class RegisterType extends Component {
   static propTypes = {
-    location: PropTypes.object,
-    register: PropTypes.func,
-    notifSend: PropTypes.func
+    location: PropTypes.object.isRequired,
+    register: PropTypes.func.isRequired,
+    notifSend: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired
   }
 
   componentDidMount() {
@@ -25,14 +26,14 @@ export default class RegisterType extends Component {
   }
 
   register = data => {
-    debugger;
+
     const newUser = data;
     newUser.verification = data.verification[0];
     this.props.register(data)
       .then(this.success)
   };
 
-  success = result => {
+  success = () => {
     this.props.notifSend({
       message: 'You\'re now registered !',
       kind: 'success',
@@ -44,15 +45,15 @@ export default class RegisterType extends Component {
   render() {
     const styles = require('./RegisterType.scss');
     return (
-        <div className={styles.wrapper}>
-          <Helmet title="Register" />
-          <div className={styles.masthead}>
-            <div className={styles.width}>
-              <h1 className={styles.heading}>Register</h1>
-              <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
-            </div>
+      <div className={styles.wrapper}>
+        <Helmet title="Register" />
+        <div className={styles.masthead}>
+          <div className={styles.width}>
+            <h1 className={styles.heading}>Register</h1>
+            <RegisterForm onSubmit={this.register} initialValues={this.getInitialValues()} />
           </div>
         </div>
+      </div>
     );
   }
 }

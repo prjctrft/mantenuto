@@ -8,12 +8,12 @@ import { Provider } from 'react-redux';
 import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect } from 'redux-connect';
-import { AppContainer as HotEnabler } from 'react-hot-loader';
+import { AppContainer as HotEnabler } from 'react-hot-loader'; // eslint-disable-line  import/no-extraneous-dependencies
 import { useScroll } from 'react-router-scroll';
-import { socket } from 'app';
 import createStore from './redux/create';
 import getRoutes from './routes';
-import client from './app';
+import client, { socket } from './app';
+
 const dest = document.getElementById('content');
 const store = createStore(browserHistory, client, window.__data);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -21,12 +21,12 @@ const history = syncHistoryWithStore(browserHistory, store);
 // hoist __mantenuto data to a global with information about the app
 window.mantenuto = window.__data.__mantenuto;
 
-const renderRouter = props => <ReduxAsyncConnect
+const renderRouter = props => (<ReduxAsyncConnect
   {...props}
   helpers={{ client }}
   filter={item => !item.deferred}
   render={applyRouterMiddleware(useScroll())}
-/>;
+/>);
 
 const render = routes => {
   ReactDOM.render(
@@ -62,7 +62,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   if (!dest || !dest.firstChild || !dest.firstChild.attributes
     || !dest.firstChild.attributes['data-react-checksum']) {
-    console.error('Server-side React render was discarded.' +
+    console.error('Server-side React render was discarded.' + //eslint-disable-line no-console
       'Make sure that your initial render does not contain any client-side code.');
   }
 }

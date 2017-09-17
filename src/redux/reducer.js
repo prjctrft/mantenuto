@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 import { reducer as form } from 'redux-form';
@@ -9,7 +8,7 @@ import notifs from 'modules/Notifs/redux';
 import rooms from 'modules/Rooms/reducer';
 import { userReducer as user } from 'modules/App/redux';
 import home from 'modules/Home/redux';
-import register from 'modules/Register/redux';
+import { registerReducer as register } from 'modules/Register/redux';
 
 export default function createReducer(asyncReducers) {
   return combineReducers({

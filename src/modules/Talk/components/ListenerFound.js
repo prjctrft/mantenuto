@@ -3,18 +3,17 @@ import { ClipLoader } from 'react-spinners';
 
 import styles from './Talk.scss';
 
-const ListenerFound = (props) => {
-  return (
+const ListenerFound = () =>
+  (
     <div>
       <h3>Listener found!</h3>
       <p>Getting your connection ready.</p>
       <ClipLoader
         color={styles.brandWarning}
-        loading={true}
+        loading
         size={100}
       />
     </div>
-  )
-}
+  );
 
 export default ListenerFound;

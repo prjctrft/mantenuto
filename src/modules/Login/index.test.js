@@ -1,7 +1,6 @@
-import React from 'react';
 import { expect } from 'chai';
 
-import routes from './'
+import routes from './';
 
 describe('login routes', () => {
   it('should contain one route with path "login"', () => {

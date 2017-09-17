@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 
-import { RequireNotLoggedIn } from './RequireNotLoggedIn';
+import { RequireNotLoggedInComponent } from './RequireNotLoggedIn';
 
 describe('<RequireNotLoggedIn />', () => {
   let props;
@@ -14,7 +14,7 @@ describe('<RequireNotLoggedIn />', () => {
       push: jest.fn(),
     }
     component = mount(
-      <RequireNotLoggedIn {...props} />
+      <RequireNotLoggedInComponent {...props} />
     );
   });
 

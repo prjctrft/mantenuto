@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -35,17 +36,17 @@ const Messages = (props) => {
       }
       return (
         <li key={i} className={`${styles[side]} clearfix`}><span className={`chat-img pull-${side}`}>
-            <i className='fa fa-user-circle fa-3x' aria-hidden="true" />
+          <i className='fa fa-user-circle fa-3x' aria-hidden="true" />
         </span>
-            <div className={`${styles.ChatBody} clearfix`}>
-                <div className={`text-${opposite}`}>
-                    <small className=" text-muted"><span className="glyphicon glyphicon-time"></span>{' '}{displayTime}</small>
-                    <strong className={`pull-${side} primary-font`}>{`${sender ? sender.first : ''}`}</strong>
-                </div>
-                <p className={`text-${side}`}>
-                    { message.content }
-                </p>
+          <div className={`${styles.ChatBody} clearfix`}>
+            <div className={`text-${opposite}`}>
+              <small className=" text-muted"><span className="glyphicon glyphicon-time" />{' '}{displayTime}</small>
+              <strong className={`pull-${side} primary-font`}>{`${sender ? sender.first : ''}`}</strong>
             </div>
+            <p className={`text-${side}`}>
+              { message.content }
+            </p>
+          </div>
         </li>
       )
     })

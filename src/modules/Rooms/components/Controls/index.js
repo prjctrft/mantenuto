@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
@@ -223,7 +224,7 @@ export default class ControlsContainer extends Component {
         if (this.props.wasCallAccepted) {
           createOffer({ audio: audioOn, video: cameraOn });
         }
-      });;
+      });
   }
 
   stopAudio = () => {
@@ -286,7 +287,7 @@ export default class ControlsContainer extends Component {
   }
 
   render() {
-    return <Controls
+    return (<Controls
       peer={this.props.peer}
       user={this.props.user}
 
@@ -303,6 +304,6 @@ export default class ControlsContainer extends Component {
       streamOpen={this.state.streamOpen}
       wasCallAccepted={this.props.wasCallAccepted}
 
-    />
+    />)
   }
 }

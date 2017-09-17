@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexRoute, IndexRedirect, Route } from 'react-router';
+import { IndexRoute, Route } from 'react-router';
 
 import Register from './Register';
 import RegisterType from './components/RegisterType';

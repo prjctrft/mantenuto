@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
-import { CounterButton, GithubButton } from 'components';
-import config from 'config';
 import Helmet from 'react-helmet';
 import { getCodes } from './redux';
 
@@ -12,12 +10,17 @@ import SpeakeasyForm from './components/SpeakeasyForm';
 import gunners from './assets/ic_already_member.png';
 
 export class Home extends Component {
+  static propTypes = {
+    getCodes: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+    codes: PropTypes.array.isRequired
+  }
 
   componentDidMount() {
     this.props.getCodes();
   }
 
-  goToRegister = (form) => {
+  goToRegister = () => {
     this.props.push('/register');
   }
 
@@ -29,7 +32,7 @@ export class Home extends Component {
         <Helmet title="Home" />
         <div className={styles.alreadyMember}>
           <Link to={'/login'}>
-            <img src={gunners} />
+            <img alt='gunners logo' src={gunners} />
             Already a member?
           </Link>
         </div>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 
 const renderClasses = (props) => {
@@ -14,9 +15,11 @@ const renderClasses = (props) => {
 
 export default (props) => {
   return (
-    <button onClick={props.onClick} type="button"
-      className={renderClasses(props)}>
-      <i className={props.faClass} aria-hidden="true"></i>
+    <button
+      onClick={props.onClick} type="button"
+      className={renderClasses(props)}
+    >
+      <i className={props.faClass} aria-hidden="true" />
     </button>
   )
 }

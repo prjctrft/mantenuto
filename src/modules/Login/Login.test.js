@@ -12,7 +12,7 @@ describe('<Login />', () => {
     push: jest.fn()
   }
   beforeEach(() => {
-    component = shallow(<Login {...props } />);
+    component = shallow(<Login {...props} />);
   })
 
   it('should render correctly', () => {expect(component.exists()).to.be.true});

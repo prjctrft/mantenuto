@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 
-import { RequireLoggedIn } from './RequireLoggedIn';
+import { RequireLoggedInComponent } from './RequireLoggedIn';
 
-describe('<RequireLoggedIn />', () => {
+describe('<RequireLoggedInComponent />', () => {
   let props;
   let component;
 
@@ -14,7 +14,7 @@ describe('<RequireLoggedIn />', () => {
       push: jest.fn(),
     }
     component = mount(
-      <RequireLoggedIn {...props} />
+      <RequireLoggedInComponent {...props} />
     );
   });
 

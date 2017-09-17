@@ -1,34 +1,37 @@
-import React from 'react';
-import { IndexLink } from 'react-router';
+import React, { PropTypes } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
-export default function NavigationCollapse(props) {
-  const { user, handleLogout } = props;
-  const styles = require('./Navigation.scss');
+const NavigationCollapse = (props) => {
 	return (
-		<Navbar.Collapse>
-      <Nav navbar pullRight>
-        <LinkContainer to="/profile" >
-          <NavItem eventKey={0} >Profile</NavItem>
-        </LinkContainer>
-        {/* {!user && <LinkContainer to="/login">
+  <Navbar.Collapse>
+    <Nav navbar pullRight>
+      <LinkContainer to="/profile" >
+        <NavItem eventKey={0} >Profile</NavItem>
+      </LinkContainer>
+      {/* {!user && <LinkContainer to="/login">
           <NavItem eventKey={5}>Login</NavItem>
         </LinkContainer>} */}
-        {/* {!user && <LinkContainer to="/register">
+      {/* {!user && <LinkContainer to="/register">
           <NavItem eventKey={6}>Register</NavItem>
         </LinkContainer>} */}
-        <NavItem eventKey={1} className="logout-link" onClick={handleLogout}>
+      <NavItem eventKey={1} className="logout-link" onClick={props.handleLogout}>
           Logout
         </NavItem>
-      </Nav>
-      {/* <Nav navbar pullRight>
+    </Nav>
+    {/* <Nav navbar pullRight>
         {user && <span className="navbar-text">
           Hello <strong>{user.first}!</strong>
         </span>}
       </Nav> */}
-    </Navbar.Collapse>
+  </Navbar.Collapse>
 	)
 }
+
+NavigationCollapse.propTypes = {
+  handleLogout: PropTypes.func.isRequired
+}
+
+export default NavigationCollapse

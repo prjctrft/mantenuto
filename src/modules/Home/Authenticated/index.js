@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { push } from 'react-router-redux';
 
 // TODO, move this to user actions?
@@ -18,31 +17,31 @@ import Authenticated from './Authenticated';
   }), { push, populateRooms })
 export default class AuthenticatedContainer extends Component {
 
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.rooms && nextProps.authenticated) {
-      this.props.populateRooms(this.props.id);
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (!nextProps.rooms && nextProps.authenticated) {
+  //     this.props.populateRooms(this.props.id);
+  //   }
+  // }
 
-  copyRoomLink = (slug) => {
-    return (event) => {
-      event.preventDefault();
-      const linkElement = document.createElement('textarea');
-      const roomLink = `${window.location.href}rooms/${slug}`;
-      linkElement.innerText = roomLink;
-      document.body.appendChild(linkElement)
-      linkElement.select()
-      document.execCommand('copy')
-      linkElement.remove()
-    }
-  }
+  // copyRoomLink = (slug) => {
+  //   return (event) => {
+  //     event.preventDefault();
+  //     const linkElement = document.createElement('textarea');
+  //     const roomLink = `${window.location.href}rooms/${slug}`;
+  //     linkElement.innerText = roomLink;
+  //     document.body.appendChild(linkElement)
+  //     linkElement.select()
+  //     document.execCommand('copy')
+  //     linkElement.remove()
+  //   }
+  // }
 
-  gotoRoom = (slug) => {
-    return (event) => {
-      event.preventDefault();
-      this.props.push(`/rooms/${slug}`);
-    }
-  }
+  // gotoRoom = (slug) => {
+  //   return (event) => {
+  //     event.preventDefault();
+  //     this.props.push(`/rooms/${slug}`);
+  //   }
+  // }
 
   // renderWelcome = () => {
   //   const { user } = this.props;
@@ -99,25 +98,3 @@ export default class AuthenticatedContainer extends Component {
     )
   }
 }
-// {/* <div className={styles.home}>
-//   <Helmet title="Home" />
-//   <div className={styles.masthead}>
-//     <div className="container">
-//       {/*<h1>Refit Chat</h1>
-//
-//       <h2>Where veterans connect and heal.</h2>*/}
-//       <div className={styles.pipelineBtns}>
-//
-//           <button onClick={this.clickTalk} className='btn btn-lg btn-primary btn-block btn-circle'>
-//             Talk
-//           </button>
-//
-//
-//           <button onClick={this.clickListen} className='btn btn-lg btn-primary btn-block btn-circle'>
-//             Listen
-//           </button>
-//
-//       </div>
-//     </div>
-//   </div>
-// </div> */}

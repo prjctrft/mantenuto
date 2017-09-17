@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
@@ -16,19 +16,19 @@ const next = (route, props) => {
 const Register = (props) => {
   const styles = require('./Register.scss');
   return (
-      <div className={styles.wrapper}>
-          <Helmet title="Register" />
-          <div className={styles.masthead}>
-            <div className="container">
-              <h1 className={styles.heading}>Register</h1>
-              <div className={styles.pipelineBtns}>
-                <CircleButton onClick={next('veteran', props)} content='Veteran' />
-                <CircleButton onClick={next('active', props)} content='Active' />
-              </div>
-              <Link className={styles.link} to={'/register/provider'}>Mental health professional?</Link>
-            </div>
+    <div className={styles.wrapper}>
+      <Helmet title="Register" />
+      <div className={styles.masthead}>
+        <div className="container">
+          <h1 className={styles.heading}>Register</h1>
+          <div className={styles.pipelineBtns}>
+            <CircleButton onClick={next('veteran', props)} content='Veteran' />
+            <CircleButton onClick={next('active', props)} content='Active' />
           </div>
+          <Link className={styles.link} to={'/register/provider'}>Mental health professional?</Link>
+        </div>
       </div>
+    </div>
   );
 }
 

@@ -7,7 +7,7 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
-import PrettyError from 'pretty-error';
+// import PrettyError from 'pretty-error';
 import http from 'http';
 // import ssl  from 'express-ssl';
 import { match } from 'react-router';
@@ -30,7 +30,7 @@ import { version } from '../package.json';
 // remote api
 const targetUrl = process.env.API_ENDPOINT;
 
-const pretty = new PrettyError();
+// const pretty = new PrettyError();
 const app = express();
 const server = new http.Server(app);
 const proxy = httpProxy.createProxyServer({
@@ -74,9 +74,9 @@ server.on('upgrade', (req, socket, head) => {
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
-  if (error.code !== 'ECONNRESET') {
-    console.error('proxy error', error);
-  }
+  // if (error.code !== 'ECONNRESET') {
+  //   console.error('proxy error', error);
+  // }
   // if (res && !res.headersSent) {
   //   res.writeHead(500, { 'content-type': 'application/json' });
   // }
@@ -84,7 +84,7 @@ proxy.on('error', (error, req, res) => {
   res.end(JSON.stringify(json));
 });
 
-let unplug;
+// let unplug;
 
 app.use((req, res) => {
 
@@ -93,7 +93,8 @@ app.use((req, res) => {
   }
 
 
-  unplug = cookie.plugToRequest(req, res);
+  // unplug = cookie.plugToRequest(req, res);
+  cookie.plugToRequest(req, res);
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
@@ -118,11 +119,9 @@ app.use((req, res) => {
     routes: getRoutes(store),
     location: req.originalUrl
   }, (error, redirectLocation, renderProps) => {
-    console.log(redirectLocation);
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
-      console.error('ROUTER ERROR:', pretty.render(error));
       res.status(500);
       hydrateOnClient();
     } else if (renderProps) {
@@ -141,8 +140,7 @@ app.use((req, res) => {
         ${ReactDOM.renderToString(
           <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />
         )}`);
-      }).catch(mountError => {
-        console.error('MOUNT ERROR:', pretty.render(mountError));
+      }).catch( () => {
         res.status(500);
       })
     } else {
@@ -156,8 +154,8 @@ const port = process.env.PORT;
 
 server.listen(port, err => {
   if (err) {
-    console.error(err);
+    console.error(err); // eslint-disable-line no-console
   }
-  console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.API);
-  console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, port);
+  console.info('----\n==> ✅  %s is running, talking to API server on %s.', config.app.title, config.API); // eslint-disable-line no-console
+  console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, port); // eslint-disable-line no-console
 });

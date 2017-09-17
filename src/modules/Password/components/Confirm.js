@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default (props) => {
+const Confirm = () => {
   return (<h1>Confirm component!</h1>)
 }
+
+export default Confirm;

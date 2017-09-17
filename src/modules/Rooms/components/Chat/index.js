@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
@@ -131,12 +132,12 @@ export default class ChatContainer extends Component {
     // const styles = require('./Chat.scss');
     // const { user, peer, messages } = this.props;
 
-    return <Chat
+    return (<Chat
       onChange={this.handleChange}
       onSubmit={this.handleSubmit}
       content={this.state.content}
       disableLoadMore={this.disableLoadMore}
-    />
+    />)
 
     // return (
     //   <div className={`${styles.Chat}`}>

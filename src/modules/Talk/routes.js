@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router';
 
-import TalkController from './TalkController';
+import ConnectTalkController from './TalkController';
 
 export default (
-  <Route path='talk' component={ TalkController } />
+  <Route path='talk' component={ConnectTalkController} />
 );

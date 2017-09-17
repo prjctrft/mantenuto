@@ -11,12 +11,12 @@ export default class LoginForm extends Component {
     ...propTypes
   }
 
-  renderInput = ({ input, label, type, placeholder, meta: { touched, error } }) =>
-    <div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
-      <input {...input} type={type} className="form-control" placeholder={placeholder}/>
-      {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback"></span>}
+  renderInput = ({ input, label, type, placeholder, meta: { touched, error } }) => //eslint-disable-line
+    (<div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
+      <input {...input} type={type} className="form-control" placeholder={placeholder} />
+      {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
       {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
-    </div>;
+    </div>);
 
   render() {
     const { handleSubmit, error } = this.props;
@@ -32,7 +32,7 @@ export default class LoginForm extends Component {
             <i className="fa fa-sign-in" />{' '}Log In
           </button>
           <hr />
-          <a href="#">Forgot password</a>
+          <a href='/foobar'>Forgot password</a>
         </div>
       </form>
     );

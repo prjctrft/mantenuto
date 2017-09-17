@@ -1,3 +1,5 @@
+/* eslint-disable */
+// TODO: Refactor this garbage
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
@@ -7,14 +9,11 @@ import Room from './components/Room';
 
 import {
   load,
-  checkin,
-  checkout,
   roomPatched,
   isListenerUpdate,
   isTalkerUpdate,
   patchRoom,
   setPeer,
-  // parseRoom,
   parsedRoom,
   peerCheckIn,
   peerCheckOut
@@ -31,7 +30,6 @@ const mapStateToProps = (state) => {
     peerCheckedIn,
     loaded
   } = state.rooms;
-  const id = state.auth.user;
   const { user } = state.user;
   return { loaded, peerCheckedIn, peer, user, room, checkedIn, isTalker, isListener, isRoomParsed };
 };
@@ -41,8 +39,6 @@ const mapStateToProps = (state) => {
   populateUser,
   isTalkerUpdate,
   isListenerUpdate,
-  // checkin,
-  // checkout,
   load,
   roomPatched,
   patchRoom,
@@ -53,19 +49,26 @@ const mapStateToProps = (state) => {
 })
 export default class RoomContainer extends Component {
   static propTypes = {
+    id: PropTypes.string.isRequired,
     user: PropTypes.object,
     room: PropTypes.object,
-    load: PropTypes.func,
-    checkin: PropTypes.func,
     params: PropTypes.shape({
       slug: PropTypes.str
-    })
+    }),
+    loaded: PropTypes.bool,
+    isRoomParsed: PropTypes.bool,
+    parsedRoom: PropTypes.bool,
+    load: PropTypes.func.isRequired,
+    populateUser: PropTypes.func.isRequired,
+    peerCheckIn: PropTypes.func.isRequired,
+    peerCheckOut: PropTypes.func.isRequired,
+    setPeer: PropTypes.func.isRequired,
+    isTalkerUpdate: PropTypes
   }
 
   componentDidMount() {
     const roomSlug = this.props.params.slug;
-    const peerSocketId = this.props.peerSocketId;
-    if (!this.props.user) {
+    if(!this.props.user) {
       this.props.populateUser(this.props.id);
     }
 
@@ -141,15 +144,6 @@ export default class RoomContainer extends Component {
   }
 
   checkout = () => {
-    // const { room, isTalker, isListener } = this.props;
-    // const update = {};
-    // if(isTalker) {
-    //   update.talker = Object.assign(room.talker, { isCheckedIn: false });
-    // }
-    // if(isListener) {
-    //   update.listener =  Object.assign(room.listener, { isCheckedIn: false });
-    // }
-    // this.props.checkout(room.slug, update);
     socket.emit('leave room');
   }
 

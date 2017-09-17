@@ -1,3 +1,4 @@
+/* eslint-disable */
 import app, { socket } from 'app';
 import * as constants from './constants';
 
@@ -11,7 +12,7 @@ export function load(slug, user) {
       constants.LOAD_ROOM_FAIL
     ],
     promise: (client) => {
-      debugger;
+
       return client.service('rooms').get(slug, {query: { $populate: 'listener.user talker.user' } })
     }
   };
@@ -96,7 +97,7 @@ export function pushMessage(message) {
     ],
     promise: () => messageService.create(message)
   };
-};
+}
 
 export function loadMessages(query) {
   return {
@@ -107,7 +108,7 @@ export function loadMessages(query) {
     ],
     promise: () => messageService.find({ query })
   };
-};
+}
 
 export function addMessage(message) {
   return {

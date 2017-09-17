@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import CircleButton from 'components/CircleButton';
 
 import Wrapper from './Wrapper';
 
-export default (props) => {
+const Preferences  = (props) => {
   const styles = require('./Preferences.scss');
   return (
     <Wrapper>
-      <div className={ styles.btns }>
+      <div className={styles.btns}>
         <div className='row'>
           <div className={`col-sm-5 ${styles.noWrap}`}>
             <h3>Can you listen anytime?</h3>
@@ -26,3 +26,10 @@ export default (props) => {
     </Wrapper>
   )
 }
+
+Preferences.propTypes = {
+  handleAnytime: PropTypes.func.isRequired,
+  handleNow: PropTypes.func.isRequired
+}
+
+export default Preferences
