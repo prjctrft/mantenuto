@@ -26,3 +26,5 @@ const routes = (
     <Route path=':token' component={Token} />
   </Route>
 );
+
+export default routes;

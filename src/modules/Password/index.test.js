@@ -11,7 +11,7 @@ describe('password routes', () => {
   const children = routes.props.children;
 
   it('/password should have 4 routes', () => {
-    expect(children).to.have.lengthOf(4);
+    expect(children).to.have.lengthOf(6);
   });
 
   it('the route "/password" should redirect to "/password/forgot"', () => {
@@ -20,24 +20,32 @@ describe('password routes', () => {
     expect(route.props.to).to.equal('forgot');
   });
 
-      // <Route path='forgot' component={Forgot} />
-      // <Route path='confirm' component={Confirm} />
-      // <Route path=':token' component={Token} />
-
   it('the route "/password/forgot" should exist', () => {
     const route = children[1];
     expect(route.type.displayName).to.equal('Route');
     expect(route.props.path).to.equal('forgot');
   });
 
-  it('the route "/password/confirm" should exist', () => {
+  it('the route "/password/sendemail" should exist', () => {
     const route = children[2];
+    expect(route.type.displayName).to.equal('Route');
+    expect(route.props.path).to.equal('sendemail');
+  });
+
+  it('the route "/password/changepassword" should exist', () => {
+    const route = children[3];
+    expect(route.type.displayName).to.equal('Route');
+    expect(route.props.path).to.equal('changepassword');
+  });
+
+  it('the route "/password/confirm" should exist', () => {
+    const route = children[4];
     expect(route.type.displayName).to.equal('Route');
     expect(route.props.path).to.equal('confirm');
   });
 
   it('the route "/password/:token" should exist', () => {
-    const route = children[3];
+    const route = children[5];
     expect(route.type.displayName).to.equal('Route');
     expect(route.props.path).to.equal(':token');
   });
