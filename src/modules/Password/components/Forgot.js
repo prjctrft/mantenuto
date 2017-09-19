@@ -7,7 +7,7 @@ const Body = () => {
   };
 
   return (
-    <div className={styles.contentnpm}>
+    <div className={styles.content}>
       <h1>Forgot your password?</h1>
       <p className="h1">No problem!</p>
 
