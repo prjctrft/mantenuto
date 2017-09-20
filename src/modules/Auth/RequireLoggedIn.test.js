@@ -12,18 +12,41 @@ describe('<RequireLoggedInComponent />', () => {
     props = {
       children: [<div key='1' />, <div key='2' />],
       push: jest.fn(),
+      authenticated: true,
+      tryingAuth: false,
+      triedAuth: false
     }
     component = mount(
       <RequireLoggedInComponent {...props} />
     );
   });
 
-  it('should render correctly', () => {
-    expect(component.exists()).to.be.true
+  it('should render correctly when "authenticated"', () => {
+    expect(component.exists()).to.be.true;
+    expect(component.children('div')).to.have.length(2);
   });
 
-  it('should render children correctly', () => {
-    expect(component.children('div')).to.have.length(2);
+  it('should render correctly when "tryingAuth"', () => {
+    const authenticated = false;
+    const tryingAuth = true;
+    props = {...props, authenticated, tryingAuth};
+    component = mount(
+      <RequireLoggedInComponent {...props} />
+    );
+    expect(component.exists()).to.be.true
+    // TODO: change to spinner
+    expect(component.find('h1')).to.have.length(1);
+  });
+
+  it('should render correctly when "triedAuth"', () => {
+    const authenticated = false;
+    const triedAuth = true;
+    props = {...props, authenticated, triedAuth};
+    component = mount(
+      <RequireLoggedInComponent {...props} />
+    );
+    expect(component.exists()).to.be.true
+    expect(component.isEmptyRender()).to.be.true;
   });
 
   it('should not redirect to "/login" if user is authenaticating', () => {

@@ -100,9 +100,11 @@ export function authReducer(state = initialState, action = {}) {
 
 export function tryRestAuth() {
   return (dispatch, getState) => {
-    const token = getState().auth.token || cookie.load('feathers-jwt');
+    const token = getState().auth.token
+      || cookie.load('feathers-jwt')
+      || (__CLIENT__ && localStorage.getItem('feathers-jwt'));
     if(token) {
-      dispatch({ type: TRYING_AUTH });
+      dispatch({ type: TRYING_AUTH })
       return dispatch(jwtLogin(token, restApp));
     }
     return dispatch({ type: TOKEN_NOT_FOUND });

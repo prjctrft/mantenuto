@@ -22,7 +22,16 @@ export class RequireLoggedInComponent extends Component {
   }
 
   render() {
-    return <div>{ this.props.children }</div>
+    if (this.props.authenticated) {
+      return <div>{ this.props.children }</div>
+    }
+    if (this.props.tryingAuth) {
+      // change to spinner
+      return <h1>Loading...</h1>;
+    }
+    if (this.props.triedAuth) {
+      return null;
+    }
   }
 }
 

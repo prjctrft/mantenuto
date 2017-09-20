@@ -9,39 +9,46 @@ describe('<TalkController />', () => {
 
   let component;
   beforeEach(() => {
-    global.socket = new EventEmitter();
     component = mount(<TalkController />);
+    const instance = component.instance();
+    instance.service = new EventEmitter();
+    instance.registerSocketListeners();
   });
 
-  it('should render self and <Talk />', () => {
+  it('should render "null"', () => {
     expect(component.exists()).to.be.true;
     expect(component.name()).to.equal('TalkController');
-    expect(component.find('Talk')).to.have.length(1);
+    expect(component.isEmptyRender()).to.be.true;
   })
 
-  it('should render with "pipeline" set to "looking"', () => {
-    expect(component.state('pipeline')).to.equal('looking');
+  it('should render with "pipeline" set to "null"', () => {
+    expect(component.state('pipeline')).to.equal(null);
   });
 
   it('should register three event listeners', () => {
-    const expectedEvents = ["listener found","room ready", "listener not found"];
-    const listeners = global.socket.eventNames();
+    const expectedEvents = [
+      "created",
+      "listener found",
+      "room ready",
+      "listener not found"
+    ];
+    const listeners = component.instance().service.eventNames();
     expect(listeners).to.have.length(expectedEvents.length);
     expect(listeners).to.have.members(expectedEvents)
   });
 
   it('"listener found" event should set "pipeline" to "listenerFound"', () => {
-    global.socket.emit('listener found');
+    component.instance().service.emit('listener found');
     expect(component.state('pipeline')).to.equal('listenerFound');
   });
 
   it('"room ready" event should set "pipeline" to "roomReady"', () => {
-    global.socket.emit('room ready');
+    component.instance().service.emit('room ready');
     expect(component.state('pipeline')).to.equal('roomReady');
   });
 
   it('"listener not found" event should set "pipeline" to "listenerNotFound"', () => {
-    global.socket.emit('listener not found');
+    component.instance().service.emit('listener not found');
     expect(component.state('pipeline')).to.equal('listenerNotFound');
   });
 

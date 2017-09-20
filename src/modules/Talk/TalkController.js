@@ -1,41 +1,66 @@
-import React, { Component } from 'react';
-
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
+import client from 'app';
 import Talk from './components/Talk';
 
 export class TalkController extends Component {
   constructor(props) {
     super(props);
+    this.service = client.service('connect');
     this.state = {
-      pipeline: 'looking'
-    }
+      pipeline: null
+    };
   }
 
   componentDidMount() {
     // start looking for listener
     this.registerSocketListeners();
+    // coming from another page
+    if (client.authenticated) {
+      this.service.create({talker: this.props.user});
+    }
+    // coming directly on page load
+    // wait for socket to authenticate
+    if (!client.auth) {
+      client.on('authenticated', () => {
+        this.service.create({talker: this.props.user});
+      })
+    }
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   if(this.state.pipeline === null && nextProps.socketAuthenticated) {
+  //     this.service.create({talker: this.props.user});
+  //   }
+  // }
+
   registerSocketListeners = () => {
+    this.service.on('created', this.createdConnect)
     // event: listener found
-    socket.on('listener found', this.listenerFound);
+    this.service.on('listener found', this.listenerFound);
       // TODO in Talk action: 'We've found someone for you to talk with!'
     // event: room ready (created OR found)
-    socket.on('room ready', this.roomReady);
+    this.service.on('room ready', this.roomReady);
       // action: 'Headed to your chat room now!'
     // event: listener not found
-    socket.on('listener not found', this.listenerNotFound);
+    this.service.on('listener not found', this.listenerNotFound);
       // we're still searching for listeners -> email
       // check back soon!
+  }
+
+  createdConnect = () => {
+    this.setState({ pipeline: 'looking'})
   }
 
   listenerFound = () => {
     this.setState({ pipeline: 'listenerFound' });
   }
 
-  roomReady = () => {
+  roomReady = (roomSlug) => {
     this.setState({ pipeline: 'roomReady' });
+    setTimeout(() => this.props.push(`/rooms/${roomSlug}`), 3000)
   }
 
   listenerNotFound = () => {
@@ -43,8 +68,22 @@ export class TalkController extends Component {
   }
 
   render() {
+    if (this.state.pipeline === null) {
+      return null;
+    }
     return <Talk pipeline={this.state.pipeline} />
   }
 }
 
-export default connect(null)(TalkController);
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user
+  }
+}
+
+TalkController.propTypes = {
+  user: PropTypes.string.isRequired,
+  push: PropTypes.func.isRequired
+}
+
+export default connect(mapStateToProps, { push })(TalkController);
