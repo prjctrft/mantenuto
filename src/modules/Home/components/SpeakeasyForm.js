@@ -9,11 +9,7 @@ const speakeasyValidation = memoize(10)(createValidator({
 }));
 
 
-@reduxForm({
-  form: 'register',
-  validate: speakeasyValidation
-})
-export default class RegisterForm extends Component {
+export class SpeakeasyFormComponent extends Component {
   static propTypes = {
     ...propTypes,
     codes: PropTypes.array
@@ -64,3 +60,9 @@ export default class RegisterForm extends Component {
     );
   }
 }
+
+
+export default reduxForm({
+  form: 'register',
+  validate: speakeasyValidation
+})(SpeakeasyFormComponent)
