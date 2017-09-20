@@ -4,7 +4,7 @@ import { push } from 'react-router-redux';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 
-import CircleButton from 'components';
+import CircleButton from 'components/CircleButton';
 
 const next = (route, props) => {
   return (e) => {
