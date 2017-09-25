@@ -10,7 +10,7 @@ describe('<Video />', () => {
   beforeEach(() => {
     const store = createStore({}, {}, {});
     // const handleSubmit = jest.fn();
-    component = mount(
+    component = shallow(
       <Provider store={store}>
         {}
         <Video />
