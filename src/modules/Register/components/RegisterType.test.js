@@ -3,14 +3,14 @@ import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import createStore from 'redux/create';
-import RegisterType from './RegisterType';
+import { RegisterType } from './RegisterType';
 
 describe('<RegisterType />', () => {
   let component;
   beforeEach(() => {
     const store = createStore({}, {}, {});
     // const handleSubmit = jest.fn();
-    component = mount(
+    component = shallow(
       <Provider store={store}>
         {}
         <RegisterType />
