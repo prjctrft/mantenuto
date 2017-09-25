@@ -3,14 +3,14 @@ import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import createStore from 'redux/create';
-import Room from './Room';
+import { Room } from './Room';
 
 describe('<Room />', () => {
   let component;
   beforeEach(() => {
     const store = createStore({}, {}, {});
     // const handleSubmit = jest.fn();
-    component = mount(
+    component = shallow(
       <Provider store={store}>
         {}
         <Room />
