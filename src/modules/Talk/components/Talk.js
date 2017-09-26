@@ -15,7 +15,7 @@ const Talk = (props) => {
             {props.pipeline === 'looking' ? <Looking /> : null}
             {props.pipeline === 'listenerFound' ? <ListenerFound /> : null}
             {props.pipeline === 'roomReady' ? <RoomReady /> : null}
-            {props.pipeline === 'listenerNotFound' ? <ListenerNotFound /> : null}
+            {props.pipeline === 'listenerNotFound' ? <ListenerNotFound totalListeners={props.totalListeners} /> : null}
           </div>
         </div>
       </div>
@@ -24,7 +24,8 @@ const Talk = (props) => {
 };
 
 Talk.propTypes = {
-  pipeline: PropTypes.string.isRequired
+  pipeline: PropTypes.string.isRequired,
+  totalListeners: PropTypes.number
 }
 
 export default Talk;
