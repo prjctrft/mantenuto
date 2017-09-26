@@ -6,7 +6,7 @@ import styles from './Talk.scss';
 const Looking = () =>
 (
   <div>
-    <h3>We{"''"}re looking for someone to connect you with!</h3>
+    <h3>We{"'"}re looking for someone to connect you with!</h3>
     <ClipLoader
       color={styles.brandPrimary}
       loading
