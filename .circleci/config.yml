@@ -6,43 +6,30 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:6.10.3
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
+      - image: circleci/node:6.11.3-stretch
     working_directory: ~/circulate
 
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: npm install
+      - run:
+        name: Installing packages
+        command: npm install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: npm test
-      #     - add_ssh_keys:
-      #     fingerprints:
-      #       - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
-      # - deploy:
-      #     name: Deploy Master to Heroku
-      #     command: |
-      #       if [ "${CIRCLE_BRANCH}" == "master" ]; then
-      #         git push heroku master
-      #         heroku run python manage.py deploy
-      #         heroku restart
-      #       fi
+      - run:
+        name: Linting code
+        command: npm run lint
+
+      - run:
+        name: Running tests
+        command: npm test
