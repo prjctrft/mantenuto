@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import client from 'app';
+import client, { socket } from 'app';
 import Talk from './components/Talk';
 
 export class TalkController extends Component {
@@ -10,7 +10,8 @@ export class TalkController extends Component {
     super(props);
     this.service = client.service('connect');
     this.state = {
-      pipeline: null
+      pipeline: null,
+      totalListeners: null
     };
   }
 
@@ -18,12 +19,12 @@ export class TalkController extends Component {
     // start looking for listener
     this.registerSocketListeners();
     // coming from another page
-    if (client.authenticated) {
+    if (socket.authenticated) {
       this.service.create({talker: this.props.user});
     }
     // coming directly on page load
     // wait for socket to authenticate
-    if (!client.auth) {
+    if (!socket.authenticated) {
       client.on('authenticated', () => {
         this.service.create({talker: this.props.user});
       })
@@ -63,15 +64,15 @@ export class TalkController extends Component {
     setTimeout(() => this.props.push(`/rooms/${roomSlug}`), 3000)
   }
 
-  listenerNotFound = () => {
-    this.setState({ pipeline: 'listenerNotFound' });
+  listenerNotFound = (totalListeners) => {
+    this.setState({ pipeline: 'listenerNotFound', totalListeners });
   }
 
   render() {
     if (this.state.pipeline === null) {
       return null;
     }
-    return <Talk pipeline={this.state.pipeline} />
+    return <Talk totalListeners={this.state.totalListeners} pipeline={this.state.pipeline} />
   }
 }
 

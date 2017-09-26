@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import createStore from 'redux/create';
@@ -19,6 +19,6 @@ describe('<NavigationCollapse />', () => {
   });
 
   it('should render', () => {
-  	expect(component.exists()).to.be.true;
+    expect(component.exists()).to.be.true;
   });
 });

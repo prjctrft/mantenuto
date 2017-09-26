@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import createStore from 'redux/create';
@@ -18,6 +18,6 @@ describe('<App />', () => {
   });
 
   it('should render', () => {
-  	expect(component.exists()).to.be.true;
+    expect(component.exists()).to.be.true;
   });
 });
