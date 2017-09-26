@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-// import styles from './Talk.scss';
-
-const ListenerNotFound = ({totalListeners}) =>
+const ListenerNotFound = ({ totalListeners }) =>
 (
   <div>
     <h3>There aren{"'"}t currently any listeners online.</h3>
@@ -11,5 +9,9 @@ const ListenerNotFound = ({totalListeners}) =>
     <p>They{"'"}ll be in touch soon!</p>
   </div>
 )
+
+ListenerNotFound.propTypes = {
+  totalListeners: PropTypes.number
+}
 
 export default ListenerNotFound;

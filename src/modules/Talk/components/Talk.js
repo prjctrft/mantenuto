@@ -24,7 +24,8 @@ const Talk = (props) => {
 };
 
 Talk.propTypes = {
-  pipeline: PropTypes.string.isRequired
+  pipeline: PropTypes.string.isRequired,
+  totalListeners: PropTypes.number
 }
 
 export default Talk;
