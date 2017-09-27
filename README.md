@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/hdngr/mantenuto/tree/master.svg?style=shield&circle-token=53d27f62ec1ce10ff859a9f7ef34023000316f98)](https://circleci.com/gh/prjctrft/mantenuto/tree/master)
+[![CircleCI](https://circleci.com/gh/prjctrft/mantenuto.svg?style=shield)](https://circleci.com/gh/prjctrft/mantenuto)
 
 # Mantenuto
 This repository is named for Green Beret and combat veteran [Michael Mantenuto](https://en.wikipedia.org/wiki/Michael_Mantenuto).  He was also one of the starts in the Disney hit [Miracle](https://en.wikipedia.org/wiki/Miracle_(2004_film)) about the 1980 US Olympic Hockey team that won the gold medal.
