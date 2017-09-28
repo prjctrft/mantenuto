@@ -21,4 +21,8 @@ describe('<Navigation />', () => {
   it('should render', () => {
     expect(component.exists()).to.be.true;
   });
+
+  it('should render nav', () => {
+    expect(component.find('nav').exists()).to.be.true;
+  });
 });
