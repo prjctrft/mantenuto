@@ -37,9 +37,9 @@
     "debug-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-debug-local\"",
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
-    "test": "jest $(find src -name '*.test.js')",
-    "tdd": "jest --watch $(find src -name '*.test.js')",
-    "debug-tests": "node --inspect-brk node_modules/.bin/jest --runInBand --watch $(find src -name '*.test.js')"
+    "test": "jest src",
+    "tdd": "jest --watch src",
+    "debug-tests": "node --inspect-brk node_modules/.bin/jest --runInBand --watch src"
   },
   "betterScripts": {
     "start-prod": {
@@ -227,7 +227,7 @@
     "happypack": "^3.1.0",
     "html-webpack-plugin": "^2.28.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^17.0.3",
+    "jest": "^21.2.0",
     "jest-static-stubs": "0.0.1",
     "json-loader": "^0.5.4",
     "less": "^2.7.2",
