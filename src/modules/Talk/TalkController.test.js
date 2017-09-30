@@ -7,6 +7,19 @@ import { TalkController } from './TalkController';
 
 describe('<TalkController />', () => {
 
+  describe('constructor', () => {
+    let controller;
+
+    beforeAll(() => {
+      controller = new TalkController();
+    })
+
+    it('should register "talk" service', () => {
+      expect(controller.service.path).to.equal('talk');
+    });
+
+  });
+
   let component;
   beforeEach(() => {
     component = mount(<TalkController />);
