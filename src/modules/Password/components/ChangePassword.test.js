@@ -24,7 +24,15 @@ describe('<ChangePassword />', () => {
 
   it('should render correctly', () => { expect(component.exists()).to.be.true });
 
-  it('should render container div with two children elements', () => {
-    expect(component.children().first().name()).to.equal('div');
+  it('should render container div and contents', () => {
+   expect(component.find('.content').exists()).to.be.true;
+
+   expect(component.find('h1')).has.length(1);
+
+   expect(component.find('.formDiv').exists()).to.be.true;
+   expect(component.find('form')).has.length(1);
+   expect(component.find('label')).has.length(2);
+   expect(component.find('input')).has.length(2);
+   expect(component.find('button')).has.length(1);
   });
 });

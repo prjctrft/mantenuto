@@ -21,4 +21,11 @@ describe('<Footer />', () => {
   it('should render', () => {
     expect(component.exists()).to.be.true;
   });
+
+  it('should render footer and contents', () => {
+    expect(component.find('.footer').exists()).to.be.true;
+    expect(component.find('span').exists()).to.be.true;
+    expect(component.find('button')).to.have.length(2);
+    expect(component.find('a')).to.have.length(2);
+  });
 });
