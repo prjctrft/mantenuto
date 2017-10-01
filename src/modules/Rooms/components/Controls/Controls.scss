@@ -1,3 +1,5 @@
+@import '../../../../theme/variables.scss';
+
 .BtnBar {
   display: flex;
   justify-content: center;
@@ -7,5 +9,13 @@
 }
 
 .controlBar {
+  display: flex;
+  justify-content: center;
   margin: 10px auto;
+  background-color: $brand-black;
+  button {
+    background-color: $brand-black;
+    color: $brand-white;
+    border: none;
+  }
 }
