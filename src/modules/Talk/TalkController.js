@@ -8,7 +8,7 @@ import Talk from './components/Talk';
 export class TalkController extends Component {
   constructor(props) {
     super(props);
-    this.service = client.service('connect');
+    this.service = client.service('talk');
     this.state = {
       pipeline: null,
       totalListeners: null
