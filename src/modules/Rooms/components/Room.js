@@ -28,40 +28,28 @@ const hoistRemoteStream = (stream) => {
   RemotePlayer.srcObject = stream;
 }
 
-
 export default (props) => {
   // TODO - move somewhere else
   const styles = require('../Styles.scss');
 
   return (
-    <div className="container">
-      <div className='row'>
-        <div className='col-xs-12 text-center'>
-          <Stats peer={props.peer} user={props.user} styles={styles} />
-        </div>
+    <div className={styles.Room}>
+      <div className={styles.videoWrapper}>
+        <Stats peer={props.peer} user={props.user} styles={styles} />
+        <Video
+          styles={styles}
+          hoistRemoteVideo={hoistRemoteVideo}
+          hoistLocalVideo={hoistLocalVideo}
+        />
+        <Controls
+          styles={styles}
+          hoistRemoteStream={hoistRemoteStream}
+          hoistLocalStream={hoistLocalStream}
+        />
       </div>
-      <div className='row'>
-        <div className='col-xs-12 text-center'>
-          <Controls
-            styles={styles}
-            hoistRemoteStream={hoistRemoteStream}
-            hoistLocalStream={hoistLocalStream}
-          />
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-xs-12 text-center'>
-          <Video
-            styles={styles}
-            hoistRemoteVideo={hoistRemoteVideo}
-            hoistLocalVideo={hoistLocalVideo}
-          />
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-xs-12'>
-          <Chat />
-        </div>
+      
+      <div className={styles.chatWrapper}>
+        <Chat />  
       </div>
     </div>
   );
