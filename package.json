@@ -37,7 +37,7 @@
     "debug-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-debug-local\"",
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
-    "test": "jest $(find src -name '*.test.js')",
+    "test": "jest --silent --maxWorkers 2 src",
     "tdd": "jest --watch $(find src -name '*.test.js')",
     "debug-tests": "node --inspect-brk node_modules/.bin/jest --runInBand --watch $(find src -name '*.test.js')"
   },
