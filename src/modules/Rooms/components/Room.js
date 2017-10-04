@@ -1,12 +1,10 @@
 /* eslint-disable */
 import React from 'react';
 
-// Todo
+// Components
 import Chat from './Chat';
 import Controls from './Controls';
 import Video from './Video';
-
-// Components
 import Stats from './Stats';
 
 let RemotePlayer;
@@ -49,7 +47,7 @@ export default (props) => {
       </div>
       
       <div className={styles.chatWrapper}>
-        <Chat />  
+        <Chat />
       </div>
     </div>
   );

@@ -9,6 +9,12 @@
   // height: 250px;
   background-color: $brand-white;
 
+  div.closeChat {
+    display: flex;
+    color: $brand-warning;
+    padding: 0.5rem;
+  }
+
   button.loadmore {
     align-self: center;
     margin: 1rem auto;
@@ -30,6 +36,9 @@
       div {
         color: $brand-gray;
       }
+      small {
+        margin-right: 1rem;
+      }
       p {
         color: $brand-white;
         padding: 2px 10px;
@@ -40,23 +49,28 @@
   li.left {
     p {
       background-color: $chat-color-dark;
+      margin-right: auto;
     }
   }
   li.right {
     justify-content: flex-end;
+
     p {
       background-color: $chat-color-light;
+      text-align: right;
+      margin-left: auto;
     }
   }
 }
 
-
 .MessageInput {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  padding: 0.5rem;
   textarea {
     max-width: 80vw;
+    margin-right: 0.5rem;
   }
   button {
     max-height: 40px;

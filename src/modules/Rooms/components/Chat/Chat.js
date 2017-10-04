@@ -8,6 +8,9 @@ const styles = require('./Chat.scss');
 export default (props) => {
   return (
     <div className={`${styles.Chat}`}>
+      <div className={styles.closeChat}>
+        <i className="fa fa-times fa-2x" aria-hidden="true"></i>
+      </div>
       <button 
         disabled={props.disableLoadMore} 
         onClick={props.loadMore} 
