@@ -102,7 +102,7 @@ export default class ProfileForm extends Component {
           Change Password
         </button>
         <button disabled={pristine || submitting} /*className="btn btn-success"*/ type="submit">
-          Done{' '}<i className="fa fa-check-circle-o" />
+          Done
         </button>
       </form>
     );
