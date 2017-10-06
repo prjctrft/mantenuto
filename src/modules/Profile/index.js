@@ -52,11 +52,9 @@ export default class Profile extends Component {
     return (
       <div className={styles.profile}>
         <h1>Profile</h1>
-        { user.userPopulated ? <ProfileForm initialValues={user.user} onSubmit={this.updateProfile} /> : null }
+        { user.userPopulated ? <ProfileForm initialValues={user.user} onSubmit={this.updateProfile} /> : <div>Loading Profile Information...</div> }
         <ListenAnytime />
       </div>
-
-
     )
   }
 }
