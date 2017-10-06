@@ -9,31 +9,31 @@ class ListenAnytime extends Component {
 	}
 
   toggleListen = () => {
-  	const { listen } = this.state;
+    const { listen } = this.state;
 
-  	if (listen) {
-  		this.setState({
-  			listen: false
-  		});
-  	} else {
-  		this.setState({
-  			listen: true
-  		});
-  	}
+    if (listen) {
+      this.setState({
+        listen: false
+      });
+    } else {
+      this.setState({
+        listen: true
+      });
+    }
   }
 
 	render() {
 		const styles = require('./ListenAnytime.scss');
 
 		return (
-	    <div className={styles.ListenAnytime}>
-	      <h2>Listen anytime?</h2>
-	      { 
-	      	this.state.listen ?
-	      	<button className={styles.on} onClick={this.toggleListen}>On</button> :
-	      	<button className={styles.off} onClick={this.toggleListen}>Off</button>
-	      }
-	    </div>
+  <div className={styles.ListenAnytime}>
+    <h2>Listen anytime?</h2>
+    { 
+      this.state.listen ?
+        <button className={styles.on} onClick={this.toggleListen}>On</button> :
+        <button className={styles.off} onClick={this.toggleListen}>Off</button>
+    }
+  </div>
     );
   }
 }
