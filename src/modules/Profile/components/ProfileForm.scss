@@ -11,12 +11,14 @@
 	}
 
 	button {
-		align-self: center;
-		width: $button-width;
-		height: $button-height;
 		box-shadow: $box-shadow;
 		background-color: $brand-gray;
 		border-radius: $button-border-radius;
+		display: block;
+		height: $button-height;
+		margin: auto;
+		text-align: center;
+		width: $button-width;
 	}
 
 	button.password {
@@ -26,6 +28,34 @@
 		color: $brand-white;
 		border: none;
 		margin: 1rem auto 3rem auto;
+	}
+
+	.injury {
+		text-align: center;
+	}
+
+	.combat {
+		width: 50%;
+		float: left;
+		> label {
+			display: block;
+		}
+		> input {
+			box-shadow: none;
+			margin: auto;
+		}
+	}
+
+	.noncombat {
+		width: 50%;
+		float: right;
+		> label {
+			display: block;
+		}
+		> input {
+			box-shadow: none;
+			margin: auto;
+		}
 	}
 
 	@media (min-width: 768px) {
