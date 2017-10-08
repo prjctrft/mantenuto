@@ -18,7 +18,12 @@
 		border: none;
 		box-shadow: $box-shadow;
 		border-radius: $button-border-radius;
-		background-color: $button-on;
 		color: $brand-white;
+		&.on {
+			background-color: $button-on
+		}
+		&.off {
+		  background-color: $button-off;
+	  }
 	}
 }

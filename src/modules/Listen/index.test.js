@@ -8,10 +8,12 @@ describe('listen routes', () => {
     expect(routes.props.path).to.equal('listen');
   });
 
-  const children = routes.props.children;
+  it('should render the <Listen> component', () => {
+    expect(routes.props.component.name).to.equal('Listen');
+  });
 
   it('listen module should have no child routes', () => {
-    expect(children).to.be.undefined;
+    expect(routes.props.children).to.be.undefined;
   });
 
 });

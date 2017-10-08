@@ -7,6 +7,19 @@ import { TalkController } from './TalkController';
 
 describe('<TalkController />', () => {
 
+  describe('constructor', () => {
+    let controller;
+
+    beforeAll(() => {
+      controller = new TalkController();
+    })
+
+    it('should register "talk" service', () => {
+      expect(controller.service.path).to.equal('talk');
+    });
+
+  });
+
   let component;
   beforeEach(() => {
     component = mount(<TalkController />);
@@ -36,6 +49,11 @@ describe('<TalkController />', () => {
     expect(listeners).to.have.length(expectedEvents.length);
     expect(listeners).to.have.members(expectedEvents)
   });
+
+  // TODO these tests are all testing two things 1) that an event fires a function,
+  // 2) that the state changes based on the event - they should really be proper
+  // unit tests, that test that the event fires a method like `this.listenerFound()`, and then a seperate test
+  // to make sure `this.listenerFound()` changes the state as expected
 
   it('"listener found" event should set "pipeline" to "listenerFound"', () => {
     component.instance().service.emit('listener found');
