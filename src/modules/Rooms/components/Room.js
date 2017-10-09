@@ -3,6 +3,7 @@ import React from 'react';
 
 // Components
 import Chat from './Chat';
+import ChatIconButton from './Chat/ChatIconButton';
 import Controls from './Controls';
 import Video from './Video';
 import Stats from './Stats';
@@ -26,6 +27,7 @@ const hoistRemoteStream = (stream) => {
   RemotePlayer.srcObject = stream;
 }
 
+
 export default (props) => {
   // TODO - move somewhere else
   const styles = require('../Styles.scss');
@@ -47,6 +49,8 @@ export default (props) => {
       </div>
       
       <div className={styles.chatWrapper}>
+
+      {props.renderChat ? <Chat /> : <ChatIconButton toggleChat={this.toggleChat}/>}
         <Chat />
       </div>
     </div>

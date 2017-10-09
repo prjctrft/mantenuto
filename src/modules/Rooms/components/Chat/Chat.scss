@@ -3,21 +3,22 @@
 .Chat {
   display: flex;
   flex-direction: column;
-  //margin: 20px auto;
   width: 100%;
   //overflow-y: scroll;
   // height: 250px;
   background-color: $brand-white;
 
-  div.closeChat {
+  .ChatHeader {
     display: flex;
-    color: $brand-warning;
+    justify-content: space-between;
+    align-items: center;
     padding: 0.5rem;
-  }
 
-  button.loadmore {
-    align-self: center;
-    margin: 1rem auto;
+    button.closeChat {
+      border: none;
+      background-color: $brand-white;
+      color: $brand-warning;
+    }
   }
 }
 
@@ -74,6 +75,19 @@
   }
   button {
     max-height: 40px;
+  }
+}
+
+.ChatIconContainer {
+  display: flex;
+  justify-content: center;
+
+  button {
+    border-radius: 50%;
+    background-color: $brand-black;
+    color: $brand-white;
+    border: 3px solid white;
+    padding: 2rem;
   }
 }
 
