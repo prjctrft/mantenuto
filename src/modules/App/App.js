@@ -1,9 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import { push } from 'react-router-redux';
 import config from 'config';
+import app from 'app';
 import { logout } from 'modules/Auth/redux';
+import { notifSend } from 'modules/Notifs/redux';
+
 import { clearUser, populateUser } from './redux';
 import Notifs from '../Notifs';
 
@@ -15,7 +19,7 @@ import Footer from './components/Footer';
     id: state.auth.user,
     authenticated: !!state.auth.user,
     user: state.user.user
-  }), { populateUser, logout, clearUser, push })
+  }), { notifSend, populateUser, logout, clearUser, push })
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
@@ -26,7 +30,8 @@ export default class App extends Component {
     clearUser: PropTypes.func.isRequired,
     authenticated: PropTypes.bool.isRequired,
     id: PropTypes.string,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    notifSend: PropTypes.object.isRequired,
   };
 
   static contextTypes = {
@@ -36,6 +41,14 @@ export default class App extends Component {
   componentDidMount() {
     // TODO move this to Auth
     this.populateUser(this.props);
+    const notifSend = this.props.notifSend;
+    app.service('notifications').on('talker waiting', ({roomSlug}) => {
+      const message = <p>A talker is waiting for you! Click here: <Link to={`/roooms/${roomSlug}`}>Room</Link></p>;
+      notifSend({
+        message,
+        kind: 'success'
+      });
+    })
   }
 
   componentWillReceiveProps(nextProps) {
