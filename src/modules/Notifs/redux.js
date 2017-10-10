@@ -13,7 +13,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         notifs: (state.notifs || []).filter(notif =>
-          notif.id !== action.notif.id
+          notif.id !== action.id
         )
       };
     case NOTIF_CLEAR:
@@ -31,12 +31,12 @@ export function notifSend(notif) {
   }
   return dispatch => {
     dispatch({ type: NOTIF_SEND, notif });
-    setTimeout(() => dispatch({ type: NOTIF_DISMISS, notif }), notif.dismissAfter || 5000);
+    setTimeout(() => dispatch(notifDismiss(notif.id)), notif.dismissAfter || 100000000);
   };
 }
 
-export function notifDismiss(id,) {
-  return { type: NOTIF_DISMISS, payload: id };
+export function notifDismiss(id) {
+  return { type: NOTIF_DISMISS, id };
 }
 
 export function notifClear() {
