@@ -115,9 +115,10 @@ export function socketAuth() {
   return (dispatch, getState) => {
     // socketAuth will only be tried on the client
     // and will always run AFTER rest client has been authenticated
+    const socketId = socket.io.engine.id;
     const token = getState().auth.token;
     dispatch({ type: TRIED_SOCKET_AUTH });
-    return dispatch(jwtLogin(token, app));
+    return dispatch(jwtLogin(token, app, socketId));
   }
 }
 
@@ -132,26 +133,25 @@ function saveAuth(response) {
 }
 
 export function login(data) {
-  const socketId = socket.io.engine.id;
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: (client) => client.authenticate({
       strategy: 'local',
       email: data.email,
-      password: data.password,
-      socketId
+      password: data.password
     })
     .then(saveAuth)
     .catch(catchValidation)
   }
 }
 
-export function jwtLogin(token, client) {
+export function jwtLogin(token, client, socketId) {
   return {
     types: [JWT_LOGIN, JWT_LOGIN_SUCCESS, JWT_LOGIN_FAIL],
     promise: () => client.authenticate({
       strategy: 'jwt',
-      accessToken: token
+      accessToken: token,
+      socketId
     })
     .then(saveAuth)
     .catch(catchValidation)
