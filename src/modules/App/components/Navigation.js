@@ -10,21 +10,24 @@ const hideNavigation = (props) => {
 }
 
 const Navigation = (props) => {
-    if(hideNavigation(props)) {
-      return null;
-    }
 
-    return (
-      <Navbar fixedTop>
-        <NavigationHeader user={props.user} />
-        { props.user ? <NavigationCollapse handleLogout={props.handleLogout} /> : null }
-      </Navbar>
-    )
+  const styles = require('./Navigation.scss');
+
+  if(hideNavigation(props)) {
+    return null;
+  }
+
+  return (
+    <Navbar className={styles.Navbar} fixedTop>
+      <NavigationHeader authenticated={props.authenticated} />
+      { props.authenticated ? <NavigationCollapse handleLogout={props.handleLogout} /> : null }
+    </Navbar>
+  )
 
 }
 
 Navigation.propTypes = {
-  user: PropTypes.object,
+  authenticated: PropTypes.bool.isRequired,
   handleLogout: PropTypes.func.isRequired
 }
 

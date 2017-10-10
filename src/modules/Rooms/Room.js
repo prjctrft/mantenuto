@@ -4,7 +4,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
 import { replace } from 'react-router-redux';
-import { populateUser } from '../App/redux';
 import Room from './components/Room';
 
 import {
@@ -36,7 +35,6 @@ const mapStateToProps = (state) => {
 
 @connect(mapStateToProps, {
   replace,
-  populateUser,
   isTalkerUpdate,
   isListenerUpdate,
   load,
@@ -59,7 +57,6 @@ export default class RoomContainer extends Component {
     isRoomParsed: PropTypes.bool,
     parsedRoom: PropTypes.bool,
     load: PropTypes.func.isRequired,
-    populateUser: PropTypes.func.isRequired,
     peerCheckIn: PropTypes.func.isRequired,
     peerCheckOut: PropTypes.func.isRequired,
     setPeer: PropTypes.func.isRequired,
@@ -68,9 +65,9 @@ export default class RoomContainer extends Component {
 
   componentDidMount() {
     const roomSlug = this.props.params.slug;
-    if(!this.props.user) {
-      this.props.populateUser(this.props.id);
-    }
+    // if(!this.props.user) {
+    //   this.props.populateUser(this.props.id);
+    // }
 
     // checkIn
     // receiveEvent if peer is checks in

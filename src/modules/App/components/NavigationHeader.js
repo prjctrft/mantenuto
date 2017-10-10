@@ -13,13 +13,13 @@ const NavigationHeader = (props) => {
       </IndexLink>
     </Navbar.Brand>
 
-    { props.user ? <Navbar.Toggle /> : null }
+    { props.authenticated ? <Navbar.Toggle /> : null }
   </Navbar.Header>
 	)
 }
 
 NavigationHeader.propTypes = {
-	user: PropTypes.object
+	authenticated: PropTypes.bool.isRequired
 }
 
 export default NavigationHeader;

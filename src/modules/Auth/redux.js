@@ -135,10 +135,18 @@ function saveAuth(response) {
 export function login(data) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.authenticate({
+    promise: () => restApp.authenticate({
       strategy: 'local',
       email: data.email,
       password: data.password
+    })
+    .then(({accessToken}) => {
+      const socketId = socket.io.engine.id;
+      return app.authenticate({
+        strategy: 'jwt',
+        accessToken,
+        socketId
+      });
     })
     .then(saveAuth)
     .catch(catchValidation)

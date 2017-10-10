@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 // TODO, move this to user actions?
-import { populateRooms } from 'modules/App/redux';
+// import { populateRooms } from 'modules/App/redux';
 
 import Authenticated from './Authenticated';
 
@@ -14,7 +14,7 @@ import Authenticated from './Authenticated';
     rooms: state.user.rooms,
     authenticated: state.auth.user
     // socketAuthenticated: state.auth.socketAuthenticated
-  }), { push, populateRooms })
+  }), { push })
 export default class AuthenticatedContainer extends Component {
 
   // componentWillReceiveProps(nextProps) {
