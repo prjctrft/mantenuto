@@ -59,7 +59,6 @@ describe('<TryAuth />', () => {
     global.socket.emit('connect');
     expect(listeners).to.have.length(1);
     expect(listeners[0]).to.equal('connect');
-    debugger;
     expect(props.socketAuth.mock.calls).to.have.length(1);
   });
 

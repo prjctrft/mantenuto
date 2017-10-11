@@ -18,8 +18,8 @@ import Authenticated from './Authenticated';
 export default class AuthenticatedContainer extends Component {
 
   componentDidMount() {
-    const app = require('app');
-    const id = this.props.id;
+    // const app = require('app');
+    // const id = this.props.id;
     // app.service('messages').find({
     //   query: {
     //     $or: [
@@ -28,7 +28,6 @@ export default class AuthenticatedContainer extends Component {
     //     ]
     //   }
     // });
-    debugger;
   }
 
   // componentWillReceiveProps(nextProps) {
