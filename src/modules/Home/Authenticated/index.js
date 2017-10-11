@@ -17,6 +17,20 @@ import Authenticated from './Authenticated';
   }), { push })
 export default class AuthenticatedContainer extends Component {
 
+  componentDidMount() {
+    const app = require('app');
+    const id = this.props.id;
+    // app.service('messages').find({
+    //   query: {
+    //     $or: [
+    //       { from: id },
+    //       { to:  id }
+    //     ]
+    //   }
+    // });
+    debugger;
+  }
+
   // componentWillReceiveProps(nextProps) {
   //   if (!nextProps.rooms && nextProps.authenticated) {
   //     this.props.populateRooms(this.props.id);
