@@ -42,12 +42,12 @@ export default class ProfileForm extends Component {
       field: 'username'
     },
     {
-      label: 'Email',
+      label: 'E-mail',
       type: 'email',
       field: 'email'
     },
     {
-      label: 'Confirm Email',
+      label: 'Confirm E-mail',
       type: 'email',
       field: 'confirmEmail'
     }
@@ -101,13 +101,13 @@ export default class ProfileForm extends Component {
           <p>Injury <span>(optional)</span></p>
 
           <div className={styles.combat}>
-            <label htmlFor='combat'>Combat</label>
             <input type='checkbox' name='combat' />
+            <label htmlFor='combat'>Combat</label>
           </div>
 
           <div className={styles.noncombat}>
-            <label htmlFor='noncombat'>Non-combat</label>
             <input type='checkbox' name='noncombat' />
+            <label htmlFor='noncombat'>Non-combat</label>
           </div>
         </div>
         {error && <p className="text-danger"><strong>{error}</strong></p>}
