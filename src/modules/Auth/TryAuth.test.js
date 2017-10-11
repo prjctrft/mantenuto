@@ -51,7 +51,7 @@ describe('<TryAuth />', () => {
   it('should run `socketAuth` on the client on "connect" event if already authed', () => {
     global.__SERVER__ = false;
     global.__CLIENT__ = true;
-    const newProps = { user: '1234', triedSocketAuth: false };
+    const newProps = { authenticated: true, triedSocketAuth: false };
     mount(
       <TryAuthComponent {...{...props, ...newProps}} />
     );

@@ -21,11 +21,6 @@ const NavigationCollapse = (props) => {
           Logout
         </NavItem>
     </Nav>
-    {/* <Nav navbar pullRight>
-        {user && <span className="navbar-text">
-          Hello <strong>{user.first}!</strong>
-        </span>}
-      </Nav> */}
   </Navbar.Collapse>
 	)
 }

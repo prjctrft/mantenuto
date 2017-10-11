@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { tryRestAuth, socketAuth } from './redux'
-
+import { populateUser } from 'modules/user/redux';
+import { tryRestAuth, socketAuth } from './redux';
 // Token from cookie on server -> 1) Rest -> tryAuth
 // Client and Already Authenticated -> 1) socket -> tryAuth
 //                                     2) rest -> tryAuth
@@ -12,8 +12,12 @@ export class TryAuthComponent extends Component {
     tryRestAuth: PropTypes.func.isRequired,
     socketAuth: PropTypes.func.isRequired,
     triedSocketAuth: PropTypes.bool.isRequired,
-    user: PropTypes.string,
-    children: PropTypes.node.isRequired
+    authenticated: PropTypes.bool.isRequired,
+    children: PropTypes.node.isRequired,
+    populateUser: PropTypes.func.isRequired,
+    userPopulated: PropTypes.bool.isRequired,
+    userPopulating: PropTypes.bool.isRequired,
+    userId: PropTypes.string
   }
 
   constructor(props) {
@@ -27,9 +31,16 @@ export class TryAuthComponent extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.authenticated) {
+      if (!nextProps.userPopulated && !nextProps.userPopulating) {
+        this.props.populateUser(nextProps.userId);
+      }
+    }
+  }
+
   trySocketAuth = () => {
-    const authenticated = !!this.props.user;
-    if(authenticated && !this.props.triedSocketAuth) {
+    if(this.props.authenticated && !this.props.triedSocketAuth) {
       this.props.socketAuth();
     }
   };
@@ -39,7 +50,15 @@ export class TryAuthComponent extends Component {
   }
 }
 
-export default connect((state) => ({ ...state.auth }), {
+export default connect((state) => {
+  const userId = state.auth.user;
+  const { userPopulated, userPopulating } = state.user;
+  return {
+    authenticated: !!state.auth.user,
+    userId, userPopulated, userPopulating
+  }
+}, {
   tryRestAuth,
-  socketAuth
+  socketAuth,
+  populateUser
 })(TryAuthComponent);

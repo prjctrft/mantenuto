@@ -6,8 +6,8 @@ const POPULATE_FAIL = 'chat/user/POPULATE_FAIL';
 const UPDATE_USER = 'chat/user/UPDATE_USER';
 const UPDATE_USER_SUCCESS = 'chat/user/UPDATE_USER_SUCCESS';
 const UPDATE_USER_FAIL = 'chat/user/UPDATE_USER_FAIL';
-const POPULATE_ROOMS = 'chat/user/POPULATE_ROOMS';
-const POPULATE_ROOMS_SUCCESS = 'chat/user/POPULATE_ROOMS_SUCCESS';
+// const POPULATE_ROOMS = 'chat/user/POPULATE_ROOMS';
+// const POPULATE_ROOMS_SUCCESS = 'chat/user/POPULATE_ROOMS_SUCCESS';
 const CLEAR_USER = 'chat/user/CLEAR_USER';
 
 const catchValidation = error => {
@@ -23,7 +23,7 @@ const catchValidation = error => {
 const defaultState = {
   user: {},
   userPopulated: false,
-  updatingUser: false
+  userPopulating: false
 };
 // TODO: test user state shape
 export function userReducer(state = defaultState, action = {}) {
@@ -31,29 +31,28 @@ export function userReducer(state = defaultState, action = {}) {
     case POPULATE_USER:
       return {
         ...state,
-        updatingUser: true
+        userPopulating: true
       };
     case UPDATE_USER_SUCCESS:
     case POPULATE_USER_SUCCESS:
       return {
         ...state,
-        populatingUser: false,
-        updatingUser: false,
+        userPopulating: false,
         userPopulated: true,
         user: action.result
       };
-    case POPULATE_ROOMS:
-      return {
-        ...state,
-        populatingRooms: true
-      };
-    case POPULATE_ROOMS_SUCCESS:
-      return {
-        ...state,
-        populatingRooms: false,
-        roomsPopulated: true,
-        rooms: [...action.result.rooms, ...(state.rooms || [])]
-      };
+    // case POPULATE_ROOMS:
+    //   return {
+    //     ...state,
+    //     populatingRooms: true
+    //   };
+    // case POPULATE_ROOMS_SUCCESS:
+    //   return {
+    //     ...state,
+    //     populatingRooms: false,
+    //     roomsPopulated: true,
+    //     rooms: [...action.result.rooms, ...(state.rooms || [])]
+    //   };
     case CLEAR_USER:
       return {};
     case POPULATE_FAIL:

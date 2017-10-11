@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.6-stretch
+      - image: circleci/node:latest
     working_directory: ~/circulate
 
     steps:
@@ -16,7 +16,6 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
       - run:
           name: Installing packages
           command: npm install

@@ -27,8 +27,10 @@ export class Login extends Component {
   };
 
   success = () => {
+    // TODO: test this in the login module as an integration test
+    // since it depends on 'modules/Notifs/redux';
     this.props.notifSend({
-      message: 'You\'re logged !',
+      message: 'You\'re logged in!',
       kind: 'success',
       dismissAfter: 5000
     });
