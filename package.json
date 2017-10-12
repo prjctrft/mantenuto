@@ -59,7 +59,7 @@
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
     "test": "jest --silent --maxWorkers 2 src",
     "tdd": "jest --watch src",
-    "debug-tests": "node --inspect-brk node_modules/.bin/jest --runInBand --watch src"
+    "debug-tests": "node --inspect-brk node_modules/.bin/jest --silent --runInBand --watch src"
   },
   "betterScripts": {
     "start-prod": {

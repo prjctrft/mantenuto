@@ -100,7 +100,7 @@ export function authReducer(state = initialState, action = {}) {
 
 export const tryRestAndSocketAuth = () => {
   return (dispatch, getState) => {
-    dispatch(tryRestAuth()).then((foo) => {
+    dispatch(tryRestAuth()).then(() => {
       const authenticated = !!getState().auth.user;
       if (authenticated) {
         socket.connect()

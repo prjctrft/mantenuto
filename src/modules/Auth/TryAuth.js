@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { populateUser } from 'modules/user/redux';
@@ -11,8 +11,7 @@ import { tryRestAuth, tryRestAndSocketAuth } from './redux';
 export class TryAuthComponent extends Component {
   static propTypes = {
     tryRestAuth: PropTypes.func.isRequired,
-    socketAuth: PropTypes.func.isRequired,
-    triedSocketAuth: PropTypes.bool.isRequired,
+    tryRestAndSocketAuth: PropTypes.func.isRequired,
     authenticated: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
     populateUser: PropTypes.func.isRequired,

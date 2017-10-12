@@ -23,7 +23,8 @@ describe('<RequireNotLoggedIn />', () => {
   });
 
   it('should render children correctly', () => {
-    expect(component.children('div')).to.have.length(2);
+
+    expect(component.find('div').children()).to.have.length(2);
   });
 
   it('should push route "/" if user is authenticated', () => {

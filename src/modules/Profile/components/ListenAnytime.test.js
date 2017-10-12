@@ -4,11 +4,10 @@ import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import createStore from 'redux/create';
 import ListenAnytime from './ListenAnytime';
-debugger;
+
 describe('<ListenAnytime />', () => {
   let component;
   beforeEach(() => {
-    debugger;
     const store = createStore({}, {}, {});
     // const handleSubmit = jest.fn();
     component = mount(

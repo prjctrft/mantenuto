@@ -19,7 +19,8 @@ export default class Profile extends Component {
   static propTypes = {
     updateUser: PropTypes.func.isRequired,
     notifSend: PropTypes.func.isRequired,
-    user: PropTypes.object
+    user: PropTypes.object,
+    userPopulated: PropTypes.bool.isRequired
     // handleSubmit: PropTypes.func.isRequired,
     // error: PropTypes.string
   }
@@ -56,7 +57,7 @@ export default class Profile extends Component {
   render() {
     const styles = require('./Profile.scss');
     const { user, userPopulated } = this.props;
-    debugger;
+
     // user is initialized as an empty object, so this will ALWAYS be true
     // let's move this concern to the form itself
     return (

@@ -5,12 +5,11 @@ import { mount } from 'enzyme';
 import Listen from './Listen';
 
 describe('<Listen />', () => {
-	const component = mount(<Listen />);
-	const instance = component.instance();
+	let component;
 
-	it('should not render <Connecting /> component by default', () => {
-		expect(component.find('Connecting').exists()).to.be.false;
-	});
+	beforeEach(() => {
+		component = mount(<Listen />);
+	})
 
 	it('should render <Preferences /> by default', () => {
 		expect(component.find('Preferences').exists()).to.be.true;
@@ -21,15 +20,15 @@ describe('<Listen />', () => {
 	});
 
 	it('call handleAnytime', () => {
-		instance.handleAnytime();
+		component.instance().handleAnytime();
+		component.update();
 		expect(component.find('Connecting').exists()).to.be.true;
 		expect(component.find('Preferences').exists()).to.be.false;
-
-		component.setState({connecting: false});
 	});
 
 	it('call handleNow', () => {
-		instance.handleNow();
+		component.instance().handleNow();
+		component.update();
 		expect(component.find('Connecting').exists()).to.be.true;
 		expect(component.find('Preferences').exists()).to.be.false;
 	});

@@ -93,8 +93,8 @@ app.use((req, res) => {
   }
 
 
-  // unplug = cookie.plugToRequest(req, res);
-  cookie.plugToRequest(req, res);
+  const unplug = cookie.plugToRequest(req, res);
+
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
@@ -135,19 +135,19 @@ app.use((req, res) => {
         res.status(200);
 
         global.navigator = { userAgent: req.headers['user-agent'] };
-
         res.send(`<!doctype html>
         ${ReactDOMServer.renderToString(
           <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />
         )}`);
-      }).catch((err) => {
+      }).catch(() => {
         res.status(500);
       })
     } else {
       res.status(404).send('Not found');
     }
+    res.send();
   })
-  // unplug();
+  unplug();
 });
 
 const port = process.env.PORT;
