@@ -98,6 +98,20 @@ export function authReducer(state = initialState, action = {}) {
   }
 }
 
+export const tryRestAndSocketAuth = () => {
+  return (dispatch, getState) => {
+    dispatch(tryRestAuth()).then((foo) => {
+      const authenticated = !!getState().auth.user;
+      if (authenticated) {
+        socket.connect()
+        socket.on('connect', () => {
+          dispatch(socketAuth());
+        });
+      }
+    });
+  }
+}
+
 export function tryRestAuth() {
   return (dispatch, getState) => {
     const token = getState().auth.token

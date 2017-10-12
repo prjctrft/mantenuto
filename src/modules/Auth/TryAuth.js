@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
 
 import { populateUser } from 'modules/user/redux';
-import { tryRestAuth, socketAuth } from './redux';
+import { tryRestAuth, tryRestAndSocketAuth } from './redux';
 // Token from cookie on server -> 1) Rest -> tryAuth
 // Client and Already Authenticated -> 1) socket -> tryAuth
 //                                     2) rest -> tryAuth
@@ -26,8 +27,7 @@ export class TryAuthComponent extends Component {
       this.props.tryRestAuth();
     }
     if(__CLIENT__) {
-      this.props.tryRestAuth();
-      socket.on('connect', this.trySocketAuth)
+      this.props.tryRestAndSocketAuth();
     }
   }
 
@@ -38,12 +38,6 @@ export class TryAuthComponent extends Component {
       }
     }
   }
-
-  trySocketAuth = () => {
-    if(this.props.authenticated && !this.props.triedSocketAuth) {
-      this.props.socketAuth();
-    }
-  };
 
   render() {
     return <div>{this.props.children}</div>
@@ -59,6 +53,6 @@ export default connect((state) => {
   }
 }, {
   tryRestAuth,
-  socketAuth,
+  tryRestAndSocketAuth,
   populateUser
 })(TryAuthComponent);
