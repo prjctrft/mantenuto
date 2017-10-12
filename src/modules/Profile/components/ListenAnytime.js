@@ -8,7 +8,7 @@ const ListenAnytime = (props) => {
 		    <h2>Listen anytime?</h2>
 		    {
 		      props.listenAnytime ?
-		        <button className={styles.on} onClick={this.props.toggleListen}>On</button> :
+		        <button className={styles.on} onClick={props.toggleListen}>On</button> :
 		        <button className={styles.off} onClick={props.toggleListen}>Off</button>
 		    }
 		  </div>
