@@ -1,7 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import React from 'react';
-import ReactDOM from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 import cookie from 'react-cookie';
 import favicon from 'serve-favicon';
 import compression from 'compression';
@@ -107,7 +107,7 @@ app.use((req, res) => {
 
   function hydrateOnClient() {
     res.send(`<!doctype html>
-      ${ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />)}`);
+      ${ReactDOMServer.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />)}`);
   }
 
   if (__DISABLE_SSR__) {
@@ -137,10 +137,10 @@ app.use((req, res) => {
         global.navigator = { userAgent: req.headers['user-agent'] };
 
         res.send(`<!doctype html>
-        ${ReactDOM.renderToString(
+        ${ReactDOMServer.renderToString(
           <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />
         )}`);
-      }).catch( () => {
+      }).catch((err) => {
         res.status(500);
       })
     } else {

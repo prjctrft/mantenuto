@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
 import Alert from 'react-bootstrap/lib/Alert';
 import { notifDismiss } from './redux';
