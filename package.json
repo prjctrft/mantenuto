@@ -20,6 +20,26 @@
     "babel"
   ],
   "main": "bin/server.js",
+  "jest": {
+    "setupFiles": [
+      "./setup.jest.js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "globals": {
+      "__CLIENT__": true,
+      "__SERVER__": false,
+      "__DEVELOPMENT__": true,
+      "__DEVTOOLS__": false,
+      "__DLLS__": "process.env.WEBPACK_DLLS === '1'"
+    },
+    "moduleNameMapper": {
+      "\\.(css|scss|eot|otf|svg|ttf|woff|woff2|m4a|aac|oga)$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|gif|png|mp4|mkv|avi|webm|swf|wav|mid)$": "jest-static-stubs/$1"
+    }
+  },
   "scripts": {
     "start": "concurrently --kill-others \"npm run start-prod\"",
     "start-prod": "better-npm-run start-prod",
@@ -39,7 +59,7 @@
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
     "test": "jest --silent --maxWorkers 2 src",
     "tdd": "jest --watch src",
-    "debug-tests": "node --inspect-brk=4999 node_modules/.bin/jest --runInBand --watch src"
+    "debug-tests": "node --inspect-brk node_modules/.bin/jest --runInBand --watch src"
   },
   "betterScripts": {
     "start-prod": {
@@ -110,23 +130,6 @@
       "env": {
         "NODE_ENV": "production"
       }
-    }
-  },
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "globals": {
-      "__CLIENT__": true,
-      "__SERVER__": false,
-      "__DEVELOPMENT__": true,
-      "__DEVTOOLS__": false,
-      "__DLLS__": "process.env.WEBPACK_DLLS === '1'"
-    },
-    "moduleNameMapper": {
-      "\\.(css|scss|eot|otf|svg|ttf|woff|woff2|m4a|aac|oga)$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|gif|png|mp4|mkv|avi|webm|swf|wav|mid)$": "jest-static-stubs/$1"
     }
   },
   "dependencies": {
@@ -211,7 +214,8 @@
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.26.4",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.7.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-import-resolver-webpack": "^0.8.3",
@@ -239,6 +243,7 @@
     "react-a11y": "^0.3.4",
     "react-addons-test-utils": "^15.6.0",
     "react-hot-loader": "^3.0.0-beta.7",
+    "react-test-renderer": "^16.0.0",
     "react-to-html-webpack-plugin": "^2.2.0",
     "redux-devtools": "^3.4.0",
     "redux-devtools-dock-monitor": "^1.1.2",
