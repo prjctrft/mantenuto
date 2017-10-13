@@ -10,7 +10,7 @@ import Preferences from './components/Preferences';
 
 export class ListenComponent extends Component {
   static propTypes = {
-    user: PropTypes.object.shape({
+    user: PropTypes.shape({
       id: PropTypes.string.isRequired,
       listenAnytime: PropTypes.bool.isRequired
     }),
