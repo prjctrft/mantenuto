@@ -46,8 +46,8 @@ export default class App extends Component {
     })
   }
 
-  componentDidCatch(error, info) {
-    console.log(error, info);
+  componentDidCatch() {
+    //TODO
   }
 
   handleLogout = event => {

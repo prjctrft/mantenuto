@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { updateUser } from 'modules/user/redux';
@@ -7,7 +8,15 @@ import Connecting from './components/Connecting';
 import Preferences from './components/Preferences';
 
 
-class Listen extends Component {
+export class ListenComponent extends Component {
+  static propTypes = {
+    user: PropTypes.object.shape({
+      id: PropTypes.string.isRequired,
+      listenAnytime: PropTypes.bool.isRequired
+    }),
+    updateUser: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props);
   }
@@ -40,4 +49,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { updateUser }, Listen);
+export default connect(mapStateToProps, { updateUser })(ListenComponent);

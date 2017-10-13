@@ -53,7 +53,6 @@ app.use('/admin', (req, res) => {
 
 // Proxy to API server
 app.use('/api', (req, res) => {
-  console.log(targetUrl);
   proxy.web(req, res, { target: targetUrl });
 });
 
@@ -91,7 +90,7 @@ app.use((req, res) => {
   }
 
 
-  const unplug = cookie.plugToRequest(req, res);
+  const unplug = cookie.plugToRequest(req, res); // eslint-disable-line
 
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since

@@ -1,35 +1,42 @@
 import React from 'react';
-import { expect } from 'chai';
-import { mount } from 'enzyme';
+import {expect} from 'chai';
+import {mount} from 'enzyme';
 
-import Listen from './Listen';
+import {ListenComponent} from './Listen';
 
-describe('<Listen />', () => {
-	let component;
+describe('<ListenComponent />', () => {
+  let component,
+    updateUser,
+    user;
 
-	beforeEach(() => {
-		component = mount(<Listen />);
-	})
+  beforeEach(() => {
+    user = {
+      id: 1234
+    };
+    updateUser = jest.fn();
+    component = mount(<ListenComponent updateUser={updateUser} user={user} />);
+  })
 
-	it('should render <Preferences /> by default', () => {
-		expect(component.find('Preferences').exists()).to.be.true;
-	});
+  it('should render <Preferences /> by default', () => {
+    expect(component.find('Preferences').exists()).to.be.true;
+  });
 
-	it('this.state.connecting should be set to false', () => {
-		expect(component.state('connecting')).to.equal(false);
-	});
+  it('call handleAnytime', () => {
+    component.instance().handleAnytime();
+    expect(updateUser.mock.calls[0][0]).to.equal(user.id)
+    expect(updateUser.mock.calls[0][1]).to.deep.equal({listenAnytime: true})
+  });
 
-	it('call handleAnytime', () => {
-		component.instance().handleAnytime();
-		component.update();
-		expect(component.find('Connecting').exists()).to.be.true;
-		expect(component.find('Preferences').exists()).to.be.false;
-	});
+  it('call handleNow', () => {
+    component.instance().handleNow();
+    expect(updateUser.mock.calls[0][0]).to.equal(user.id)
+    expect(updateUser.mock.calls[0][1]).to.deep.equal({listenAnytime: false})
+  });
 
-	it('call handleNow', () => {
-		component.instance().handleNow();
-		component.update();
-		expect(component.find('Connecting').exists()).to.be.true;
-		expect(component.find('Preferences').exists()).to.be.false;
-	});
+  // TODO, cases where this is
+  // expect(component.find('Connecting').exists()).to.be.true;
+  // expect(component.find('Preferences').exists()).to.be.false;
+
+  // expect(component.find('Connecting').exists()).to.be.true;
+  // expect(component.find('Preferences').exists()).to.be.false;
 });

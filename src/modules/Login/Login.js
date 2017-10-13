@@ -42,7 +42,7 @@ export class Login extends Component {
     this.props.push(next);
   };
 
-  fail = (err) => {
+  fail = () => {
     // TODO - better feedback here, what if username does not exist?
     throw new SubmissionError({ password: 'Incorrect password.' });
   }

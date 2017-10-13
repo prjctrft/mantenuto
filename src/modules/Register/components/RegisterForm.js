@@ -5,22 +5,22 @@ import {
   touch, startAsyncValidation, stopAsyncValidation,
   reduxForm, Field, propTypes
 } from 'redux-form';
-import registerValidation from './registerValidation';
 import { checkUsername } from 'modules/user/redux';
+import registerValidation from './registerValidation';
 
 @reduxForm({
   form: 'register',
   validate: registerValidation
 })
 class RegisterForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     ...propTypes,
     handleSubmit: PropTypes.func.isRequired,
     error: PropTypes.string
+  }
+
+  constructor(props) {
+    super(props);
   }
 
   validateUsername = (e) => {
