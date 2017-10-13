@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
@@ -24,7 +24,7 @@ export class Login extends Component {
   login = (data) => {
     return this.props.login(data)
       .then(this.success)
-      .catch(this.fail)
+      // .catch(this.fail)
   };
 
   success = () => {
@@ -42,7 +42,7 @@ export class Login extends Component {
     this.props.push(next);
   };
 
-  fail = () => {
+  fail = (err) => {
     // TODO - better feedback here, what if username does not exist?
     throw new SubmissionError({ password: 'Incorrect password.' });
   }
