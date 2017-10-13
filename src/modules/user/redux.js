@@ -84,10 +84,14 @@ export function populateUser(id) {
 export function updateUser(id, data) {
   return {
     types: [UPDATE_USER, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL],
-    promise: (client) => client.service('users').patch(id, data)
+    promise: () => restApp.service('users').patch(id, data)
       .then(saveUser)
       .catch(catchValidation)
   }
+}
+
+export function checkUsername(username) {
+  return restApp.service('users/check-username').create({ username });
 }
 
 // function saveRooms(response) {
