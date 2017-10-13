@@ -7,9 +7,7 @@ import favicon from 'serve-favicon';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
-// import PrettyError from 'pretty-error';
 import http from 'http';
-// import ssl  from 'express-ssl';
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
@@ -39,12 +37,6 @@ const proxy = httpProxy.createProxyServer({
   changeOrigin: true
 });
 
-app.use(compression());
-app.use(cookieParser());
-app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
-
-app.use(express.static(path.join(__dirname, '..', 'static')));
-
 // Redirect http to https
 // app.all('*', function(req,res,next) {
 //   if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
@@ -61,6 +53,7 @@ app.use('/admin', (req, res) => {
 
 // Proxy to API server
 app.use('/api', (req, res) => {
+  console.log(targetUrl);
   proxy.web(req, res, { target: targetUrl });
 });
 
@@ -71,6 +64,11 @@ app.use('/ws', (req, res) => {
 server.on('upgrade', (req, socket, head) => {
   proxy.ws(req, socket, head, { target: targetUrl });
 });
+
+app.use(compression())
+  .use(cookieParser())
+  .use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')))
+  .use(express.static(path.join(__dirname, '..', 'static')));
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
@@ -145,9 +143,9 @@ app.use((req, res) => {
     } else {
       res.status(404).send('Not found');
     }
-    res.send();
+    // res.send();
   })
-  unplug();
+  // unplug();
 });
 
 const port = process.env.PORT;
