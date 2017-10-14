@@ -5,6 +5,7 @@ import app from 'app';
 import { pushMessage, addMessage, loadMessages } from '../../actions';
 
 import Chat from './Chat';
+import ChatIconButton from './ChatIconButton';
 
 @connect(state => ({
   messages: state.rooms.messages,
@@ -137,6 +138,7 @@ export default class ChatContainer extends Component {
       onSubmit={this.handleSubmit}
       content={this.state.content}
       disableLoadMore={this.disableLoadMore}
+      toggleChat={this.toggleChat}
     />)
 
     // return (

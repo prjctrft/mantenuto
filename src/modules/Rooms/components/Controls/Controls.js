@@ -12,22 +12,22 @@ export default (props) => {
     <div className={`${styles.controlBar}`}>
       <div className="btn-group btn-group-lg" role="group" aria-label="...">
         <ControlButton
-          onClick={props.toggleVideo}
-          streamOpen={props.streamOpen}
-          controlOn={props.cameraOn}
-          faClass={'fa fa-eye'}
-        />
-        <ControlButton
           onClick={props.toggleAudio}
           streamOpen={props.streamOpen}
           controlOn={props.audioOn}
-          faClass={'fa fa-microphone'}
+          faClass={'fa fa-microphone fa-2x'}
+        />
+        <ControlButton
+          onClick={props.toggleVideo}
+          streamOpen={props.streamOpen}
+          controlOn={props.cameraOn}
+          faClass={'fa fa-video-camera fa-2x'}
         />
         <ControlButton
           onClick={props.startCall}
           streamOpen={props.streamOpen}
           controlOn={props.wasCallAccepted}
-          faClass={'fa fa-phone'}
+          faClass={'fa fa-phone fa-2x'}
         />
         {/* <button onClick={this.startCall}
           type="button"
@@ -42,7 +42,7 @@ export default (props) => {
           onClick={props.stopCall}
           streamOpen={props.wasCallAccepted}
           controlOn={!props.wasCallAccepted}
-          faClass={'fa fa-times'}
+          faClass={'fa fa-times fa-2x'}
         />
         {/* <button onClick={this.stopCall}
           type="button"

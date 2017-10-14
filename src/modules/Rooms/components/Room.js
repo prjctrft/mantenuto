@@ -1,12 +1,11 @@
 /* eslint-disable */
 import React from 'react';
 
-// Todo
+// Components
 import Chat from './Chat';
+import ChatIconButton from './Chat/ChatIconButton';
 import Controls from './Controls';
 import Video from './Video';
-
-// Components
 import Stats from './Stats';
 
 let RemotePlayer;
@@ -28,41 +27,42 @@ const hoistRemoteStream = (stream) => {
   RemotePlayer.srcObject = stream;
 }
 
+export default class Room extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      renderChat: false
+    }
+  }
 
-export default (props) => {
-  // TODO - move somewhere else
-  const styles = require('../Styles.scss');
+  toggleChat = () => {
+    this.setState({renderChat: !this.state.renderChat});
+  }
 
-  return (
-    <div className="container">
-      <div className='row'>
-        <div className='col-xs-12 text-center'>
+  render() { 
+    const styles = require('../Styles.scss');
+
+    return (
+      <div className={styles.Room}>
+        <div className={styles.videoWrapper}>
           <Stats peer={props.peer} user={props.user} styles={styles} />
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-xs-12 text-center'>
+          <Video
+            styles={styles}
+            hoistRemoteVideo={hoistRemoteVideo}
+            hoistLocalVideo={hoistLocalVideo}
+          />
           <Controls
             styles={styles}
             hoistRemoteStream={hoistRemoteStream}
             hoistLocalStream={hoistLocalStream}
           />
         </div>
-      </div>
-      <div className='row'>
-        <div className='col-xs-12 text-center'>
-          <Video
-            styles={styles}
-            hoistRemoteVideo={hoistRemoteVideo}
-            hoistLocalVideo={hoistLocalVideo}
-          />
+        
+        <div className={styles.chatWrapper}>
+
+        {props.renderChat ? <Chat toggleChat={this.toggleChat}/> : <ChatIconButton toggleChat={this.toggleChat}/>}
         </div>
       </div>
-      <div className='row'>
-        <div className='col-xs-12'>
-          <Chat />
-        </div>
-      </div>
-    </div>
-  );
+    );
+  }
 }
