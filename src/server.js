@@ -37,17 +37,11 @@ const proxy = httpProxy.createProxyServer({
   changeOrigin: true
 });
 
-// Redirect http to https
-// app.all('*', function(req,res,next) {
-//   if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
-//   // if(req.headers['x-forwarded-proto'] !== 'https') {
-//     res.redirect('https://'+ req.hostname + req.url)
-//   } else {
-//     next()
-//   }
-// });
 
 app.use('/admin', (req, res) => {
+  if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+    return res.redirect('https://'+ req.hostname + req.url)
+  }
   proxy.web(req, res, { target: `${targetUrl}/admin` });
 });
 
