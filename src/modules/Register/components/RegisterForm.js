@@ -17,7 +17,7 @@ export default class RegisterForm extends Component {
     return (
       <div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
         {/* <div className='col-xs-12'> */}
-        <label className='control-label' htmlFor={input.name}>{label}</label>
+        <label htmlFor={input.name}><span className="text-danger">*</span>{label}</label>
         {/* </div>
         <div className='col-xs-12'> */}
         <input {...input} type={type} className="form-control" />
@@ -61,17 +61,23 @@ export default class RegisterForm extends Component {
         <div className={`${styles.flexForm}`}>
           <fieldset className={`${styles.flexColumn}`}>
             <Field
-              name="first"
+              name="full-name"
               type="text"
               component={this.renderInput}
-              label="First Name"
+              label="Full Name"
             />
             <Field
-              name="last"
+              name="mos"
               type="text"
               component={this.renderInput}
-              label="Last Name"
+              label="MOS"
             />
+            <label className="control-label" htmlFor="injury">Injury <span className={styles.optional}>(optional)</span></label>
+              <Field className="form-control" component="select">
+                <option></option>
+                <option value="combat">Combat</option>
+                <option value="non-combat">Non-Combat</option>
+              </Field>
             <Field
               name="username"
               type="text"
@@ -82,19 +88,29 @@ export default class RegisterForm extends Component {
               name="email"
               type="email"
               component={this.renderInput}
-              label="Email"
+              label="E-mail"
             />
+            <Field
+              name="password"
+              type="password"
+              component={this.renderInput}
+              label="Password"
+            />
+            <Field
+              name="confirm-password"
+              type="password"
+              component={this.renderInput}
+              label="Confirm Password"
+            />
+            <div className={styles.submitDiv}>
+              <button type="submit">Done</button>
+            </div>
           </fieldset>
           <fieldset className={`${styles.flexColumn}`}>
             <Field styles={styles} name="verification" type="file" component={this.renderVerification} label="Upload DD214" />
           </fieldset>
         </div>
         {this.props.error && <p className="text-danger"><strong>{this.props.error}</strong></p>}
-        <div className='text-center form-group'>
-          <button className="btn btn-primary" type="submit">
-            Done
-          </button>
-        </div>
       </form>
     );
   }
