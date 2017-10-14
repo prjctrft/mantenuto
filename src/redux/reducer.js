@@ -6,7 +6,7 @@ import { reducer as form } from 'redux-form';
 import { authReducer as auth } from 'modules/Auth/redux';
 import notifs from 'modules/Notifs/redux';
 import rooms from 'modules/Rooms/reducer';
-import { userReducer as user } from 'modules/App/redux';
+import { userReducer as user } from 'modules/user/redux';
 import home from 'modules/Home/redux';
 import { registerReducer as register } from 'modules/Register/redux';
 

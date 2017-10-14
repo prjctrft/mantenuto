@@ -5,6 +5,10 @@
 	flex-direction: column;
 	justify-content: center;
 	width: 90%;
+	
+	label {
+		font-size: 1.2em;
+	}
 
 	input {
 		box-shadow: $box-shadow;
@@ -37,24 +41,26 @@
 	.combat {
 		width: 50%;
 		float: left;
-		> label {
-			display: block;
-		}
 		> input {
 			box-shadow: none;
-			margin: auto;
+			float: left;
+			margin: .3em 1em auto 3.5em;
+		}
+		> label {
+			float: left;
 		}
 	}
 
 	.noncombat {
 		width: 50%;
 		float: right;
-		> label {
-			display: block;
-		}
 		> input {
 			box-shadow: none;
-			margin: auto;
+			float: left;
+			margin: .3em 1em auto 1.25em;
+		}
+		> label {
+			float: left;
 		}
 	}
 

@@ -1,5 +1,9 @@
 @import '../../../theme/variables.scss';
 
+.Navbar {
+  z-index: 10;
+}
+
 .brand {
     position: absolute;
     $size: 40px;

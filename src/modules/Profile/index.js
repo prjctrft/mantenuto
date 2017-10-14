@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import { updateUser } from '../App/redux';
+import { updateUser } from 'modules/user/redux';
 
 import { notifSend } from '../Notifs/redux';
 
