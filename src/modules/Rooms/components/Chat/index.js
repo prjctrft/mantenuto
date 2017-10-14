@@ -81,10 +81,6 @@ export default class ChatContainer extends Component {
     });
   }
 
-  toggleChat = () => {
-    this.setState({renderChat: !this.state.renderChat});
-  }
-
   // renderMessages = (styles) => {
   //   const { messages, user, peer } = this.props;
   //   if (messages.length === 0) {

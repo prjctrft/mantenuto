@@ -27,32 +27,42 @@ const hoistRemoteStream = (stream) => {
   RemotePlayer.srcObject = stream;
 }
 
+export default class Room extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      renderChat: false
+    }
+  }
 
-export default (props) => {
-  // TODO - move somewhere else
-  const styles = require('../Styles.scss');
+  toggleChat = () => {
+    this.setState({renderChat: !this.state.renderChat});
+  }
 
-  return (
-    <div className={styles.Room}>
-      <div className={styles.videoWrapper}>
-        <Stats peer={props.peer} user={props.user} styles={styles} />
-        <Video
-          styles={styles}
-          hoistRemoteVideo={hoistRemoteVideo}
-          hoistLocalVideo={hoistLocalVideo}
-        />
-        <Controls
-          styles={styles}
-          hoistRemoteStream={hoistRemoteStream}
-          hoistLocalStream={hoistLocalStream}
-        />
+  render() { 
+    const styles = require('../Styles.scss');
+
+    return (
+      <div className={styles.Room}>
+        <div className={styles.videoWrapper}>
+          <Stats peer={props.peer} user={props.user} styles={styles} />
+          <Video
+            styles={styles}
+            hoistRemoteVideo={hoistRemoteVideo}
+            hoistLocalVideo={hoistLocalVideo}
+          />
+          <Controls
+            styles={styles}
+            hoistRemoteStream={hoistRemoteStream}
+            hoistLocalStream={hoistLocalStream}
+          />
+        </div>
+        
+        <div className={styles.chatWrapper}>
+
+        {props.renderChat ? <Chat toggleChat={this.toggleChat}/> : <ChatIconButton toggleChat={this.toggleChat}/>}
+        </div>
       </div>
-      
-      <div className={styles.chatWrapper}>
-
-      {props.renderChat ? <Chat /> : <ChatIconButton toggleChat={this.toggleChat}/>}
-        <Chat />
-      </div>
-    </div>
-  );
+    );
+  }
 }

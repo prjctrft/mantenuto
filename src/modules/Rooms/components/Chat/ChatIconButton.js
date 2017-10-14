@@ -3,6 +3,7 @@ import React from 'react';
 const styles = require('./Chat.scss');
 
 const ChatIconButton = (props) => {
+
   return (
     <div className={styles.ChatIconContainer}>
       <button onClick={props.toggleChat}>
