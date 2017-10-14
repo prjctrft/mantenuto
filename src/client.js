@@ -39,10 +39,8 @@ const render = routes => {
 };
 
 const isOnline = window.__data;
-
 if (isOnline) {
   global.socket = socket;
-  socket.open();
 }
 
 render(getRoutes(store));

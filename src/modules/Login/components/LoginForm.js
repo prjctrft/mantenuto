@@ -24,7 +24,7 @@ export default class LoginForm extends Component {
 
     return (
       <form className={`${styles.LoginForm} form-horizontal`} onSubmit={handleSubmit}>
-        <Field name="email" type="text" component={this.renderInput} label="Email" placeholder="Username..." />
+        <Field name="lookup" type="text" component={this.renderInput} label="Lookup" placeholder="Login with Username or Email" />
         <Field name="password" type="password" component={this.renderInput} label="Password" placeholder="Password..." />
         {error && <p className="text-danger"><strong>{error}</strong></p>}
         <div className={styles.buttonWrapper}>

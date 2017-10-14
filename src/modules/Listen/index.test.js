@@ -9,7 +9,7 @@ describe('listen routes', () => {
   });
 
   it('should render the <Listen> component', () => {
-    expect(routes.props.component.name).to.equal('Listen');
+    expect(routes.props.component.WrappedComponent.name).to.equal('ListenComponent');
   });
 
   it('listen module should have no child routes', () => {

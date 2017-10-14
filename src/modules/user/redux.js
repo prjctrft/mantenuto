@@ -1,4 +1,5 @@
 import { SubmissionError } from 'redux-form';
+import { restApp } from 'app';
 
 const POPULATE_USER = 'chat/user/POPULATE_USER';
 const POPULATE_USER_SUCCESS = 'chat/user/POPULATE_SUCCESS';
@@ -74,7 +75,7 @@ function saveUser(response) {
 export function populateUser(id) {
   return {
     types: [POPULATE_USER, POPULATE_USER_SUCCESS, POPULATE_FAIL],
-    promise: (client) => client.service('users').get(id)
+    promise: () => restApp.service('users').get(id)
       .then(saveUser)
       .catch(catchValidation)
   }
@@ -83,10 +84,14 @@ export function populateUser(id) {
 export function updateUser(id, data) {
   return {
     types: [UPDATE_USER, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL],
-    promise: (client) => client.service('users').patch(id, data)
+    promise: () => restApp.service('users').patch(id, data)
       .then(saveUser)
       .catch(catchValidation)
   }
+}
+
+export function checkUsername(username) {
+  return restApp.service('users/check-username').create({ username });
 }
 
 // function saveRooms(response) {

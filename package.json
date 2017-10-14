@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "engines": {
     "node": "8.4.0",
-    "npm": "5.5.1"
+    "npm": "5.2.0"
   },
   "keywords": [
     "react",
@@ -20,6 +20,26 @@
     "babel"
   ],
   "main": "bin/server.js",
+  "jest": {
+    "setupFiles": [
+      "./setup.jest.js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "globals": {
+      "__CLIENT__": true,
+      "__SERVER__": false,
+      "__DEVELOPMENT__": true,
+      "__DEVTOOLS__": false,
+      "__DLLS__": "process.env.WEBPACK_DLLS === '1'"
+    },
+    "moduleNameMapper": {
+      "\\.(css|scss|eot|otf|svg|ttf|woff|woff2|m4a|aac|oga)$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|gif|png|mp4|mkv|avi|webm|swf|wav|mid)$": "jest-static-stubs/$1"
+    }
+  },
   "scripts": {
     "start": "concurrently --kill-others \"npm run start-prod\"",
     "start-prod": "better-npm-run start-prod",
@@ -39,7 +59,7 @@
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
     "test": "jest --silent --maxWorkers 2 src",
     "tdd": "jest --watch src",
-    "debug-tests": "node --inspect-brk node_modules/.bin/jest --runInBand --watch src"
+    "debug-tests": "node --inspect-brk node_modules/.bin/jest --silent --runInBand --watch src"
   },
   "betterScripts": {
     "start-prod": {
@@ -74,7 +94,7 @@
       }
     },
     "start-dev-debug": {
-      "command": "node --inspect --debug ./bin/server.js",
+      "command": "node --inspect=4999 --debug ./bin/server.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
@@ -85,7 +105,7 @@
       }
     },
     "start-dev-debug-local": {
-      "command": "node --inspect --debug ./bin/server.js",
+      "command": "node --inspect=4999 --debug ./bin/server.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "development",
@@ -112,23 +132,6 @@
       }
     }
   },
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "globals": {
-      "__CLIENT__": true,
-      "__SERVER__": false,
-      "__DEVELOPMENT__": true,
-      "__DEVTOOLS__": false,
-      "__DLLS__": "process.env.WEBPACK_DLLS === '1'"
-    },
-    "moduleNameMapper": {
-      "\\.(css|scss|eot|otf|svg|ttf|woff|woff2|m4a|aac|oga)$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|gif|png|mp4|mkv|avi|webm|swf|wav|mid)$": "jest-static-stubs/$1"
-    }
-  },
   "dependencies": {
     "async": "^2.4.1",
     "babel-core": "^6.25.0",
@@ -143,7 +146,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
-    "body-parser": "^1.17.2",
     "compression": "^1.6.2",
     "concurrently": "^3.5.0",
     "cookie-parser": "^1.4.3",
@@ -174,12 +176,12 @@
     "morgan": "^1.8.2",
     "multireducer": "^3.1.0",
     "pretty-error": "^2.1.1",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-bootstrap": "^0.30.10",
+    "prop-types": "^15.6.0",
+    "react": "16.0.0",
+    "react-bootstrap": "0.31.3",
     "react-cookie": "^0.4.9",
-    "react-dom": "^15.6.1",
-    "react-helmet": "^3.3.2",
+    "react-dom": "^16.0.0",
+    "react-helmet": "^5.2.0",
     "react-redux": "^4.4.8",
     "react-router": "^3.0.5",
     "react-router-bootstrap": "^0.23.3",
@@ -187,7 +189,7 @@
     "react-router-scroll": "^0.4.2",
     "react-spinners": "0.0.30",
     "redux": "^3.7.0",
-    "redux-connect": "^3.0.0",
+    "redux-connect": "^6.0.0",
     "redux-form": "^6.8.0",
     "redux-persist": "^4.4.0",
     "redux-thunk": "^2.2.0",
@@ -211,7 +213,8 @@
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.26.4",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.7.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-import-resolver-webpack": "^0.8.3",
@@ -239,6 +242,7 @@
     "react-a11y": "^0.3.4",
     "react-addons-test-utils": "^15.6.0",
     "react-hot-loader": "^3.0.0-beta.7",
+    "react-test-renderer": "^16.0.0",
     "react-to-html-webpack-plugin": "^2.2.0",
     "redux-devtools": "^3.4.0",
     "redux-devtools-dock-monitor": "^1.1.2",

@@ -28,7 +28,7 @@ describe('<Home />', () => {
   });
 
   it('should render proper text under image', () => {
-    expect(component.find('Link').children().nodes[1]).to.equal('Already a member?');
+    expect(component.find('Link').childAt(1).text()).to.equal('Already a member?');
   });
 
   it('should render h1 element', () => {

@@ -11,7 +11,7 @@ describe('<TryAuth />', () => {
     props = {
       children: [<div key='1' />, <div key='2' />],
       tryRestAuth: jest.fn(),
-      socketAuth: jest.fn()
+      tryRestAndSocketAuth: jest.fn()
     };
     global.socket = new EventEmitter();
   });
@@ -27,7 +27,7 @@ describe('<TryAuth />', () => {
     const component = mount(
       <TryAuthComponent {...props} />
     );
-    expect(component.children('div')).to.have.length(2);
+    expect(component.find('div').children()).to.have.length(2);
   });
 
   it('should run `tryRestAuth` once on the server', () => {
@@ -39,27 +39,13 @@ describe('<TryAuth />', () => {
     expect(props.tryRestAuth.mock.calls).to.have.length(1);
   });
 
-  it('should run `tryRestAuth` once on the client', () => {
+  it('should run `tryRestAndSocketAuth` once on the client', () => {
     global.__SERVER__ = false;
     global.__CLIENT__ = true;
     mount(
       <TryAuthComponent {...props} />
     );
-    expect(props.tryRestAuth.mock.calls).to.have.length(1);
-  });
-
-  it('should run `socketAuth` on the client on "connect" event if already authed', () => {
-    global.__SERVER__ = false;
-    global.__CLIENT__ = true;
-    const newProps = { authenticated: true, triedSocketAuth: false };
-    mount(
-      <TryAuthComponent {...{...props, ...newProps}} />
-    );
-    const listeners = global.socket.eventNames();
-    global.socket.emit('connect');
-    expect(listeners).to.have.length(1);
-    expect(listeners[0]).to.equal('connect');
-    expect(props.socketAuth.mock.calls).to.have.length(1);
+    expect(props.tryRestAndSocketAuth.mock.calls).to.have.length(1);
   });
 
 });

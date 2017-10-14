@@ -98,6 +98,24 @@ export function authReducer(state = initialState, action = {}) {
   }
 }
 
+export const tryRestAndSocketAuth = () => {
+  return (dispatch, getState) => {
+    dispatch(tryRestAuth())
+    .then(() => {
+      const authenticated = !!getState().auth.user;
+      if (authenticated) {
+        socket.connect()
+        socket.on('connect', () => {
+          dispatch(socketAuth());
+        });
+      }
+    })
+    .catch(() =>{
+      dispatch({ type: TOKEN_NOT_FOUND });
+    });
+  }
+}
+
 export function tryRestAuth() {
   return (dispatch, getState) => {
     const token = getState().auth.token
@@ -107,7 +125,7 @@ export function tryRestAuth() {
       dispatch({ type: TRYING_AUTH })
       return dispatch(jwtLogin(token, restApp));
     }
-    return dispatch({ type: TOKEN_NOT_FOUND });
+    return Promise.reject()
   }
 }
 
@@ -137,16 +155,20 @@ export function login(data) {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
     promise: () => restApp.authenticate({
       strategy: 'local',
-      email: data.email,
+      lookup: data.lookup,
       password: data.password
     })
-    .then(({accessToken}) => {
-      const socketId = socket.io.engine.id;
-      return app.authenticate({
-        strategy: 'jwt',
-        accessToken,
-        socketId
+    .then(({ accessToken }) => {
+      socket.connect()
+      socket.on('connect', () => {
+        const socketId = socket.io.engine.id;
+        return app.authenticate({
+          strategy: 'jwt',
+          accessToken,
+          socketId
+        });
       });
+      return { accessToken };
     })
     .then(saveAuth)
     .catch(catchValidation)

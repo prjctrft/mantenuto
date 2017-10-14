@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types'; 
 import { reduxForm, Field, propTypes } from 'redux-form';
 import memoize from 'lru-memoize';
 import { createValidator, required} from 'utils/validation';

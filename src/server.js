@@ -1,15 +1,13 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import React from 'react';
-import ReactDOM from 'react-dom/server';
+import ReactDOMServer from 'react-dom/server';
 import cookie from 'react-cookie';
 import favicon from 'serve-favicon';
 import compression from 'compression';
 import httpProxy from 'http-proxy';
 import path from 'path';
-// import PrettyError from 'pretty-error';
 import http from 'http';
-// import ssl  from 'express-ssl';
 import { match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
@@ -39,12 +37,6 @@ const proxy = httpProxy.createProxyServer({
   changeOrigin: true
 });
 
-app.use(compression());
-app.use(cookieParser());
-app.use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')));
-
-app.use(express.static(path.join(__dirname, '..', 'static')));
-
 // Redirect http to https
 // app.all('*', function(req,res,next) {
 //   if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
@@ -72,6 +64,11 @@ server.on('upgrade', (req, socket, head) => {
   proxy.ws(req, socket, head, { target: targetUrl });
 });
 
+app.use(compression())
+  .use(cookieParser())
+  .use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')))
+  .use(express.static(path.join(__dirname, '..', 'static')));
+
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
   // if (error.code !== 'ECONNRESET') {
@@ -93,8 +90,8 @@ app.use((req, res) => {
   }
 
 
-  // unplug = cookie.plugToRequest(req, res);
-  cookie.plugToRequest(req, res);
+  const unplug = cookie.plugToRequest(req, res); // eslint-disable-line
+
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
@@ -107,7 +104,7 @@ app.use((req, res) => {
 
   function hydrateOnClient() {
     res.send(`<!doctype html>
-      ${ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />)}`);
+      ${ReactDOMServer.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />)}`);
   }
 
   if (__DISABLE_SSR__) {
@@ -135,17 +132,17 @@ app.use((req, res) => {
         res.status(200);
 
         global.navigator = { userAgent: req.headers['user-agent'] };
-
         res.send(`<!doctype html>
-        ${ReactDOM.renderToString(
+        ${ReactDOMServer.renderToString(
           <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />
         )}`);
-      }).catch( () => {
+      }).catch(() => {
         res.status(500);
       })
     } else {
       res.status(404).send('Not found');
     }
+    // res.send();
   })
   // unplug();
 });

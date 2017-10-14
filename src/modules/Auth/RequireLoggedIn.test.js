@@ -23,7 +23,7 @@ describe('<RequireLoggedInComponent />', () => {
 
   it('should render correctly when "authenticated"', () => {
     expect(component.exists()).to.be.true;
-    expect(component.children('div')).to.have.length(2);
+    expect(component.find('div').children()).to.have.length(2);
   });
 
   it('should render correctly when "tryingAuth"', () => {

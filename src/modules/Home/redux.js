@@ -1,3 +1,5 @@
+import { restApp } from 'app';
+
 const GET_CODES = 'Home/GET_CODES';
 const GET_CODES_SUCCESS = 'Home/GET_CODES_SUCCESS';
 const GET_CODES_FAIL = 'Home/GET_CODES_FAIL';
@@ -23,7 +25,7 @@ export default function (state = initialState, action = {}) {
 export function getCodes() {
   return {
     types: [GET_CODES, GET_CODES_SUCCESS, GET_CODES_FAIL],
-    promise: (client) => client.service('speakeasy')
+    promise: () => restApp.service('speakeasy')
       .find()
   };
 }

@@ -1,17 +1,42 @@
-import React, { Component, PropTypes } from 'react';
-import { reduxForm, Field, propTypes } from 'redux-form';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import {
+  touch, startAsyncValidation, stopAsyncValidation,
+  reduxForm, Field, propTypes
+} from 'redux-form';
+import { checkUsername } from 'modules/user/redux';
 import registerValidation from './registerValidation';
 
 @reduxForm({
   form: 'register',
   validate: registerValidation
 })
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
   static propTypes = {
     ...propTypes,
     handleSubmit: PropTypes.func.isRequired,
     error: PropTypes.string
   }
+
+  constructor(props) {
+    super(props);
+  }
+
+  validateUsername = (e) => {
+    const username = e.target.value;
+    if(username && username.length > 3) {
+      this.props.dispatch(startAsyncValidation('register'));
+      return checkUsername(username).then(({ message }) => {
+        const errors = {};
+        if(message) {
+          errors.username = message;
+          this.props.dispatch(touch('register', 'username'))
+        }
+        this.props.dispatch(stopAsyncValidation('register', errors));
+      })
+    }
+  };
 
   renderInput = ({ input, label, type, meta: { touched, error } }) => {
     return (
@@ -83,6 +108,7 @@ export default class RegisterForm extends Component {
               type="text"
               component={this.renderInput}
               label="Username"
+              onChange={this.validateUsername}
             />
             <Field
               name="email"
@@ -115,3 +141,6 @@ export default class RegisterForm extends Component {
     );
   }
 }
+
+// export default RegisterForm;
+export default connect(null, { startAsyncValidation, stopAsyncValidation })(RegisterForm)

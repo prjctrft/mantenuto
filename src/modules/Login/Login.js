@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
@@ -23,7 +24,7 @@ export class Login extends Component {
   login = (data) => {
     return this.props.login(data)
       .then(this.success)
-      .catch(this.fail)
+      // .catch(this.fail)
   };
 
   success = () => {
