@@ -1,8 +1,8 @@
 import React from 'react';
-
-const styles = require('./Chat.scss');
+import PropTypes from 'prop-types';
 
 const ChatIconButton = (props) => {
+  const styles = require('./Chat.scss');
 
   return (
     <div className={styles.ChatIconContainer}>
@@ -11,6 +11,10 @@ const ChatIconButton = (props) => {
       </button>
     </div>
   )
+}
+
+ChatIconButton.propTypes = {
+  toggleChat: PropTypes.func.isRequired
 }
 
 export default ChatIconButton;

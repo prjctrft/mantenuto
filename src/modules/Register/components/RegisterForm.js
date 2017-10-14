@@ -98,11 +98,11 @@ class RegisterForm extends Component {
               label="MOS"
             />
             <label className="control-label" htmlFor="injury">Injury <span className={styles.optional}>(optional)</span></label>
-              <Field className="form-control" component="select">
-                <option></option>
-                <option value="combat">Combat</option>
-                <option value="non-combat">Non-Combat</option>
-              </Field>
+            <Field className="form-control" component="select">
+              <option />
+              <option value="combat">Combat</option>
+              <option value="non-combat">Non-Combat</option>
+            </Field>
             <Field
               name="username"
               type="text"
