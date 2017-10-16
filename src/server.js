@@ -75,10 +75,8 @@ proxy.on('error', (error, req, res) => {
   res.end(JSON.stringify(json));
 });
 
-// let unplug;
 
 app.use((req, res) => {
-
   if(req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
     return res.redirect('https://'+ req.hostname + req.url)
   }
@@ -130,15 +128,16 @@ app.use((req, res) => {
         ${ReactDOMServer.renderToString(
           <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />
         )}`);
-      }).catch(() => {
+        unplug();
+      }).catch((err) => {
+        unplug();
         res.status(500);
+        console.log(err); // eslint-disable-line no-console 
       })
     } else {
       res.status(404).send('Not found');
     }
-    // res.send();
   })
-  // unplug();
 });
 
 const port = process.env.PORT;
