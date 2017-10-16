@@ -21,7 +21,7 @@ const routes = (
     <IndexRedirect to='forgot' />
     <Route path='forgot' component={Forgot} />
     <Route path='reset' component={Reset} />
-    <Route path='change' component={Change} />
+    <Route path='change/:token' component={Change} />
     {/* <Route path='confirm' component={Confirm} />
     <Route path=':token' component={Token} /> */}
   </Route>

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { reduxForm, SubmissionError, Field, propTypes } from 'redux-form';
 import memoize from 'lru-memoize';
+import { RefitInput } from 'components';
 import { createValidator, email, required } from 'utils/validation';
 import { forgotPassword } from '../redux';
 
@@ -41,17 +42,6 @@ class Body extends Component {
       });
   };
 
-  renderInput = ({ input, label, type, meta: { touched, error, dirty, initial, pristine } }) => { //eslint-disable-line no-unused-vars
-    return (
-      <div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
-        <label htmlFor={input.name}>{label}</label>
-        <input {...input} type={type} className='form-control' />
-        {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
-        {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
-      </div>
-    )
-  }
-
   render() {
     const styles = require('../Password.scss');
     return (
@@ -60,7 +50,7 @@ class Body extends Component {
         <p className='lead'>No problem!</p>
 
         <form onSubmit={this.props.handleSubmit(this.forgotPassword)} name='resetPasswordForm'>
-          <Field name={'email'} component={this.renderInput} label={'Email'} />
+          <Field size='lg' name={'email'} component={RefitInput} label={'Email'} />
           <button type="submit">Send</button>
         </form>
       </div>
