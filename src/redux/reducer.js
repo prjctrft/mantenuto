@@ -9,6 +9,7 @@ import rooms from 'modules/Rooms/reducer';
 import { userReducer as user } from 'modules/user/redux';
 import home from 'modules/Home/redux';
 import { registerReducer as register } from 'modules/Register/redux';
+import password from 'modules/Password/redux';
 
 export default function createReducer(asyncReducers) {
   return combineReducers({
@@ -23,6 +24,7 @@ export default function createReducer(asyncReducers) {
     rooms,
     home,
     register,
+    password,
     ...asyncReducers
   });
 }

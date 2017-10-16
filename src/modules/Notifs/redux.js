@@ -29,9 +29,10 @@ export function notifSend(notif) {
   if (!notif.id) {
     notif.id = new Date().getTime() * Math.random();
   }
+  const dismissAfter = process.env.NODE_ENV === 'production' ? 5000 : 100000000;
   return dispatch => {
     dispatch({ type: NOTIF_SEND, notif });
-    setTimeout(() => dispatch(notifDismiss(notif.id)), notif.dismissAfter || 100000000);
+    setTimeout(() => dispatch(notifDismiss(notif.id)), notif.dismissAfter || dismissAfter);
   };
 }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { reduxForm, Field, propTypes } from 'redux-form';
 import loginValidation from './loginValidation';
 
@@ -13,7 +14,7 @@ export default class LoginForm extends Component {
 
   renderInput = ({ input, label, type, placeholder, meta: { touched, error } }) => //eslint-disable-line
     (<div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
-      <input {...input} type={type} className="form-control" placeholder={placeholder} />
+      <input {...input} type={this.type} className="form-control" placeholder={placeholder} />
       {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
       {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
     </div>);
@@ -32,7 +33,7 @@ export default class LoginForm extends Component {
             <i className="fa fa-sign-in" />{' '}Log In
           </button>
           <hr />
-          <a href='/foobar'>Forgot password</a>
+          <Link to={'password'}>Forgot password?</Link>
         </div>
       </form>
     );

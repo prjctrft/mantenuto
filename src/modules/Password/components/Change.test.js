@@ -6,9 +6,9 @@ import { browserHistory } from 'react-router';
 import createStore from 'redux/create';
 
 import client from 'app';
-import ChangePassword from './ChangePassword';
+import Change from './Change';
 
-describe('<ChangePassword />', () => {
+describe('<Change />', () => {
   const mockStore = {
   };
 
@@ -16,11 +16,11 @@ describe('<ChangePassword />', () => {
   const onButtonClick = jest.mock();
   const connectedComponent = mount(
     <Provider store={store} key="provider">
-      <ChangePassword onButtonClick={onButtonClick} />
+      <Change onButtonClick={onButtonClick} />
     </Provider>
   );
 
-  const component = connectedComponent.find(ChangePassword);
+  const component = connectedComponent.find(Change);
 
   it('should render correctly', () => { expect(component.exists()).to.be.true });
 
