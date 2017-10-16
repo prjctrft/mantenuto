@@ -7,6 +7,7 @@ import {
 } from 'redux-form';
 import { checkUsername } from 'modules/user/redux';
 import registerValidation from './registerValidation';
+import Dropzone from 'react-dropzone';
 
 @reduxForm({
   form: 'register',
@@ -21,6 +22,11 @@ class RegisterForm extends Component {
 
   constructor(props) {
     super(props);
+    this.state = { files: [] }
+  }
+  
+  onDrop(files) {
+    this.setState({ files });
   }
 
   validateUsername = (e) => {
@@ -133,7 +139,9 @@ class RegisterForm extends Component {
             </div>
           </fieldset>
           <fieldset className={`${styles.flexColumn}`}>
-            <Field styles={styles} name="verification" type="file" component={this.renderVerification} label="Upload DD214" />
+            <Dropzone className={styles.dropzone} onDrop={this.onDrop.bind(this)}>
+              <Field styles={styles} name="verification" type="file" component={this.renderVerification} label="Upload DD214" />
+            </Dropzone>
           </fieldset>
         </div>
         {this.props.error && <p className="text-danger"><strong>{this.props.error}</strong></p>}
