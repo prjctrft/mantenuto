@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
-const SentEmail = (props) => {
+const Reset = (props) => {
   const styles = require('../Password.scss');
 
   return (
@@ -19,7 +19,7 @@ const SentEmail = (props) => {
   );
 }
 
-SentEmail.propTypes = {
+Reset.propTypes = {
   location: PropTypes.shape({
     query: PropTypes.shape({
       email: PropTypes.string.isRequired
@@ -27,4 +27,4 @@ SentEmail.propTypes = {
   })
 };
 
-export default SentEmail;
+export default Reset;

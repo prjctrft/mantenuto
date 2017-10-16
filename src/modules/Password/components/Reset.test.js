@@ -2,18 +2,18 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 
-import SentEmail from './SentEmail';
+import Reset from './Reset';
 
-describe('<SentEmail />', () => {
+describe('<Reset />', () => {
 
   let component;
 
   beforeEach(() => {
     const wrapper = mount(
-      <SentEmail location={{query: {email: 'foo@bar.com' }}} />
+      <Reset location={{query: {email: 'foo@bar.com' }}} />
     );
 
-    component = wrapper.find(SentEmail);
+    component = wrapper.find(Reset);
   })
 
   it('should render correctly', () => { expect(component.exists()).to.be.true; });

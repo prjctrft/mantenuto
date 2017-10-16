@@ -10,8 +10,8 @@ describe('password routes', () => {
 
   const children = routes.props.children;
 
-  it('/password should have 3 routes', () => {
-    expect(children).to.have.lengthOf(3);
+  it('/password should have 4 routes', () => {
+    expect(children).to.have.lengthOf(4);
   });
 
   it('the route "/password" should redirect to "/password/forgot"', () => {

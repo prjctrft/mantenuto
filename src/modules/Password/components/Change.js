@@ -1,7 +1,8 @@
 import React from 'react';
 
-const ChangePassword = () => {
+const Change = () => {
 	const styles = require('../Password.scss');
+
 	const changePasswordButton = function () {
 		/*
     **if (password === confirmPassword) {
@@ -33,4 +34,4 @@ const ChangePassword = () => {
 	);
 }
 
-export default ChangePassword
+export default Change;
