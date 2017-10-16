@@ -5,9 +5,9 @@ import {
   touch, startAsyncValidation, stopAsyncValidation,
   reduxForm, Field, propTypes
 } from 'redux-form';
+import Dropzone from 'react-dropzone';
 import { checkUsername } from 'modules/user/redux';
 import registerValidation from './registerValidation';
-import Dropzone from 'react-dropzone';
 
 @reduxForm({
   form: 'register',
@@ -22,7 +22,8 @@ class RegisterForm extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { files: [] }
+    this.state = { files: [] };
+    this.onDrop = this.onDrop.bind(this);
   }
   
   onDrop(files) {
@@ -139,7 +140,7 @@ class RegisterForm extends Component {
             </div>
           </fieldset>
           <fieldset className={`${styles.flexColumn}`}>
-            <Dropzone className={styles.dropzone} onDrop={this.onDrop.bind(this)}>
+            <Dropzone className={styles.dropzone} onDrop={this.onDrop}>
               <Field styles={styles} name="verification" type="file" component={this.renderVerification} label="Upload DD214" />
             </Dropzone>
           </fieldset>
