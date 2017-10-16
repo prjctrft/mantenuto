@@ -50,7 +50,7 @@
   #   # "no-console": "off",
   #   # "no-alert": "off",
   #   # "max-len": ["error", 120],
-  # "react/jsx-indent": [2, {SwitchCase": 1}]
+  "react/jsx-indent": [2]
   },
   "plugins": [
     "react",

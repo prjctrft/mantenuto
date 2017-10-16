@@ -22,48 +22,46 @@ class RegisterForm extends Component {
     error: PropTypes.string
   }
 
-  fields = () => [
-    {
-      name: 'username',
-      type: 'text',
-      label: 'Pick a unique Username!',
-      labelRequired: true,
-      onChange: this.validateUsername
-    },
-    {
-      name: 'first',
-      type: 'text',
-      label: 'First Name',
-      labelRequired: true
-    },
-    {
-      name: 'last',
-      type: 'text',
-      label: 'Last Name',
-      labelRequired: true
-    },
-    {
-      name: 'email',
-      type: 'email',
-      label: 'Email'
-    },
-    {
-      name: 'mos',
-      type: 'text',
-      label: 'MOS'
-    },
-    {
-      name: 'injury'
-    }
-  ];
-
   constructor(props) {
     super(props);
     this.state = { files: [] };
-    this.onDrop = this.onDrop.bind(this);
+    this.fields = [
+      {
+        name: 'username',
+        type: 'text',
+        label: 'Pick a unique Username!',
+        labelRequired: true,
+        onChange: this.validateUsername
+      },
+      {
+        name: 'first',
+        type: 'text',
+        label: 'First Name',
+        labelRequired: true
+      },
+      {
+        name: 'last',
+        type: 'text',
+        label: 'Last Name',
+        labelRequired: true
+      },
+      {
+        name: 'email',
+        type: 'email',
+        label: 'Email'
+      },
+      {
+        name: 'mos',
+        type: 'text',
+        label: 'MOS'
+      },
+      {
+        name: 'injury'
+      }
+    ];
   }
 
-  onDrop(files) {
+  onDrop = (files) => {
     this.setState({ files });
   }
 
@@ -113,10 +111,10 @@ class RegisterForm extends Component {
       <form onSubmit={this.props.handleSubmit}>
         <div className={`${styles.flexForm}`}>
           <fieldset className={`${styles.flexColumn}`}>
-            { this.fields().map((field) => {
+            { this.fields.map((field) => {
               if(field.name === 'injury') {
                 return (
-                  <div>
+                  <div key={field.name}>
                     <label className="control-label" htmlFor="injury">Injury <span className={styles.optional}>(optional)</span></label>
                     <Field className="form-control" component="select">
                       <option />
@@ -128,6 +126,7 @@ class RegisterForm extends Component {
               }
               return (
                 <Field
+                  key={field.name}
                   name={field.name}
                   type={field.type}
                   component={RefitInput}
