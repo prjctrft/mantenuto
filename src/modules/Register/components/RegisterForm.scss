@@ -75,6 +75,10 @@ select {
   }
 }
 
+.dropzone {
+  width: 100%;
+}
+
 @media (min-width: 768px) {
 	.flexForm {
 		flex-direction: row;
