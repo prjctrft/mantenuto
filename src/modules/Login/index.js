@@ -1,8 +1,3 @@
-import React from 'react';
-import { Route } from 'react-router';
+import routes from './routes';
 
-import ConnectLogin from './Login';
-
-export default (
-  <Route path='login' component={ConnectLogin} />
-);
+export default routes;

@@ -5,7 +5,9 @@ import {
   touch, startAsyncValidation, stopAsyncValidation,
   reduxForm, Field, propTypes
 } from 'redux-form';
+
 import Dropzone from 'react-dropzone';
+import { RefitInput } from 'components';
 import { checkUsername } from 'modules/user/redux';
 import registerValidation from './registerValidation';
 
@@ -20,12 +22,47 @@ class RegisterForm extends Component {
     error: PropTypes.string
   }
 
+  fields = () => [
+    {
+      name: 'username',
+      type: 'text',
+      label: 'Pick a unique Username!',
+      labelRequired: true,
+      onChange: this.validateUsername
+    },
+    {
+      name: 'first',
+      type: 'text',
+      label: 'First Name',
+      labelRequired: true
+    },
+    {
+      name: 'last',
+      type: 'text',
+      label: 'Last Name',
+      labelRequired: true
+    },
+    {
+      name: 'email',
+      type: 'email',
+      label: 'Email'
+    },
+    {
+      name: 'mos',
+      type: 'text',
+      label: 'MOS'
+    },
+    {
+      name: 'injury'
+    }
+  ];
+
   constructor(props) {
     super(props);
     this.state = { files: [] };
     this.onDrop = this.onDrop.bind(this);
   }
-  
+
   onDrop(files) {
     this.setState({ files });
   }
@@ -36,30 +73,14 @@ class RegisterForm extends Component {
       this.props.dispatch(startAsyncValidation('register'));
       return checkUsername(username).then(({ message }) => {
         const errors = {};
+        this.props.dispatch(touch('register', 'username'))
         if(message) {
           errors.username = message;
-          this.props.dispatch(touch('register', 'username'))
         }
         this.props.dispatch(stopAsyncValidation('register', errors));
       })
     }
   };
-
-  renderInput = ({ input, label, type, meta: { touched, error } }) => {
-    return (
-      <div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
-        {/* <div className='col-xs-12'> */}
-        <label htmlFor={input.name}><span className="text-danger">*</span>{label}</label>
-        {/* </div>
-        <div className='col-xs-12'> */}
-        <input {...input} type={type} className="form-control" />
-        {error === 'Required' && !touched && <span className="text-success form-control-feedback">*</span>}
-        {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
-        {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
-        {/* </div> */}
-      </div>
-    );
-  }
 
   renderVerification = ({ styles, input, label, meta: { touched, error } }) => {
     const icUpload = require('../assets/ic_upload.png');
@@ -92,49 +113,29 @@ class RegisterForm extends Component {
       <form onSubmit={this.props.handleSubmit}>
         <div className={`${styles.flexForm}`}>
           <fieldset className={`${styles.flexColumn}`}>
-            <Field
-              name="full-name"
-              type="text"
-              component={this.renderInput}
-              label="Full Name"
-            />
-            <Field
-              name="mos"
-              type="text"
-              component={this.renderInput}
-              label="MOS"
-            />
-            <label className="control-label" htmlFor="injury">Injury <span className={styles.optional}>(optional)</span></label>
-            <Field className="form-control" component="select">
-              <option />
-              <option value="combat">Combat</option>
-              <option value="non-combat">Non-Combat</option>
-            </Field>
-            <Field
-              name="username"
-              type="text"
-              component={this.renderInput}
-              label="Username"
-              onChange={this.validateUsername}
-            />
-            <Field
-              name="email"
-              type="email"
-              component={this.renderInput}
-              label="E-mail"
-            />
-            <Field
-              name="password"
-              type="password"
-              component={this.renderInput}
-              label="Password"
-            />
-            <Field
-              name="confirm-password"
-              type="password"
-              component={this.renderInput}
-              label="Confirm Password"
-            />
+            { this.fields().map((field) => {
+              if(field.name === 'injury') {
+                return (
+                  <div>
+                    <label className="control-label" htmlFor="injury">Injury <span className={styles.optional}>(optional)</span></label>
+                    <Field className="form-control" component="select">
+                      <option />
+                      <option value="combat">Combat</option>
+                      <option value="non-combat">Non-Combat</option>
+                    </Field>
+                  </div>
+                )
+              }
+              return (
+                <Field
+                  name={field.name}
+                  type={field.type}
+                  component={RefitInput}
+                  label={field.label}
+                  labelRequired={field.labelRequired}
+                  onChange={field.onChange}
+                />)
+            })}
             <div className={styles.submitDiv}>
               <button type="submit">Done</button>
             </div>
