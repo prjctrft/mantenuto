@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { reduxForm, Field, propTypes } from 'redux-form';
+import { RefitInput } from 'components';
 import loginValidation from './loginValidation';
 
 @reduxForm({
@@ -12,21 +13,14 @@ export default class LoginForm extends Component {
     ...propTypes
   }
 
-  renderInput = ({ input, label, type, placeholder, meta: { touched, error } }) => //eslint-disable-line
-    (<div className={`form-group ${error && touched ? 'has-error has-feedback' : ''}`}>
-      <input {...input} type={this.type} className="form-control" placeholder={placeholder} />
-      {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
-      {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
-    </div>);
-
   render() {
     const { handleSubmit, error } = this.props;
     const styles = require('./LoginForm.scss');
 
     return (
       <form className={`${styles.LoginForm} form-horizontal`} onSubmit={handleSubmit}>
-        <Field name="lookup" type="text" component={this.renderInput} label="Lookup" placeholder="Login with Username or Email" />
-        <Field name="password" type="password" component={this.renderInput} label="Password" placeholder="Password..." />
+        <Field name="lookup" type="text" component={RefitInput} label="Username or Email" placeholder="Login with Username or Email" />
+        <Field name="password" type="password" component={RefitInput} label="Password" placeholder="Password..." />
         {error && <p className="text-danger"><strong>{error}</strong></p>}
         <div className={styles.buttonWrapper}>
           <button className="btn btn-default" type="submit">
