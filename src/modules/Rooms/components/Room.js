@@ -39,13 +39,13 @@ export default class Room extends React.Component {
     this.setState({renderChat: !this.state.renderChat});
   }
 
-  render() { 
+  render() {
     const styles = require('../Styles.scss');
 
     return (
       <div className={styles.Room}>
         <div className={styles.videoWrapper}>
-          <Stats peer={props.peer} user={props.user} styles={styles} />
+          <Stats peer={this.props.peer} user={this.props.user} styles={styles} />
           <Video
             styles={styles}
             hoistRemoteVideo={hoistRemoteVideo}
@@ -57,10 +57,10 @@ export default class Room extends React.Component {
             hoistLocalStream={hoistLocalStream}
           />
         </div>
-        
+
         <div className={styles.chatWrapper}>
 
-        {props.renderChat ? <Chat toggleChat={this.toggleChat}/> : <ChatIconButton toggleChat={this.toggleChat}/>}
+        {this.state.renderChat ? <Chat toggleChat={this.toggleChat}/> : <ChatIconButton toggleChat={this.toggleChat}/>}
         </div>
       </div>
     );
