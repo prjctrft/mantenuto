@@ -14,17 +14,23 @@ restApp.authenticate({
   lookup: EMAIL,
   password: PW
 }).then(({accessToken}) => {
-  const env = fs.readFileSync('.env');
+  let env;
+  try {
+    env = fs.readFileSync('.env');
+  } catch(e) {
+    // if env doesn't exist (like in circleci), build from scratch
+    env = [`EMAIL=${EMAIL}`, `USER_ID=${USER_ID}`, `PW=${PW}`, `API_ENDPOINT=${API_ENDPOINT}`].join('\n');
+    console.log(e);
+  }
   return {oldEnv: env, accessToken};
 }).then(({oldEnv, accessToken}) => {
-  debugger;
-  const newLine = `TOKEN=${accessToken}\n`;
-  const trimToken = oldEnv.toString().split('\n');
+  const newLines = ['# These lines created automatically by "authenticate.jest.js"', `TOKEN=${accessToken}\n`];
+  let newEnv = oldEnv.toString().split('\n');
   // if the last line is `TOKEN=`
-  let newEnv;
-  if(trimToken[trimToken.length - 2].search('TOKEN=') === 0) {
-    newEnv = [].concat(trimToken.slice(0, trimToken.length - 2), [newLine]).join('\n');
+  if(newEnv[newEnv.length - 2].search('TOKEN=') === 0) {
+    newEnv = newEnv.slice(0, newEnv.length - 3);
   };
+  newEnv = [].concat(newEnv, newLines).join('\n')
   // if(trimToken[trimToken.length].search(token))
   // add token to .env file to be used in the rest of tests
   return fs.writeFile('.env', newEnv, (err) => {
