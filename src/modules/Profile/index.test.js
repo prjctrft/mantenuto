@@ -9,7 +9,6 @@ describe('<index />', () => {
   let component;
   beforeEach(() => {
     const store = createStore({}, {}, {});
-    // const handleSubmit = jest.fn();
     component = mount(
       <Provider store={store}>
         {}
@@ -21,8 +20,4 @@ describe('<index />', () => {
   it('should render', () => {
     expect(component.exists()).to.be.true;
   });
-
-  it('should foo', () => {
-    expect(process.env.foo).to.equal('bar!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  })
 });

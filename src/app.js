@@ -7,7 +7,7 @@ import socketio from 'feathers-socketio/client';
 import authentication from 'feathers-authentication-client';
 import superagent from 'superagent';
 
-const storage = __SERVER__ ? require('localstorage-memory') : window.localStorage;
+const storage = __SERVER__ ? require('localstorage-memory') : window.localStorage; // eslint-disable-line
 const apiEndpoint = __SERVER__ ? process.env.API_ENDPOINT : window.__data.__mantenuto.apiEndpoint;
 
 const host = clientUrl => {
@@ -28,6 +28,5 @@ const configureApp = (transport) => feathers()
         storageKey: 'feathers-jwt', // default
       }));
 
-debugger;
 export default configureApp(socketio(socket));
 export const restApp = configureApp(rest(host('')).superagent(superagent));
