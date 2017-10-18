@@ -9,7 +9,6 @@ describe('<index />', () => {
   let component;
   beforeEach(() => {
     const store = createStore({}, {}, {});
-    // const handleSubmit = jest.fn();
     component = mount(
       <Provider store={store}>
         {}

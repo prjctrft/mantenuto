@@ -3,6 +3,15 @@ One of the best things about using React, is that there are a really great set o
 for testing.  [Facebook's Jest](https://facebook.github.io/jest/) and [Airbnb's Enzyme](http://airbnb.io/enzyme/) being the two most important.  We use jest to run our tests, enzyme to mock render and traverse components, and [chai](http://chaijs.com/) as our assertion library.
 
 ## Getting Started
+Setup integration tests by creating a `.env` file with the following:
+```
+EMAIL=<YOUR_PROJECTREFIT_EMAIL>
+USERNAME=<YOUR_PROJECTREFIT_USERNAME>
+PW=<YOUR_PASSWORD>
+API_ENDPOINT=https://api.projectrefit.us
+# don't check this file in (duh)
+```
+
 Run all tests:
 ```
 npm test
@@ -37,7 +46,7 @@ The following are things that **should** be tested
 
 * [Actions]() - TODO, need some good examples of testing redux actions.
 
-* [API Calls]() - TODO, need to setup some good integration tests.
+* [API Calls](https://github.com/prjctrft/mantenuto/blob/master/src/modules/users/redux.test.js) - test that api calls used will return expected results.
 
 * [Any important ui expectations](https://github.com/prjctrft/mantenuto/blob/master/src/modules/Home/Home.test.js) - like that an image is present
 
@@ -56,3 +65,17 @@ There is actually not a whole lot of things that are "bad" to test.  However, ul
   * css styles
 
 * Anything that will break in a CI environment.
+
+## A Little Bit About How Tests are Set Up
+Tests are set up to run locally and in circleci ci.
+* `npm test` runs the tests
+* `npm run tdd` will run the tests in watch mode for test driven development, e.g. only files that change are tested
+* `npm run debug-tests` nothing more refreshing than being able to interactively debug tests
+
+Before `jest` runs, `authenticate.jest.js` is run.  It looks for a `.env` file with the environment variables mentioned in the getting started section OR it will look for the variables directly in `process.env`.
+
+These variables are used by `authenticate.jest.js` to create a new env variables called `TOKEN` that will be used to authenticate api requests with the given user.
+
+In development, use your own identity, or have an admin create you a user.  All tests should fix what they break, or restore data to original state, so using your own identity shouldn't be a problem (but undoubtedly it will at some point be a problem).
+
+`jest` itself will use the `setup.jest.js` file to setup each test.  This sets some important variables, loads the `.env` file created by `authenticate.jest.js` and sets up `Enzyme` to be used with React 16.

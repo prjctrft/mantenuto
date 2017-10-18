@@ -45,19 +45,6 @@ app.use('/admin', (req, res) => {
   proxy.web(req, res, { target: `${targetUrl}/admin` });
 });
 
-// Proxy to API server
-app.use('/api', (req, res) => {
-  proxy.web(req, res, { target: targetUrl });
-});
-
-app.use('/ws', (req, res) => {
-  proxy.web(req, res, { target: `${targetUrl}/ws` });
-});
-
-server.on('upgrade', (req, socket, head) => {
-  proxy.ws(req, socket, head, { target: targetUrl });
-});
-
 app.use(compression())
   .use(cookieParser())
   .use(favicon(path.join(__dirname, '..', 'static', 'favicon.ico')))
@@ -65,12 +52,6 @@ app.use(compression())
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', (error, req, res) => {
-  // if (error.code !== 'ECONNRESET') {
-  //   console.error('proxy error', error);
-  // }
-  // if (res && !res.headersSent) {
-  //   res.writeHead(500, { 'content-type': 'application/json' });
-  // }
   const json = { error: 'proxy_error', reason: error.message };
   res.end(JSON.stringify(json));
 });
@@ -89,9 +70,10 @@ app.use((req, res) => {
     // hot module replacement is enabled in the development env
     webpackIsomorphicTools.refresh();
   }
-  // const client = new ApiClient(req);
+  // pass api end point to client app
+  const apiEndpoint = process.env.API_ENDPOINT;
   const memoryHistory = createHistory(req.originalUrl);
-  const store = createStore(memoryHistory, client, {__mantenuto: { version }});
+  const store = createStore(memoryHistory, client, {__mantenuto: { version, apiEndpoint }});
   const history = syncHistoryWithStore(memoryHistory, store);
 
   function hydrateOnClient() {
@@ -132,7 +114,7 @@ app.use((req, res) => {
       }).catch((err) => {
         unplug();
         res.status(500);
-        console.log(err); // eslint-disable-line no-console 
+        console.log(err); // eslint-disable-line no-console
       })
     } else {
       res.status(404).send('Not found');

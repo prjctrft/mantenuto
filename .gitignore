@@ -8,3 +8,4 @@ npm-debug.log
 .happypack
 .DS_Store
 .TODOS
+.env

@@ -38,6 +38,9 @@
     "moduleNameMapper": {
       "\\.(css|scss|eot|otf|svg|ttf|woff|woff2|m4a|aac|oga)$": "identity-obj-proxy",
       "\\.(jpg|jpeg|gif|png|mp4|mkv|avi|webm|swf|wav|mid)$": "jest-static-stubs/$1"
+    },
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
     }
   },
   "scripts": {
@@ -57,9 +60,9 @@
     "debug-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-debug-local\"",
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\"",
     "dev-local": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev-local\"",
-    "test": "jest --silent --maxWorkers 2 src",
-    "tdd": "jest --watch src",
-    "debug-tests": "node --inspect-brk node_modules/.bin/jest --silent --runInBand --watch src"
+    "test": "node authenticate.jest.js && jest --silent --maxWorkers 2 src",
+    "tdd": "node authenticate.jest.js && jest --watch src",
+    "debug-tests": "node authenticate.jest.js && node --inspect-brk node_modules/.bin/jest --silent --runInBand --watch src"
   },
   "betterScripts": {
     "start-prod": {
@@ -214,6 +217,7 @@
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^0.26.4",
+    "dotenv": "^4.0.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.7.0",
