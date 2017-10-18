@@ -21,4 +21,8 @@ describe('<index />', () => {
   it('should render', () => {
     expect(component.exists()).to.be.true;
   });
+
+  it('should foo', () => {
+    expect(process.env.foo).to.equal('bar!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  })
 });

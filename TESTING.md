@@ -3,6 +3,15 @@ One of the best things about using React, is that there are a really great set o
 for testing.  [Facebook's Jest](https://facebook.github.io/jest/) and [Airbnb's Enzyme](http://airbnb.io/enzyme/) being the two most important.  We use jest to run our tests, enzyme to mock render and traverse components, and [chai](http://chaijs.com/) as our assertion library.
 
 ## Getting Started
+Setup the tests by creating a `.env` file with the following:
+```
+EMAIL=<YOUR_PROJECTREFIT_EMAIL>
+USERNAME=<YOUR_PROJECTREFIT_USERNAME>
+PW=<YOUR_PASSWORD>
+API_ENDPOINT=https://api.projectrefit.us
+# don't check this file in (duh)
+```
+
 Run all tests:
 ```
 npm test
