@@ -35,7 +35,7 @@
     align-items: center;
   }
   .credentialLabel {
-    width: 100%;
+    width: auto;
     height: 100%;
     position: absolute;
   }
@@ -51,9 +51,9 @@
 }
 
 label {
+  color: #5A5B5C;
   font-size: 1.75rem;
   text-align: left;
-  width: 100%;
 }
 
 select {
@@ -85,9 +85,6 @@ select {
 		flex-wrap: wrap;
 		justify-content: space-between;
 		align-items: center;
-    button {
-  		margin: 0 auto 0 15rem;
-  	}
 	}
 
 	.flexColumn {
