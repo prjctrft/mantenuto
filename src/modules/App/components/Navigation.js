@@ -31,15 +31,14 @@ export default class Navigation extends Component {
     if(this.hideNavigation()) {
       return null;
     }
-    const bootstrap = require('theme/bootstrap.scss');
     const styles = require('./Navigation.scss');
     return (
-      <Navbar cssModule={bootstrap} dark expand='md' className={styles.Navbar} fixed>
-        <NavbarBrand cssModule={bootstrap} className={styles.brand} href='/' />
+      <Navbar dark expand='md' className={styles.Navbar} fixed>
+        <NavbarBrand className={styles.brand} href='/' />
         { this.props.authenticated ?
           [
-            <NavbarToggler key={0} cssModule={bootstrap} onClick={this.toggle} />,
-            <NavigationCollapse key={1} cssModule={bootstrap} isOpen={this.state.isOpen} handleLogout={this.props.handleLogout} />
+            <NavbarToggler key={0} onClick={this.toggle} />,
+            <NavigationCollapse key={1} isOpen={this.state.isOpen} handleLogout={this.props.handleLogout} />
           ]
           : null
         }

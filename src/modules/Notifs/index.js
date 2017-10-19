@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Alert } from 'reactstrap';
 import { notifDismiss } from './redux';
 
-@connect((state) => ({notifs: state.notifs}), { notifDismiss })
+@connect((state) => ({notifs: state.notifs.notifs}), { notifDismiss })
 export default class Notifs extends Component {
   static propTypes = {
     notifs: PropTypes.arrayOf(PropTypes.shape({
@@ -21,9 +21,8 @@ export default class Notifs extends Component {
   }
 
   render() {
-    const bootstrap = require('theme/bootstrap.scss');
     const styles = require('./Notifs.scss');
-    const { notifs } = this.props.notifs;
+    const notifs = this.props.notifs;
     if (!notifs) {
       return null;
     }
@@ -34,7 +33,6 @@ export default class Notifs extends Component {
 
         {notifs.map(notif =>
           (<Alert
-            cssModule={bootstrap}
             key={notif.id}
             className={`${styles.notification} ${styles[notif.kind]}`}
             toggle={this.dismiss(notif.id)}

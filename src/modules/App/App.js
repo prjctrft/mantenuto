@@ -61,6 +61,9 @@ export default class App extends Component {
   render() {
     const authenticated = this.props.authenticated;
     const { pathname } = this.props.location;
+    const bootstrap = require('theme/bootstrap.global.scss');
+    console.log(bootstrap);
+    debugger;
     const styles = require('./App.scss');
 
     return (
