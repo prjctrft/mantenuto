@@ -1,7 +1,8 @@
-@import '../../../theme/variables.scss';
+@import '~theme/variables.scss';
 
 .Navbar {
   z-index: 10;
+  background: $brand-black;
 }
 
 .brand {
@@ -18,9 +19,6 @@
     border-radius: $size / 2;
   }
 
-.profile {
-    color: $brand-white;
-}
 
 nav :global(.fa) {
     font-size: 2em;

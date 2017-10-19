@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router';
 
-import Room from './Room';
+import RoomsController from './RoomsController';
 
 export default (
-  <Route path="rooms/:slug" component={Room} />
+  <Route path="rooms/:slug" component={RoomsController} />
 );

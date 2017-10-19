@@ -10,6 +10,7 @@ export default createDevTools(
     toggleVisibilityKey="ctrl-H"
     changePositionKey="ctrl-Q"
   >
-    <LogMonitor />
+    {/* Reimplemnet when this is fixed: https://github.com/alexkuz/react-json-tree/issues/94 */}
+    {/* <LogMonitor /> */}
   </DockMonitor>
 );

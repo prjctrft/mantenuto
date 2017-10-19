@@ -7,7 +7,7 @@
  */
 
 // Custom Colors
-$brand-black: #100c2e; 
+$brand-black: #100c2e;
 $brand-gray: #ccc;
 $brand-darker-gray: #2c2d2f;
 $brand-white: #fff;
@@ -33,7 +33,7 @@ $brand-info: #5bc0de;
 $text-color: #333;
 
 
-$font-size-base: 14px;
+$font-size-base: 1rem;
 // $font-family-sans-serif: "Helvetica Neue", Helvetica, sans-serif;
 // $font-family-sans-serif: 'Inconsolata', monospace;
 $font-family-sans-serif: 'Roboto', sans-serif;
@@ -46,4 +46,6 @@ $button-on: $brand-success;
 $button-off: $brand-danger;
 $box-shadow: 2px 2px 2px $brand-gray;
 
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/variables";
+// Bootstrap variables overrides
+// see ./variables.defaults.scss for more
+$blue: $brand-primary;

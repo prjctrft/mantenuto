@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 // import { clearCallState } from '../actions';
 
 const Video = (props) => {
-
+  const styles = require('./Video.scss');
   // renderCallAccepted = () => {
   //   setTimeout(this.props.clearCallState(), 3000);
   //   return ('Call Accepted!');
   // }
 
   // render() {
-    const { styles, callStarted, callAccepted, connectionState } = props;
+    const { callStarted, callAccepted, connectionState } = props;
     let borderStyle;
     switch (connectionState) {
       case 'connected':

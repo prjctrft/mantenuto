@@ -45,9 +45,8 @@ var webpackConfig = module.exports = {
     'main': [
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
       'react-hot-loader/patch',
-      'bootstrap-sass!./src/theme/bootstrap.config.js',
       'font-awesome-webpack!./src/theme/font-awesome.config.js',
-      './src/client.js'
+      './src/client.js',
     ]
   },
   output: {
