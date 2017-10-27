@@ -12,10 +12,10 @@
   display: flex;
   justify-content: center;
   margin: 10px auto;
-  background-color: $brand-black;
   button {
-    background-color: $brand-black;
-    color: $brand-white;
-    border: none;
+    background-color: transparent;
+    i {
+      color: $brand-white;
+    }
   }
 }

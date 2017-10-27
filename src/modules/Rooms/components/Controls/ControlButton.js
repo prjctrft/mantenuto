@@ -17,7 +17,7 @@ export default (props) => {
   return (
     <button
       onClick={props.onClick} type="button"
-      className={renderClasses(props)}
+      className={`${renderClasses(props)} ${props.className}`}
     >
       <i className={props.faClass} aria-hidden="true" />
     </button>

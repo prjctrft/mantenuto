@@ -136,6 +136,13 @@ export function socketAuth() {
     const socketId = socket.io.engine.id;
     const token = getState().auth.token;
     dispatch({ type: TRIED_SOCKET_AUTH });
+    const errorHandler = error => {
+      debugger;
+      const socketId = socket.io.engine.id;
+      dispatch(jwtLogin(token, app, socketId))
+    };
+    // Handle when auth fails during a reconnect or a transport upgrade
+    app.on('reauthentication-error', errorHandler)
     return dispatch(jwtLogin(token, app, socketId));
   }
 }

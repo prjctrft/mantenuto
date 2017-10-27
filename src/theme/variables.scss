@@ -1,21 +1,15 @@
-/**
- *  Define scss variables here.
- *
- *  Available options for Bootstrap:
- *  http://getbootstrap.com/customize/
- *
- */
-
+// UPDATING A VARIABLE THIS FILE MAY REBUILD BOOTSTRAP FROM SASS
+// it will take a while, so don't be mad
 // Custom Colors
-$brand-black: #100c2e;
-$brand-gray: #ccc;
+$brand-black: #2C2D2F;
+$brand-gray: #C2C3C6;
 $brand-darker-gray: #2c2d2f;
 $brand-white: #fff;
 
 $brand-success: #85e9b0;
 $brand-danger: #e98585;
 
-$text-color-light: #c2c3c6;
+$text-color-light: $brand-gray;
 $text-color-dark: #67676a;
 $chat-color-light: #389abc;
 $chat-color-dark: #1739af;
@@ -49,3 +43,4 @@ $box-shadow: 2px 2px 2px $brand-gray;
 // Bootstrap variables overrides
 // see ./variables.defaults.scss for more
 $blue: $brand-primary;
+$navbar-dark-color: $brand-gray;

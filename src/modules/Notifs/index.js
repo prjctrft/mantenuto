@@ -8,7 +8,9 @@ import { notifDismiss } from './redux';
 export default class Notifs extends Component {
   static propTypes = {
     notifs: PropTypes.arrayOf(PropTypes.shape({
-      kind: PropTypes.string.isRequired //one of: "success", "warning", "danger", "info"
+      kind: PropTypes.string.isRequired, //one of: "success", "warning", "danger", "info"
+      message: PropTypes.string.isRequired,
+      dismissAfter: PropTypes.number
     })),
     notifDismiss: PropTypes.func.isRequired,
   };
