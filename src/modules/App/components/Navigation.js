@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import { Navbar, NavbarBrand, NavbarToggler} from 'reactstrap';
 import NavigationCollapse from './NavigationCollapse';
 
@@ -34,10 +35,10 @@ export default class Navigation extends Component {
     const styles = require('./Navigation.scss');
     return (
       <Navbar dark expand='md' className={styles.Navbar} fixed>
-        <NavbarBrand className={styles.brand} href='/' />
+        <NavbarBrand className={styles.brand} to={'/'} tag={Link} />
         { this.props.authenticated ?
           [
-            <NavbarToggler key={0} onClick={this.toggle} />,
+            <NavbarToggler key={0} className='ml-auto' onClick={this.toggle} />,
             <NavigationCollapse key={1} isOpen={this.state.isOpen} handleLogout={this.props.handleLogout} />
           ]
           : null
