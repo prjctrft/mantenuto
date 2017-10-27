@@ -1,0 +1,11 @@
+@import '~theme/variables.scss';
+
+.ChatIconButton {
+  button {
+    border-radius: 50%;
+    background-color: #000;
+    color: $brand-white;
+    border: 3px solid white;
+    padding: 2rem;
+  }
+}
