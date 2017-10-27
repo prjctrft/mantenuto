@@ -33,6 +33,7 @@ describe('<RefitInput />', () => {
   });
 
   // TODO:
+  // test "disabled" prop
   // test "size" prop
   // test "labelRequired" prop
   // test "glyphicon-ok"

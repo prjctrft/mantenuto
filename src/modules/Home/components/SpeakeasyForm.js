@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { reduxForm, Field, propTypes } from 'redux-form';
 import memoize from 'lru-memoize';
 import { createValidator, required} from 'utils/validation';
-
+import { RefitInput } from 'components';
 
 const speakeasyValidation = memoize(10)(createValidator({
   code: required,
@@ -26,17 +26,17 @@ export class SpeakeasyFormComponent extends Component {
     }
   };
 
-  renderInput = ({ input, placeholder, type, meta: { touched, error } }) => {
-    return (
-      <div className="col-sm-12">
-        <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
-          <input {...input} placeholder={placeholder} type={type} className="form-control" />
-          {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
-          {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
-        </div>
-      </div>
-    );
-  }
+  // renderInput = ({ input, placeholder, type, meta: { touched, error } }) => {
+  //   return (
+  //     <div className="col-sm-12">
+  //       <div className={`form-group ${error && touched ? 'has-error' : ''}`}>
+  //         <input {...input} placeholder={placeholder} type={type} className="form-control" />
+  //         {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
+  //         {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   render() {
     const { handleSubmit, error } = this.props;
@@ -45,11 +45,12 @@ export class SpeakeasyFormComponent extends Component {
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <fieldset>
           <Field
+            disabled={this.props.codes.length === 0}
             placeholder="Your special registration code..."
             validate={this.validateCode}
             name="code"
             type="text"
-            component={this.renderInput}
+            component={RefitInput}
           />
         </fieldset>
 
