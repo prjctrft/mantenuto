@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
-import { makeCall } from 'modules/Call/redux';
+import { makeCall, startUserMedia } from 'modules/Call/redux';
 import {
   patchRoom,
   updateConnectionState,
@@ -31,20 +31,18 @@ import ControlsComponent from './ControlsComponent';
   patchRoom,
   // updateConnectionState,
   makeCall,
+  startUserMedia,
   // callAccepted,
   // clearCallState,
   localVideoOn,
-  localVideoOff
+  localVideoOff,
 })
 export default class ControlsContainer extends Component {
   constructor(props) {
     super(props);
     this.defaultState = {
       cameraOn: false,
-      audioOn: true,
-      receiveCallPrompt: false,
-      remoteDescription: undefined,
-      streamOpen: false
+      audioOn: true
     };
     this.state = {
       ...this.defaultState
@@ -52,8 +50,8 @@ export default class ControlsContainer extends Component {
     this.rtcConnection = false;
   }
 
-  componentDidMount() {
-    require('webrtc-adapter');
+  // componentDidMount() {
+    // require('webrtc-adapter');
 
     // socket.on('ice candidate', (candidate) => {
     //   if(candidate) {
@@ -99,102 +97,101 @@ export default class ControlsContainer extends Component {
     //   this.localRTC.setRemoteDescription(desc);
     // });
 
-  }
+  // }
 
-  createRTC = () => {
-    this.localRTC = new RTCPeerConnection(null);
+  // createRTC = () => {
+  //   this.localRTC = new RTCPeerConnection(null);
+  //
+  //   this.localRTC.ontrack = (e) => {
+  //     this.remoteStream = e.streams[0];
+  //     const videoTracks = this.remoteStream.getVideoTracks();
+  //     // debugger;
+  //     if(videoTracks.length > 0) {
+  //       this.props.hoistRemoteStream(this.remoteStream);
+  //     }
+  //   }
+  //
+  //   this.localRTC.oniceconnectionstatechange = (e) => {
+  //     console.log('ICE state change event: ', this.localRTC.iceConnectionState);
+  //   }
+  //
+  //   this.localRTC.onicecandidate = (event) => {
+  //     socket.emit('ice candidate', event.candidate);
+  //   }
+  // }
 
-    this.localRTC.ontrack = (e) => {
-      this.remoteStream = e.streams[0];
-      const videoTracks = this.remoteStream.getVideoTracks();
-      // debugger;
-      if(videoTracks.length > 0) {
-        this.props.hoistRemoteStream(this.remoteStream);
-      }
-    }
+  // createOffer = ({ audio, video }) => {
+  //   this.createRTC();
+  //   const offerToReceiveAudio = audio ? 1 : 0;
+  //   const offerToReceiveVideo = video ? 1 : 0;
+  //   this.startUserMedia()
+  //   .then(() => {
+  //     this.localStream.getTracks().forEach((track) => {
+  //       this.localRTC.addTrack(track, this.localStream)
+  //     })
+  //   })
+  //   .then(() => {
+  //     return this.localRTC.createOffer({
+  //       offerToReceiveAudio,
+  //       offerToReceiveVideo,
+  //       voiceActivityDetection: false
+  //     })
+  //   })
+  //   .then((description) => {
+  //     return this.localRTC.setLocalDescription(description);
+  //   })
+  //   .then(() => {
+  //     const description = this.localRTC.localDescription;
+  //     socket.emit('create offer', description);
+  //   });
+  // }
+  //
+  // receiveOffer = (description) => {
+  //   const desc = new RTCSessionDescription(description);
+  //   this.localRTC.setRemoteDescription(desc).then(() => {
+  //     return this.startUserMedia({});
+  //   })
+  //   .then(() => {
+  //     return this.localRTC.createAnswer();
+  //   })
+  //   .then((description) => {
+  //     return this.localRTC.setLocalDescription(description);
+  //   })
+  //   .then(() => {
+  //     const description = this.localRTC.localDescription;
+  //     socket.emit('send description', description);
+  //   });
+  // }
 
-    this.localRTC.oniceconnectionstatechange = (e) => {
-      console.log('ICE state change event: ', this.localRTC.iceConnectionState);
-    }
-
-    this.localRTC.onicecandidate = (event) => {
-      socket.emit('ice candidate', event.candidate);
-    }
-  }
-
-  createOffer = ({ audio, video }) => {
-    this.createRTC();
-    const offerToReceiveAudio = audio ? 1 : 0;
-    const offerToReceiveVideo = video ? 1 : 0;
-    this.startUserMedia()
-    .then(() => {
-      this.localStream.getTracks().forEach((track) => {
-        this.localRTC.addTrack(track, this.localStream)
-      })
-    })
-    .then(() => {
-      return this.localRTC.createOffer({
-        offerToReceiveAudio,
-        offerToReceiveVideo,
-        voiceActivityDetection: false
-      })
-    })
-    .then((description) => {
-      return this.localRTC.setLocalDescription(description);
-    })
-    .then(() => {
-      const description = this.localRTC.localDescription;
-      socket.emit('create offer', description);
-    });
-  }
-
-  receiveOffer = (description) => {
-    const desc = new RTCSessionDescription(description);
-    this.localRTC.setRemoteDescription(desc).then(() => {
-      return this.startUserMedia({});
-    })
-    .then(() => {
-      return this.localRTC.createAnswer();
-    })
-    .then((description) => {
-      return this.localRTC.setLocalDescription(description);
-    })
-    .then(() => {
-      const description = this.localRTC.localDescription;
-      socket.emit('send description', description);
-    });
-  }
-
-  startUserMedia = ({ audioOn, cameraOn } = {}) => {
-    // pass audioOn and cameraOn as arguments because state was just updated
-    // and this.state.cameraOn and this.state.audioOn will not reflect update from
-    // startVideo and startAudio functions
-    const audio = audioOn || this.state.audioOn;
-    const video = cameraOn || this.state.cameraOn;
-    return navigator.mediaDevices.getUserMedia({
-      video,
-      audio
-    }).then((stream) => {
-      this.props.hoistLocalStream(stream);
-      this.localStream = stream;
-    })
-    .catch(function(e) {
-      alert('getUserMedia() error: ' + e.name);
-    });
-  }
+  // startUserMedia = ({ audioOn, cameraOn } = {}) => {
+  //   // pass audioOn and cameraOn as arguments because state was just updated
+  //   // and this.state.cameraOn and this.state.audioOn will not reflect update from
+  //   // startVideo and startAudio functions
+  //   const audio = audioOn || this.state.audioOn;
+  //   const video = cameraOn || this.state.cameraOn;
+  //   return navigator.mediaDevices.getUserMedia({
+  //     video,
+  //     audio
+  //   }).then((stream) => {
+  //     this.props.hoistLocalStream(stream);
+  //     this.localStream = stream;
+  //   })
+  //   .catch(function(e) {
+  //     alert('getUserMedia() error: ' + e.name);
+  //   });
+  // }
 
   startVideo = () => {
     this.props.localVideoOn();
     const cameraOn = true;
     const audioOn = this.state.audioOn;
-    const streamOpen = true;
-    this.setState({ cameraOn, streamOpen });
-    this.startUserMedia({ cameraOn })
-      .then(() => {
-        if (this.props.wasCallAccepted) {
-          this.createOffer({ audio: audioOn, video: cameraOn });
-        }
-      });
+    this.setState({ cameraOn });
+    this.props.startUserMedia({ cameraOn });
+      // .then(() => {
+      //   if (this.props.wasCallAccepted) {
+      //     this.createOffer({ audio: audioOn, video: cameraOn });
+      //   }
+      // });
   }
 
   stopVideo = () => {
@@ -217,15 +214,14 @@ export default class ControlsContainer extends Component {
 
   startAudio = () => {
     const audioOn = true;
-    const streamOpen = true;
     const cameraOn = this.state.cameraOn;
     this.setState({ audioOn, streamOpen });
-    this.startUserMedia({ audioOn })
-      .then(() => {
-        if (this.props.wasCallAccepted) {
-          createOffer({ audio: audioOn, video: cameraOn });
-        }
-      });
+    this.props.startUserMedia({ audioOn });
+      // .then(() => {
+      //   if (this.props.wasCallAccepted) {
+      //     createOffer({ audio: audioOn, video: cameraOn });
+      //   }
+      // });
   }
 
   stopAudio = () => {

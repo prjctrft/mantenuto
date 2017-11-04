@@ -16,11 +16,11 @@ import {
   setIsTalker,
   setIsListener,
 
-  checkInTalker,
-  checkInListener,
+  // checkInTalker,
+  // checkInListener,
 
-  checkOutTalker,
-  checkOutListener,
+  // checkOutTalker,
+  // checkOutListener,
 
   roomPatched,
 } from './redux';
@@ -49,15 +49,20 @@ export class RoomsControllerComponent extends Component {
         let peer;
         if (userId === room.talker._id) {
           this.props.setIsTalker();
-          this.props.checkInTalker(roomSlug);
+          // this.props.checkInTalker(roomSlug);
           peer = room.listener;
         }
         if (userId === room.listener._id) {
           this.props.setIsListener();
-          this.props.checkInListener(roomSlug);
+          // this.props.checkInListener(roomSlug);
           peer = room.talker;
         }
         return this.props.setPeer(peer);
+      })
+      .catch((err) => {
+        if(err) {
+          this.props.notifSend({kind: 'danger', message: 'There is a problem with this room.  Check the url!'});
+        }
       });
 
     // TODO: reroute through service
@@ -83,10 +88,10 @@ export class RoomsControllerComponent extends Component {
     }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.checkout)
-    this.checkout();
-  }
+  // componentWillUnmount() {
+  //   window.removeEventListener("beforeunload", this.checkout)
+  //   this.checkout();
+  // }
 
   registerListeners() {
     const roomService = app.service('rooms');
@@ -95,14 +100,14 @@ export class RoomsControllerComponent extends Component {
     });
   }
 
-  checkout = () => {
-    if(this.props.isListener) {
-      this.props.checkOutListener()
-    }
-    if(this.props.isTalker) {
-      this.props.checkOutTalker()
-    }
-  }
+  // checkout = () => {
+  //   if(this.props.isListener) {
+  //     this.props.checkOutListener()
+  //   }
+  //   if(this.props.isTalker) {
+  //     this.props.checkOutTalker()
+  //   }
+  // }
 
 
   render() {
@@ -147,10 +152,10 @@ export default connect(mapStateToProps, {
   setIsTalker,
   setIsListener,
   // roomPatched,
-  checkInTalker,
-  checkInListener,
-  checkOutTalker,
-  checkOutListener
+  // checkInTalker,
+  // checkInListener,
+  // checkOutTalker,
+  // checkOutListener
   // peerCheckIn,
   // peerCheckOut,
   // parsedRoom,

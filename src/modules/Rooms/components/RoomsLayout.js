@@ -11,21 +11,21 @@ import Stats from './Stats';
 let RemotePlayer;
 let LocalPlayer;
 
-const hoistRemoteVideo = (ref) => {
-  RemotePlayer = ref;
-}
-
-const hoistLocalVideo = (ref) => {
-  LocalPlayer = ref;
-}
-
-const hoistLocalStream = (stream) => {
-  LocalPlayer.srcObject = stream;
-}
-
-const hoistRemoteStream = (stream) => {
-  RemotePlayer.srcObject = stream;
-}
+// const hoistRemoteVideo = (ref) => {
+//   RemotePlayer = ref;
+// }
+//
+// const hoistLocalVideo = (ref) => {
+//   LocalPlayer = ref;
+// }
+//
+// const hoistLocalStream = (stream) => {
+//   LocalPlayer.srcObject = stream;
+// }
+//
+// const hoistRemoteStream = (stream) => {
+//   RemotePlayer.srcObject = stream;
+// }
 
 export default class RoomsLayout extends Component {
   constructor(props) {
@@ -56,12 +56,12 @@ export default class RoomsLayout extends Component {
           <div className='col-12 col-md-8 col-xl-6'>
             {/* <Stats peer={this.props.peer} user={this.props.user} styles={styles} /> */}
             <Video
-              hoistRemoteVideo={hoistRemoteVideo}
-              hoistLocalVideo={hoistLocalVideo}
+              // hoistRemoteVideo={hoistRemoteVideo}
+              // hoistLocalVideo={hoistLocalVideo}
             />
             <Controls
-              hoistRemoteStream={hoistRemoteStream}
-              hoistLocalStream={hoistLocalStream}
+              // hoistRemoteStream={hoistRemoteStream}
+              // hoistLocalStream={hoistLocalStream}
             />
           </div>
           <div className={`${styles.chatCol} ${this.chatClasses()}`}>
