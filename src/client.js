@@ -27,7 +27,7 @@ const renderRouter = props => (<ReduxAsyncConnect
 
 const render = routes => {
   ReactDOM.render(
-    <HotEnabler>
+    <HotEnabler warnings={false}>
       <Provider store={store} key="provider">
         <Router history={history} render={renderRouter}>
           {routes}

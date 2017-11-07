@@ -10,7 +10,8 @@ import { logout } from 'modules/Auth/redux';
 import { notifSend } from 'modules/Notifs/redux';
 
 import { clearUser } from 'modules/user/redux';
-import Notifs from '../Notifs';
+import Notifs from 'modules/Notifs';
+import Call from 'modules/Call';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -61,6 +62,7 @@ export default class App extends Component {
   render() {
     const authenticated = this.props.authenticated;
     const { pathname } = this.props.location;
+    require('theme/index.global.scss');
     const styles = require('./App.scss');
 
     return (
@@ -68,6 +70,7 @@ export default class App extends Component {
         <Helmet {...config.app.head} />
         <Navigation authenticated={authenticated} handleLogout={this.handleLogout} pathname={pathname} />
         <Notifs />
+        <Call />
         <div className={styles.appContent}>
           { this.props.children }
         </div>

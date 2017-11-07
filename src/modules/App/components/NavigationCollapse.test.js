@@ -1,20 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import { Provider } from 'react-redux';
-import createStore from 'redux/create';
 import NavigationCollapse from './NavigationCollapse';
 
 describe('<NavigationCollapse />', () => {
   let component;
+  let handleLogout;
   beforeEach(() => {
-    const store = createStore({}, {}, {});
-    // const handleSubmit = jest.fn();
+    handleLogout = jest.fn();
     component = mount(
-      <Provider store={store}>
-        {}
-        <NavigationCollapse />
-      </Provider>
+      <NavigationCollapse handleLogout={handleLogout} />
     );
   });
 
@@ -22,20 +17,14 @@ describe('<NavigationCollapse />', () => {
     expect(component.exists()).to.be.true;
   });
 
-  // Test for Navbar.Collapse
-
-  it('should contain Nav, LinkContainer and NavItem components', () => {
-    expect(component.find('Nav')).to.have.length(1);
-    expect(component.find('LinkContainer')).to.have.length(1);
-    expect(component.find('NavItem')).to.have.length(2);
+  it('should be called "NavigationCollapse"', () => {
+    expect(component.name()).to.equal('NavigationCollapse')
   });
 
-  it('should have properly defined props', () => {
-    expect(component.find('LinkContainer').props().to).to.be.defined;
 
-    expect(component.find('NavItem').at(0).props().eventKey).to.be.defined;
+  it('should call "props.handleLogout" link is clicked', () => {
+    component.find('.logout-link NavLink').simulate('click');
+    expect(handleLogout.mock.calls).to.have.lengthOf(1);
+  })
 
-    expect(component.find('NavItem').at(1).props().eventKey).to.be.defined;
-    expect(component.find('NavItem').at(1).props().onClick).to.be.defined;
-  });
 });

@@ -1,0 +1,34 @@
+@import '~theme/variables.scss';
+
+$player-background: #A1A1A1;
+
+.embedResponsive {
+  background-color: $player-background;
+  border-radius: 1px;
+  .LocalPlayer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: #000 0.5px solid;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: inherit;
+    top: inherit;
+    margin: 10px;
+    background: $player-background;
+    i {
+      color: #000;
+    }
+  }
+  .CallState {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 100px;
+    color: $brand-gray;
+    font-size: 20px;
+  }
+}

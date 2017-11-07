@@ -1,3 +1,3 @@
-import routes from './routes';
+import loginRoutes from './routes';
 
-export default routes;
+export default loginRoutes;

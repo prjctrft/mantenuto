@@ -1,33 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
-import { LinkContainer } from 'react-router-bootstrap';
-import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
+import PropTypes from 'prop-types';
+import { Collapse, Nav, NavItem, NavLink } from 'reactstrap';
 
 const NavigationCollapse = (props) => {
 	return (
-  <Navbar.Collapse>
-    <Nav navbar pullRight>
-      <LinkContainer to="/profile" >
-        <NavItem eventKey={0} >Profile</NavItem>
-      </LinkContainer>
-      {/* {!user && <LinkContainer to="/login">
-          <NavItem eventKey={5}>Login</NavItem>
-        </LinkContainer>} */}
-      {/* {!user && <LinkContainer to="/register">
-          <NavItem eventKey={6}>Register</NavItem>
-        </LinkContainer>} */}
-      <NavItem eventKey={1} className="logout-link" onClick={props.handleLogout}>
+  <Collapse isOpen={props.isOpen} navbar>
+    <Nav className="ml-auto"  navbar>
+      <NavItem >
+        <NavLink  href='/profile'>Profile</NavLink>
+      </NavItem>
+      <NavItem  className="logout-link">
+        <NavLink  onClick={props.handleLogout}>
           Logout
-        </NavItem>
+				</NavLink>
+      </NavItem>
     </Nav>
-  </Navbar.Collapse>
+  </Collapse>
 	)
 }
 
 NavigationCollapse.propTypes = {
-  handleLogout: PropTypes.func.isRequired
+  handleLogout: PropTypes.func.isRequired,
+	isOpen: PropTypes.bool.isRequired
 }
 
 export default NavigationCollapse

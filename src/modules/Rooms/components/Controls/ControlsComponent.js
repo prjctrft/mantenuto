@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import Modal from 'react-bootstrap/lib/Modal';
+import Modal from 'reactstrap';
 
 import ControlButton from './ControlButton';
 
@@ -24,9 +24,10 @@ export default (props) => {
           faClass={'fa fa-video-camera fa-2x'}
         />
         <ControlButton
-          onClick={props.startCall}
+          onClick={props.makeCall}
           streamOpen={props.streamOpen}
           controlOn={props.wasCallAccepted}
+          className={() => this.props.disableCallButton()}
           faClass={'fa fa-phone fa-2x'}
         />
         {/* <button onClick={this.startCall}
@@ -53,22 +54,6 @@ export default (props) => {
           <i className='fa fa-times' aria-hidden='true' />
         </button> */}
       </div>
-      <Modal show={props.receiveCallPrompt} onHide={props.close}>
-        <Modal.Header closeButton>
-          { props.peer && props.peer.user ? <Modal.Title>Incoming Call from {props.peer.user.first}.</Modal.Title> : null }
-        </Modal.Header>
-        <Modal.Body>
-          <h4>Accept Call?</h4>
-          <hr />
-          <p className={styles.BtnBar}>
-            <button type='button' onClick={props.acceptCallOnClick(true)} className='btn btn-success'>Accept</button>
-            <button type='button' onClick={props.acceptCallOnClick(false)} className='btn btn-danger'>Don't Accept</button>
-          </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <button className='btn btn-default' onClick={props.close}>Close</button>
-        </Modal.Footer>
-      </Modal>
     </div>
   )
 }

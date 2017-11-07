@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
@@ -39,7 +39,7 @@ export class Home extends Component {
         </div>
         <div className='col-xs-12 col-sm-6 text-center'>
           <h1>Project Refit</h1>
-          {codes.length > 0 ? <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} /> : null}
+          <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} />
         </div>
       </div>
     );

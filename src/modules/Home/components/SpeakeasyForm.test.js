@@ -3,20 +3,17 @@ import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import createStore from 'redux/create';
-import SpeakeasyForm, { SpeakeasyFormComponent } from './SpeakeasyForm';
+import { SpeakeasyFormComponent } from './SpeakeasyForm';
 
 describe('<SpeakeasyForm />', () => {
   let component;
+  let props;
+  let method;
   beforeEach(() => {
-    const store = createStore({}, {}, {});
-    // const handleSubmit = jest.fn();
-    component = mount(
-      <Provider store={store}>
-        {/* <SpeakeasyForm handleSubmit={handleSubmit} /> */}
-        <SpeakeasyForm />
-      </Provider>
-    );
-  });
+    props = {codes: ['hello', 'yes']}
+    component = shallow(<SpeakeasyFormComponent {...props} />);
+    method = component.instance().validateCode;
+  })
 
   it('should render self and a form', () => {
     expect(component.exists()).to.be.true;
@@ -24,21 +21,12 @@ describe('<SpeakeasyForm />', () => {
   });
 
   describe('"validateCode" method', () => {
-    let component;
-    let props;
-    let method;
-    beforeEach(() => {
-      props = {codes: ['hello', 'yes']}
-      component = shallow(<SpeakeasyFormComponent {...props} />);
-      method = component.instance().validateCode;
-    })
-
     it('should exist', () => {
       expect(method).to.be.a('function');
     });
 
     it('should return "undefined" if no arguments are passed', () => {
-      expect(method()).to.be.equal(undefined);
+      expect(method()).to.equal(undefined);
     });
 
     it('should return "undefined" if a correct code is passed', () => {

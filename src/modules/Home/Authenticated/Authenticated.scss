@@ -16,18 +16,22 @@
   display: flex;
   justify-content: center;
   margin: 1rem 0;
-
   @media (min-width: 768px) {
     margin: 0 3rem;
   }
 }
 
 .talk {
+  color: $brand-white;
   background-color: $brand-darker-gray;
 }
 
 .listen {
+  color: $brand-darker-gray;
   background-color: $brand-gray;
+  &:hover {
+    color: $brand-white;
+  }
 }
 
 .home {

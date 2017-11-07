@@ -1,35 +1,50 @@
-import React from 'react';
-import PropTypes from 'prop-types'; 
-import Navbar from 'react-bootstrap/lib/Navbar';
-
-import NavigationHeader from './NavigationHeader';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router';
+import { Navbar, NavbarBrand, NavbarToggler} from 'reactstrap';
 import NavigationCollapse from './NavigationCollapse';
 
-// a bit hacky
-const hideNavigation = (props) => {
-  return props.pathname === '/' && !props.authenticated
-}
-
-const Navigation = (props) => {
-
-  const styles = require('./Navigation.scss');
-
-  if(hideNavigation(props)) {
-    return null;
+export default class Navigation extends Component {
+  static propTypes = {
+    authenticated: PropTypes.bool.isRequired,
+    handleLogout: PropTypes.func.isRequired,
+    pathname: PropTypes.string.isRequired
   }
 
-  return (
-    <Navbar className={styles.Navbar} fixedTop>
-      <NavigationHeader authenticated={props.authenticated} />
-      { props.authenticated ? <NavigationCollapse handleLogout={props.handleLogout} /> : null }
-    </Navbar>
-  )
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false
+    }
+  }
+
+
+  // a bit hacky
+  hideNavigation = () => {
+    return this.props.pathname === '/' && !this.props.authenticated
+  }
+
+  toggle = () => {
+    this.setState({ isOpen: !this.state.isOpen })
+  }
+
+  render() {
+    if(this.hideNavigation()) {
+      return null;
+    }
+    const styles = require('./Navigation.scss');
+    return (
+      <Navbar dark expand='md' className={styles.Navbar} fixed>
+        <NavbarBrand className={styles.brand} to={'/'} tag={Link} />
+        { this.props.authenticated ?
+          [
+            <NavbarToggler key={0} className='ml-auto' onClick={this.toggle} />,
+            <NavigationCollapse key={1} isOpen={this.state.isOpen} handleLogout={this.props.handleLogout} />
+          ]
+          : null
+        }
+      </Navbar>
+    )
+  }
 
 }
-
-Navigation.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
-  handleLogout: PropTypes.func.isRequired
-}
-
-export default Navigation

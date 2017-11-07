@@ -1,0 +1,15 @@
+@import '~theme/variables.scss';
+
+.RoomsLayout {
+  background-color: #000;
+  min-height: 100vh;
+  overflow: hidden;
+  .chatCol {
+    position: relative;
+    width: 100%;
+  }
+  .chatWrapper {
+    height: 100%;
+    width: 100%;
+  }
+}

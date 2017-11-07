@@ -45,7 +45,6 @@ var webpackConfig = module.exports = {
     'main': [
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
       'react-hot-loader/patch',
-      'bootstrap-sass!./src/theme/bootstrap.config.js',
       'font-awesome-webpack!./src/theme/font-awesome.config.js',
       './src/client.js'
     ]
@@ -76,9 +75,17 @@ var webpackConfig = module.exports = {
         loader: 'happypack/loader?id=less',
         include: [path.resolve(__dirname, '../src')]
       },
+      // specially for theme/bootstrap.global.scss so compiled css is not module
+      {
+        happy: { id: 'globalSass' },
+        test: /\.global.scss$/,
+        loader: 'happypack/loader?id=globalSass',
+        include: [path.resolve(__dirname, '../src')]
+      },
       {
         happy: { id: 'sass' },
         test: /\.scss$/,
+        exclude: /\.global.scss$/,
         loader: 'happypack/loader?id=sass',
         include: [path.resolve(__dirname, '../src')]
       },
@@ -125,6 +132,12 @@ var webpackConfig = module.exports = {
     helpers.createHappyPlugin('sass', [
       'style',
       'css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
+      'autoprefixer?browsers=last 2 version',
+      'sass?outputStyle=expanded&sourceMap'
+    ]),
+    helpers.createHappyPlugin('globalSass', [
+      'style',
+      'css?modules=false?importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]',
       'autoprefixer?browsers=last 2 version',
       'sass?outputStyle=expanded&sourceMap'
     ])

@@ -5,7 +5,7 @@
 	flex-direction: column;
 	justify-content: center;
 	width: 90%;
-	
+
 	label {
 		color: #5A5B5C;
 		font-size: 1.2em;
@@ -16,14 +16,14 @@
 	}
 
 	button {
-		box-shadow: $box-shadow;
-		background-color: $brand-gray;
+		// box-shadow: $box-shadow;
+		// background-color: $brand-gray;
 		border-radius: $button-border-radius;
-		display: block;
-		height: $button-height;
-		margin: auto;
-		text-align: center;
-		width: $button-width;
+		// display: block;
+		// height: $button-height;
+		// margin: auto;
+		// text-align: center;
+		// width: $button-width;
 	}
 
 	button.password {

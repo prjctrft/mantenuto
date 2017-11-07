@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Alert from 'react-bootstrap/lib/Alert';
+import { Alert } from 'reactstrap';
 import { notifDismiss } from './redux';
 
-// kind = one of: "success", "warning", "danger", "info"
-
-@connect((state) => ({notifs: state.notifs}), { notifDismiss })
+@connect((state) => ({notifs: state.notifs.notifs}), { notifDismiss })
 export default class Notifs extends Component {
   static propTypes = {
-    notifs: PropTypes.object.isRequired,
+    notifs: PropTypes.arrayOf(PropTypes.shape({
+      kind: PropTypes.string.isRequired, //one of: "success", "warning", "danger", "info"
+      message: PropTypes.string.isRequired,
+      dismissAfter: PropTypes.number
+    })),
     notifDismiss: PropTypes.func.isRequired,
   };
 
@@ -22,7 +24,7 @@ export default class Notifs extends Component {
 
   render() {
     const styles = require('./Notifs.scss');
-    const { notifs } = this.props.notifs;
+    const notifs = this.props.notifs;
     if (!notifs) {
       return null;
     }
@@ -34,9 +36,8 @@ export default class Notifs extends Component {
         {notifs.map(notif =>
           (<Alert
             key={notif.id}
-            bsClass={styles.notification}
-            className={styles[notif.kind]}
-            onDismiss={this.dismiss(notif.id)}
+            className={`${styles.notification} ${styles[notif.kind]}`}
+            toggle={this.dismiss(notif.id)}
           >
             {notif.message}
           </Alert>))}
