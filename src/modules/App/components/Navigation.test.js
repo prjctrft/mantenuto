@@ -50,8 +50,8 @@ describe('<Navigation />', () => {
       expect(component.find('NavbarToggler')).to.have.lengthOf(1);
     });
 
-    it('should render "NavbarCollapse"', () => {
-      expect(component.find('NavbarCollapse')).to.have.lengthOf(1);
+    it('should render "NavigationCollapse"', () => {
+      expect(component.find('NavigationCollapse')).to.have.lengthOf(1);
     })
 
   });

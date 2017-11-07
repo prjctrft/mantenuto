@@ -157,7 +157,7 @@ export const startUserMedia = ({ audioOn = true, cameraOn = true } = {}) => {
       video: cameraOn,
       audio: audioOn
     }).then((stream) => {
-      debugger;
+      
       dispatch({
         type: UPDATE_LOCAL_STREAM,
         stream
@@ -166,7 +166,7 @@ export const startUserMedia = ({ audioOn = true, cameraOn = true } = {}) => {
       // this.localStream = stream;
     })
     .catch(function(e) {
-      debugger;
+      
       alert('getUserMedia() error: ' + e.name);
     });
   }

@@ -171,7 +171,8 @@ export class CallController extends Component {
             modalOpen={this.state.modalOpen}
             acceptCall={this.acceptCall}
             rejectCall={this.rejectCall}
-            peer={this.props.peer} />
+            peer={this.props.peer}
+          />
             : null}
       </div>
     )

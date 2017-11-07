@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
@@ -17,27 +16,7 @@ import {
 
 import ControlsComponent from './ControlsComponent';
 
-@connect((state)=> ({
-  room: state.rooms.room,
-  isTalker: state.rooms.isTalker,
-  isListener: state.rooms.isListener,
-  user: state.user.user,
-  peer: state.rooms.peer,
-  peerCheckedIn: state.rooms.peerCheckedIn,
-  makingCall: state.calls.makingCall,
-  incomingCall: state.calls.incomingCall,
-  callInProgress: state.calls.callInProgress
-}), {
-  patchRoom,
-  // updateConnectionState,
-  makeCall,
-  startUserMedia,
-  // callAccepted,
-  // clearCallState,
-  localVideoOn,
-  localVideoOff,
-})
-export default class ControlsContainer extends Component {
+export class ControlsControllerComponent extends Component {
   constructor(props) {
     super(props);
     this.defaultState = {
@@ -304,3 +283,24 @@ export default class ControlsContainer extends Component {
     />)
   }
 }
+
+export default connect((state)=> ({
+  room: state.rooms.room,
+  isTalker: state.rooms.isTalker,
+  isListener: state.rooms.isListener,
+  user: state.user.user,
+  peer: state.rooms.peer,
+  peerCheckedIn: state.rooms.peerCheckedIn,
+  makingCall: state.calls.makingCall,
+  incomingCall: state.calls.incomingCall,
+  callInProgress: state.calls.callInProgress
+}), {
+  patchRoom,
+  // updateConnectionState,
+  makeCall,
+  startUserMedia,
+  // callAccepted,
+  // clearCallState,
+  localVideoOn,
+  localVideoOff,
+}, ControlsControllerComponent)

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 // used in redux-form <Field /> Component
 // e.g. <Field ... component={RefitInput} />
 const RefitInput  = ({ size, disabled, placeholder, labelRequired, input, label, type, meta: { touched, error, dirty, initial, pristine, valid } }) => { //eslint-disable-line no-unused-vars
-	debugger;
 	// const styles = require('./index.scss');
 	const formGroupSize = size ? `form-group-${size}` : '';
 	const requiredLabel = labelRequired ? <span className="text-warning">*</span> : null;
