@@ -75,7 +75,7 @@ var webpackConfig = module.exports = {
         loader: 'happypack/loader?id=less',
         include: [path.resolve(__dirname, '../src')]
       },
-      // specially for theme/bootstrap.global.scss so compiled css is not module
+      // specially for theme/index.global.scss so compiled css is not module
       {
         happy: { id: 'globalSass' },
         test: /\.global.scss$/,

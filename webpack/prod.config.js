@@ -19,7 +19,6 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     main: [
-      'bootstrap-sass!./src/theme/bootstrap.config.prod.js',
       'font-awesome-webpack!./src/theme/font-awesome.config.prod.js',
       './src/client.js'
     ]
@@ -40,7 +39,13 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /\.global.scss$/,
         loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true')
+      },
+      // extract bootstrap with global classes instead of to css modules
+      {
+        test: /\.global.scss$/,
+        loader: ExtractTextPlugin.extract('style', 'css?importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap&sourceMap=true&sourceMapContents=true')
       },
       { test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
