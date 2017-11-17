@@ -52,8 +52,12 @@
 
 label {
   color: #5A5B5C;
-  font-size: 1.75rem;
+  font-size: 1rem;
   text-align: left;
+
+  @media (min-width: 450px) {
+    font-size: 1.75rem;
+  }
 }
 
 select {
@@ -61,17 +65,23 @@ select {
 }
 
 .optional {
-  font-size: 1.2rem;
+  font-size: 1rem;
+
+  @media (min-width: 450px) {
+    font-size: 1.2rem;
+  }
 }
 
 .submitDiv {
   display: flex;
   justify-content: center;
+  margin: 0 auto;
   > button {
     border: none;
     border-radius: 2px;
     box-shadow: 2px 2px 5px #888;
     font-weight: bold;
+    width: 8rem;
   }
 }
 

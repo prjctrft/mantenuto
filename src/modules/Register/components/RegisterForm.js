@@ -135,15 +135,16 @@ class RegisterForm extends Component {
                   onChange={field.onChange}
                 />)
             })}
-            <div className={styles.submitDiv}>
-              <button type="submit">Done</button>
-            </div>
+           
           </fieldset>
           <fieldset className={`${styles.flexColumn}`}>
             <Dropzone className={styles.dropzone} onDrop={this.onDrop}>
               <Field styles={styles} name="verification" type="file" component={this.renderVerification} label="Upload DD214" />
             </Dropzone>
           </fieldset>
+        </div>
+        <div className={styles.submitDiv}>
+          <button type="submit">Done</button>
         </div>
         {this.props.error && <p className="text-danger"><strong>{this.props.error}</strong></p>}
       </form>
