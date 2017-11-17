@@ -12,13 +12,23 @@
   width: 100%;
 	bottom: 0;
 	position: fixed;
+	font-size: 0.75rem;
+
+	@media (min-width: 475px) {
+		font-size: 1rem;
+	}
+
 
 	button,
 	span {
 		background-color: $brand-black;
 		color: $brand-white;
 		border: none;
-		margin: 0 1rem;
+		margin: 0 0.5rem;
+
+		@media (min-width: 768px) {
+			margin: 0 1rem;
+		}
 	}
 
 	span {
