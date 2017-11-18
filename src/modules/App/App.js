@@ -38,13 +38,6 @@ export default class App extends Component {
 
   componentDidMount() {
     const notifSend = this.props.notifSend;
-    app.service('notifications').on('talker waiting', ({roomSlug}) => {
-      const message = <p>A talker is waiting for you! Click here: <Link to={`/roooms/${roomSlug}`}>Room</Link></p>;
-      notifSend({
-        message,
-        kind: 'success'
-      });
-    })
   }
 
   componentDidCatch() {

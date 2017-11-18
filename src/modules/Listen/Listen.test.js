@@ -17,7 +17,13 @@ describe('<ListenComponent />', () => {
     component = mount(<ListenComponent updateUser={updateUser} user={user} />);
   })
 
-  it('should render <Preferences /> by default', () => {
+  it('should render <NotRegisteredListener /> when the user is not a "listener"', () => {
+    expect(component.find('NotRegisteredListener').exists()).to.be.true;
+  });
+
+
+  it('should render <Preferences /> when the user is a "listener"', () => {
+    component.setProps({user: { listener: true }});
     expect(component.find('Preferences').exists()).to.be.true;
   });
 
@@ -39,4 +45,7 @@ describe('<ListenComponent />', () => {
 
   // expect(component.find('Connecting').exists()).to.be.true;
   // expect(component.find('Preferences').exists()).to.be.false;
+
+  // TODO, test { updateUser } from 'modules/user/redux';
+  // should take proper parameters
 });

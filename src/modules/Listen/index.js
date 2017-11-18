@@ -5,6 +5,7 @@ import Listen from './Listen';
 
 // for react-hot-reloader
 if (process.env.NODE_ENV !== 'production') {
+  require('./Listen');
   require('./components/Connecting');
   require('./components/Preferences');
 }

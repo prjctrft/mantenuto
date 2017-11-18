@@ -157,8 +157,8 @@ export const startUserMedia = ({ audioOn = true, cameraOn = true } = {}) => {
       video: cameraOn,
       audio: audioOn
     }).then((stream) => {
-      
-      dispatch({
+
+      return dispatch({
         type: UPDATE_LOCAL_STREAM,
         stream
       });
@@ -166,11 +166,23 @@ export const startUserMedia = ({ audioOn = true, cameraOn = true } = {}) => {
       // this.localStream = stream;
     })
     .catch(function(e) {
-      
       alert('getUserMedia() error: ' + e.name);
     });
   }
 }
+
+export const stopUserMedia = ({ audioOn = true, cameraOn = true} = {}) => {
+  return (dispatch, getState) => {
+    debugger;
+    const localStream = getState().calls.localStream;
+    if(!audioOn) {
+      localStream.getAudioTracks()[0].stop();
+    }
+    if(!cameraOn) {
+      localStream.getVideoTracks()[0].stop();
+    }
+  }
+};
 
 export const updateRemoteStream = (stream) => {
   return {
