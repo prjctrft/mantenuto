@@ -31,7 +31,6 @@ export default class RoomsLayout extends Component {
 
   render() {
     const styles = require('./RoomsLayout.scss');
-
     return (
       <div className={`${styles.RoomsLayout} container-fluid`}>
         <div className='row justify-content-end py-5'>

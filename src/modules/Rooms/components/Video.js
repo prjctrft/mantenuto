@@ -17,6 +17,13 @@ const Video = (props) => {
     }
   }
 
+  const localVideoOn = () => {
+    // TODO: fix this to properly account for video not playing
+    if(!props.localStream) {
+      return false;
+    }
+  }
+
   const { callStarted, callAccepted, connectionState } = props;
   return (
     <div className={`embed-responsive embed-responsive-4by3 ${styles.embedResponsive}`}>
@@ -27,14 +34,13 @@ const Video = (props) => {
         </div> : null
       }
       <div className='embed-responsive-item'>
-        {/* {!this.props.remoteVideoOn ? <i className={`fa fa-5x fa-user ${styles.remoteUserPlaceHolder}`} /> : null} */}
-        {/* <video ref={(video) => props.hoistRemoteVideo(video)} autoPlay muted /> */}
-        <video ref={attachRemoteStream} autoPlay muted />
+        {/* {!props.callInProgress ? <i className='fa fa-5x fa-user' /> : null} */}
+        {props.callInProgress ? <video ref={attachRemoteStream} autoPlay muted /> : null}
       </div>
       <div className={`${styles.LocalPlayer}`}>
         <video ref={attachLocalStream} autoPlay muted />
         {/* <video src={props.localStream} autoPlay muted /> */}
-        {!props.localVideoOn ? <i className='fa fa-5x fa-user' /> : null}
+        {!localVideoOn() ? <i className='fa fa-5x fa-user' /> : null}
       </div>
     </div>
   )
@@ -44,9 +50,9 @@ const mapStateToProps = (state) => state => ({
   callStarted: state.rooms.callStarted,
   callAccepted: state.rooms.callAccepted,
   connectionState: state.rooms.connectionState,
-  localVideoOn: state.rooms.localVideoOn,
+  localStream: state.calls.localStream,
   remoteStream: state.calls.remoteStream,
-  localStream: state.calls.localStream
+  callInProgress: state.calls.callInProgress
 });
 
 export default connect(mapStateToProps)(Video);
