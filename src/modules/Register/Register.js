@@ -22,10 +22,11 @@ const Register = (props) => {
         <div className="container">
           <h1 className={styles.heading}>Register</h1>
           <div className={styles.pipelineBtns}>
-            <CircleButton onClick={next('veteran', props)} content='Veteran' />
-            <CircleButton onClick={next('active', props)} content='Active' />
+            <CircleButton onClick={next('veteran', props)} content='Veterans Click Here' />
+            <CircleButton onClick={next('active', props)} content='Active Duty Click Here' />
+            <CircleButton content='Mental Health Professional Click Here' />
           </div>
-          <Link className={styles.link} to={'/register/provider'}>Mental health professional?</Link>
+          {/*<Link className={styles.link} to={'/register/provider'}>Mental health professional?</Link>*/}
         </div>
       </div>
     </div>

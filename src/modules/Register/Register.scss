@@ -1,5 +1,4 @@
 @import '../../theme/variables.scss';
-
 .heading {
   color: $brand-darker-gray;
 }
@@ -41,14 +40,19 @@
 .pipelineBtns {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  max-width: 60%;
+  flex-wrap: wrap;
+  //max-width: 60%;
   margin: auto;
   margin-bottom: 1rem;
 
   button {
-    &:first-of-type {
+    margin: 1rem auto;
+    box-shadow: $box-shadow;
+    
+    &:first-of-type,
+    &:last-of-type {
       background: $brand-black;
       color: $brand-white;
 
@@ -58,7 +62,7 @@
       }
     }
 
-    &:last-of-type {
+    &:nth-of-type(2) {
       background: $brand-gray;
       color: $brand-black;
 

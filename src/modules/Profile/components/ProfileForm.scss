@@ -1,5 +1,4 @@
 @import '../../../theme/variables.scss';
-
 .ProfileForm {
 	display: flex;
 	flex-direction: column;
@@ -16,7 +15,7 @@
 	}
 
 	button {
-		// box-shadow: $box-shadow;
+		box-shadow: $box-shadow;
 		// background-color: $brand-gray;
 		border-radius: $button-border-radius;
 		// display: block;
@@ -24,15 +23,6 @@
 		// margin: auto;
 		// text-align: center;
 		// width: $button-width;
-	}
-
-	button.password {
-		width: $button-width * 1.5;
-		height: $button-height * 1.5;
-		background-color: $brand-light-blue;
-		color: $brand-white;
-		border: none;
-		margin: 1rem auto 3rem auto;
 	}
 
 	.injury {
@@ -63,6 +53,21 @@
 		> label {
 			float: left;
 		}
+	}
+
+	button.password {
+		width: $button-width * 1.5;
+		height: $button-height * 1.5;
+		background-color: $brand-light-blue;
+		color: $brand-white;
+		border: none;
+		margin: 1rem auto 3rem auto;
+	}
+
+	button.done {
+		width: $button-width;
+		background-color: $brand-gray;
+		align-self: center;
 	}
 
 	@media (min-width: 768px) {
