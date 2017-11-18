@@ -39,6 +39,7 @@ export class Home extends Component {
         </div>
         <div className='col-xs-12 col-sm-6 text-center'>
           <h1>Project Refit</h1>
+          <h2>Where Warriors beat PTSD together</h2>
           <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} />
         </div>
       </div>
