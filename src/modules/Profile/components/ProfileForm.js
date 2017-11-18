@@ -114,7 +114,7 @@ export default class ProfileForm extends Component {
         <button className={styles.password} type="button">
           Change Password
         </button>
-        <button disabled={pristine || submitting} className="btn btn-default" type="submit">
+        <button disabled={pristine || submitting} className={styles.done} type="submit">
           Done
         </button>
       </form>
