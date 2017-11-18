@@ -39,4 +39,7 @@ describe('<ListenComponent />', () => {
 
   // expect(component.find('Connecting').exists()).to.be.true;
   // expect(component.find('Preferences').exists()).to.be.false;
+
+  // TODO, test { updateUser } from 'modules/user/redux';
+  // should take proper parameters
 });
