@@ -40,7 +40,7 @@ export class SpeakeasyFormComponent extends Component {
 
   render() {
     const { handleSubmit, error } = this.props;
-    // const styles = require('../Register.scss');
+    const styles = require('../Home.scss');
     return (
       <form className="form-horizontal" onSubmit={handleSubmit}>
         <fieldset>
@@ -55,8 +55,9 @@ export class SpeakeasyFormComponent extends Component {
         </fieldset>
 
         {error && <p className="text-danger"><strong>{error}</strong></p>}
-        <button className="btn btn-default" type="submit">
-          <i className="fa fa-sign-in" />{' '}Next
+        <button className={styles.speakEasyButton} type="submit">
+          {/*<i className="fa fa-sign-in" />{' '}*/}
+          Enter
         </button>
       </form>
     );

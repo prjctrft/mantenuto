@@ -10,6 +10,11 @@
   top: 0;
   left: 0;
   width: 100%;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
 }
 
 .alreadyMember {
@@ -28,4 +33,13 @@
     color: $brand-black;
     text-decoration: none;
   }
+}
+
+.speakEasyButton {
+  width: $button-width;
+  height: $button-height * 1.5;
+  background-color: $brand-gray;
+  color: $brand-darker-gray;
+  border-radius: $button-border-radius;
+  box-shadow: $box-shadow;
 }
