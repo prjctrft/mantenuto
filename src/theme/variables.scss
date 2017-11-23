@@ -16,10 +16,12 @@ $chat-color-dark: #1739af;
 
 $brand-light-blue: #3AC9E3;
 
+// Layout
+$footer-height: 4rem;
+
 // Bootstrap Variables
 $brand-primary: #55acf6;
 $brand-secondary: #e25139;
-//$brand-success: #5cb85c;
 $brand-warning: #f0ad4e;
 //$brand-danger: #d9534f;
 $brand-info: #5bc0de;
@@ -43,4 +45,5 @@ $box-shadow: 2px 2px 2px $brand-gray;
 // Bootstrap variables overrides
 // see ./variables.defaults.scss for more
 $blue: $brand-primary;
+$green: $brand-success;
 $navbar-dark-color: $brand-gray;
