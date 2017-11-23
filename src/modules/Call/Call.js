@@ -90,6 +90,9 @@ export class CallController extends Component {
     this.localRTC.onicecandidate = (event) => {
       socket.emit('ice candidate', event.candidate);
     }
+
+    // this.localRTC.oniceconnectionstatechange = (event) => {}
+
   }
 
   createOffer = ({ audioOn, cameraOn }) => {
@@ -121,14 +124,12 @@ export class CallController extends Component {
   receiveOffer = (description) => {
     this.createRTC();
     const desc = new RTCSessionDescription(description);
-    if(!this.props.localStream) {
-      this.props.startUserMedia().then(() => {
-        // const stream = this.localStream;
-        this.props.localStream.getTracks().forEach(track => {
-          this.localRTC.addTrack(track, this.props.localStream)
-        });
-      })
-    }
+    this.props.startUserMedia().then(() => {
+      // const stream = this.localStream;
+      this.props.localStream.getTracks().forEach(track => {
+        this.localRTC.addTrack(track, this.props.localStream)
+      });
+    })
     this.localRTC.setRemoteDescription(desc).then(() => {
       return this.props.startUserMedia({});
     })
