@@ -7,21 +7,22 @@ import ControlButton from './ControlButton';
 export default (props) => {
 
   const styles = require('./Controls.scss');
-
+  const iconVoiceOn = require('./assets/ic_voice_on.png');
+  const iconVoiceOff = require('./assets/ic_voice_off.png');
+  const iconVideoOn = require('./assets/ic_video_on.png');
+  const iconVideoOff = require('./assets/ic_video_off.png');
   return (
     <div className={`${styles.controlBar}`}>
       <div className="btn-group btn-group-lg" role="group" aria-label="...">
         <ControlButton
           onClick={props.toggleAudio}
           streamOpen={props.streamOpen}
-          controlOn={props.audioOn}
-          faClass={'fa fa-microphone fa-2x'}
+          src={props.audioOn ? iconVoiceOn : iconVoiceOff}
         />
         <ControlButton
           onClick={props.toggleVideo}
           streamOpen={props.streamOpen}
-          controlOn={props.cameraOn}
-          faClass={'fa fa-video-camera fa-2x'}
+          src={props.cameraOn ? iconVideoOn : iconVideoOff}
         />
         <ControlButton
           onClick={props.makeCall}

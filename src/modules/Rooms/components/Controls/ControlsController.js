@@ -60,8 +60,8 @@ export class ControlsControllerComponent extends Component {
   startAudio = () => {
     const audioOn = true;
     const cameraOn = this.state.cameraOn;
-    this.setState({ audioOn, streamOpen });
-    this.props.startUserMedia({ audioOn });
+    this.setState({ audioOn });
+    this.props.startUserMedia({ audioOn, cameraOn });
       // .then(() => {
       //   if (this.props.wasCallAccepted) {
       //     createOffer({ audio: audioOn, video: cameraOn });
@@ -70,12 +70,8 @@ export class ControlsControllerComponent extends Component {
   }
 
   stopAudio = () => {
-    const nextState = { audioOn: false };
-    if (!this.state.cameraOn) {
-      nextState.streamOpen = false;
-    }
-    this.setState({ ...nextState });
-    this.localStream.getAudioTracks()[0].stop()
+    this.setState({ audioOn: false });
+    this.props.stopUserMedia({ audioOn: false });
   }
 
   toggleAudio = (e) => {
