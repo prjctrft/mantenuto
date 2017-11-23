@@ -1,11 +1,6 @@
-@import '../../../theme/variables.scss';
+@import '~theme/variables.scss';
 
 .ProfileForm {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 90%;
-
 	label {
 		color: #5A5B5C;
 		font-size: 1.2em;
@@ -16,59 +11,11 @@
 	}
 
 	button {
-		// box-shadow: $box-shadow;
-		// background-color: $brand-gray;
 		border-radius: $button-border-radius;
-		// display: block;
-		// height: $button-height;
-		// margin: auto;
-		// text-align: center;
-		// width: $button-width;
 	}
 
-	button.password {
-		width: $button-width * 1.5;
-		height: $button-height * 1.5;
-		background-color: $brand-light-blue;
-		color: $brand-white;
-		border: none;
-		margin: 1rem auto 3rem auto;
-	}
-
-	.injury {
-		text-align: center;
-	}
-
-	.combat {
-		width: 50%;
-		float: left;
-		> input {
-			box-shadow: none;
-			float: left;
-			margin: .3em 1em auto 3.5em;
-		}
-		> label {
-			float: left;
-		}
-	}
-
-	.noncombat {
-		width: 50%;
-		float: right;
-		> input {
-			box-shadow: none;
-			float: left;
-			margin: .3em 1em auto 1.25em;
-		}
-		> label {
-			float: left;
-		}
-	}
-
-	@media (min-width: 768px) {
-		width: 50%;
-	}
-	@media (min-width: 1024px) {
-		width: 33%;
+	.checkbox {
+		box-shadow: none;
+		margin: 1rem;
 	}
 }
