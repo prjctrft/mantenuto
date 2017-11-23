@@ -21,7 +21,7 @@ export const forgotPassword = (email) =>  {
   return {
     types: [RESET_PASSWORD, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAIL],
     promise: () => restApp.service('/users/reset-password')
-      .create({ email })
+      .create({ email })      
   };
 };
 

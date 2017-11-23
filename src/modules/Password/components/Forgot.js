@@ -6,6 +6,7 @@ import { reduxForm, SubmissionError, Field, propTypes } from 'redux-form';
 import memoize from 'lru-memoize';
 import { RefitInput } from 'components';
 import { createValidator, email, required } from 'utils/validation';
+import { logout } from 'modules/Auth/redux';
 import { forgotPassword } from '../redux';
 
 const forgotValidation = createValidator({
@@ -17,7 +18,7 @@ memoize(10)(forgotValidation);
   resettingPassword: state.password.resettingPassword,
   passwordResetFail: state.password.passwordResetFail,
   passwordResetSuccess: state.password.passwordResetSuccess
-}), { forgotPassword, push })
+}), { forgotPassword, logout, push })
 @reduxForm({
   form: 'forgotPassword',
   validate: forgotValidation,
@@ -34,6 +35,9 @@ class Body extends Component {
   forgotPassword = (form) => {
     const { email } = form;
     return this.props.forgotPassword(email)
+      .then(() => {
+        this.props.logout()
+      })
       .then(() => {
         this.props.push({pathname: `/password/reset`, query: { email }});
       })

@@ -1,4 +1,4 @@
-@import '../../../theme/variables.scss';
+@import '~theme/variables.scss';
 
 .ListenAnytime {
 	display: flex;
@@ -6,8 +6,8 @@
 	justify-content: space-around;
 	align-items: center;
 	border-top: 2px solid $brand-black;
-	margin: 2rem;
-	width: 90%;
+	padding: 1rem;
+	margin-bottom: $footer-height;
 
 	h2 {
 		color: $brand-black;
