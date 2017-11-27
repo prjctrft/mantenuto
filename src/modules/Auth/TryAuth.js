@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import Notifs from 'modules/Notifs';
+import Call from 'modules/Call';
+import Messages from 'modules/Messages';
 import { populateUser } from 'modules/user/redux';
 import { tryRestAuth, tryRestAndSocketAuth } from './redux';
 // Token from cookie on server -> 1) Rest -> tryAuth
@@ -39,6 +42,16 @@ export class TryAuthComponent extends Component {
   }
 
   render() {
+    if(this.props.authenticated) {
+      return (
+        <div>
+          <Notifs />
+          <Call />
+          <Messages />
+          {this.props.children}
+        </div>
+      )
+    }
     return <div>{this.props.children}</div>
   }
 }
