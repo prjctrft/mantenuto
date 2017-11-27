@@ -10,8 +10,6 @@ import { logout } from 'modules/Auth/redux';
 import { notifSend } from 'modules/Notifs/redux';
 
 import { clearUser } from 'modules/user/redux';
-import Notifs from 'modules/Notifs';
-import Call from 'modules/Call';
 
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
@@ -62,8 +60,6 @@ export default class App extends Component {
       <div className={styles.app}>
         <Helmet {...config.app.head} />
         <Navigation authenticated={authenticated} handleLogout={this.handleLogout} pathname={pathname} />
-        <Notifs />
-        <Call />
         <div className={styles.appContent}>
           { this.props.children }
         </div>
