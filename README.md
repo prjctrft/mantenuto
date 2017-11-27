@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/prjctrft/mantenuto.svg?style=shield)](https://circleci.com/gh/prjctrft/mantenuto)
 
 # Mantenuto
-This repository is named for Green Beret and combat veteran [Michael Mantenuto](https://en.wikipedia.org/wiki/Michael_Mantenuto).  He was also one of the starts in the Disney hit [Miracle](https://en.wikipedia.org/wiki/Miracle_(2004_film)) about the 1980 US Olympic Hockey team that won the gold medal.
+This repository is named for Green Beret and combat veteran [Michael Mantenuto](https://en.wikipedia.org/wiki/Michael_Mantenuto).  He was also one of the stars in the Disney hit [Miracle](https://en.wikipedia.org/wiki/Miracle_(2004_film)) about the 1980 US Olympic Hockey team that won the gold medal.
 
 This repository contains the front end for Project Refit's Chat application.
 

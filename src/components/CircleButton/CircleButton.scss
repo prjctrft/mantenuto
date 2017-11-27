@@ -1,7 +1,18 @@
 .CircleButton {
-  width: 20rem;
-  height: 20rem;
   border: none;
-  border-radius: 50%;
-  font-size: 5rem;
+  border-radius: 5px;
+  width: 70%;
+  height: 5rem;
+  font-size: 1rem; 
+  margin: 2rem 0;
+  white-space: normal; //to wrap button text
+
+  @media (min-width: 768px) {
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    font-size: 1.5rem;
+  }
 }
+
+
