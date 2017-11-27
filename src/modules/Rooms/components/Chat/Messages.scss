@@ -1,28 +1,42 @@
 @import '~theme/variables.scss';
 
 
-.Chat {
+.ChatList {
+  li {
+    list-style: none;
+  }
+  .left {
+    p {
+      background-color: $chat-color-dark;
+      margin-right: auto;
+    }
+  }
+
+  .right {
+    justify-content: flex-end;
+
+    p {
+      background-color: $chat-color-light;
+      text-align: right;
+      margin-left: auto;
+    }
+  }
+}
+
+
+.MessageBody {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  //overflow-y: scroll;
-  // height: 250px;
-  background-color: $brand-white;
-
-  .ChatHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem;
-
-    button.closeChat {
-      border: none;
-      background-color: transparent;
-      color: $brand-warning;
-      .faTimesThin:before {
-	       content: '\00d7';
-       }
-    }
+  div {
+    color: $brand-gray;
+  }
+  small {
+    margin-right: 1rem;
+  }
+  p {
+    color: $brand-white;
+    padding: 2px 10px;
+    border-radius: 15px;
   }
 }
 

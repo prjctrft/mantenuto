@@ -9,6 +9,7 @@ import rooms from 'modules/Rooms/redux';
 import { userReducer as user } from 'modules/user/redux';
 import calls from 'modules/Call/redux';
 import home from 'modules/Home/redux';
+import messages from 'modules/Messages/redux';
 import { registerReducer as register } from 'modules/Register/redux';
 import password from 'modules/Password/redux';
 
@@ -27,6 +28,7 @@ export default function createReducer(asyncReducers) {
     register,
     password,
     calls,
+    messages,
     ...asyncReducers
   });
 }
