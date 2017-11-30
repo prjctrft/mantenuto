@@ -27,6 +27,7 @@ const initialState = {
 };
 
 const catchValidation = error => {
+  debugger;
   if (error.message) {
     if (error.message === 'Validation failed' && error.data) {
       throw new SubmissionError(error.data);
@@ -110,7 +111,8 @@ export const tryRestAndSocketAuth = () => {
         });
       }
     })
-    .catch(() =>{
+    .catch((err) =>{
+      debugger;
       dispatch({ type: TOKEN_NOT_FOUND });
     });
   }
@@ -191,15 +193,13 @@ export function jwtLogin(token, client, socketId) {
       socketId
     })
     .then(saveAuth)
-    .catch(catchValidation)
+    .catch((err) => {
+      if(err.message && err.message === 'jwt expired') {
+        cleanStorage();
+      }
+    })
   };
 }
-
-// function socketAuthenticated() {
-//   return {
-//     type: SOCKET_AUTHENTICATED
-//   }
-// }
 
 export function logout() {
   return {
