@@ -47,31 +47,31 @@
   margin: auto;
   margin-bottom: 1rem;
 
-  button {
-    margin: 1rem auto;
-    box-shadow: $box-shadow;
+  // button {
+  //   margin: 1rem auto;
+  //   box-shadow: $box-shadow;
     
-    &:first-of-type,
-    &:last-of-type {
-      background: $brand-black;
-      color: $brand-white;
+  //   &:first-of-type,
+  //   &:last-of-type {
+  //     background: $brand-black;
+  //     color: $brand-white;
 
-      &:hover {
-        background: $brand-gray;
-        color: $brand-black;
-      }
-    }
+  //     &:hover {
+  //       background: $brand-gray;
+  //       color: $brand-black;
+  //     }
+  //   }
 
-    &:nth-of-type(2) {
-      background: $brand-gray;
-      color: $brand-black;
+  //   &:nth-of-type(2) {
+  //     background: $brand-gray;
+  //     color: $brand-black;
 
-      &:hover {
-        background: $brand-black;
-        color: $brand-white;
-      }
-    }
-  }
+  //     &:hover {
+  //       background: $brand-black;
+  //       color: $brand-white;
+  //     }
+  //   }
+  // }
 
   @media (min-width: 768px) {
     flex-direction: row;
