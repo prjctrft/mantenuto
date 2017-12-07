@@ -1,4 +1,4 @@
-@import '../../theme/variables.scss';
+@import '~theme/variables.scss';
 .heading {
   color: $brand-darker-gray;
 }
@@ -47,31 +47,31 @@
   margin: auto;
   margin-bottom: 1rem;
 
-  button {
-    margin: 1rem auto;
-    box-shadow: $box-shadow;
-    
-    &:first-of-type,
-    &:last-of-type {
-      background: $brand-black;
-      color: $brand-white;
+  // button {
+  //   margin: 1rem auto;
+  //   box-shadow: $box-shadow;
 
-      &:hover {
-        background: $brand-gray;
-        color: $brand-black;
-      }
-    }
+  //   &:first-of-type,
+  //   &:last-of-type {
+  //     background: $brand-black;
+  //     color: $brand-white;
 
-    &:nth-of-type(2) {
-      background: $brand-gray;
-      color: $brand-black;
+  //     &:hover {
+  //       background: $brand-gray;
+  //       color: $brand-black;
+  //     }
+  //   }
 
-      &:hover {
-        background: $brand-black;
-        color: $brand-white;
-      }
-    }
-  }
+  //   &:nth-of-type(2) {
+  //     background: $brand-gray;
+  //     color: $brand-black;
+
+  //     &:hover {
+  //       background: $brand-black;
+  //       color: $brand-white;
+  //     }
+  //   }
+  // }
 
   @media (min-width: 768px) {
     flex-direction: row;

@@ -1,0 +1,14 @@
+@import '../../theme/variables.scss';
+
+.RefitButton {
+  border: none;
+  background-color: $brand-black;
+  color: $brand-white;
+  box-shadow: $box-shadow;
+  white-space: normal; //to wrap button text
+
+  &:hover {
+    background-color: $brand-light-blue;
+  }
+}
+
