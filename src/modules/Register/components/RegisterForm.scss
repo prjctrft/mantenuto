@@ -1,4 +1,10 @@
-@import '../../../theme/variables.scss';
+@import '~theme/variables.scss';
+
+.RegisterForm {
+  margin-bottom: $footer-height;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 
 * {
   color: #5A5B5C;
@@ -52,24 +58,11 @@
 
 label {
   color: #5A5B5C;
-  font-size: 1rem;
   text-align: left;
-
-  @media (min-width: 450px) {
-    font-size: 1.75rem;
-  }
 }
 
 select {
   margin-bottom: 15px;
-}
-
-.optional {
-  font-size: 1rem;
-
-  @media (min-width: 450px) {
-    font-size: 1.2rem;
-  }
 }
 
 .submitDiv {

@@ -22,7 +22,7 @@ const RefitInput  = ({ size, disabled, placeholder, labelRequired, input, label,
 RefitInput.propTypes = {
 	size: PropTypes.oneOf(['lg', 'sm']), // specifiy the size of the form-group
 	labelRequired: PropTypes.bool, // display an astreik in required fields
-	label: PropTypes.string.isRequired, // passed into Field
+	label: PropTypes.string, // passed into Field
 	type: PropTypes.string.isRequired, // passed into Field
 	disabled: PropTypes.bool, // passed into Field
 	placeholder: PropTypes.string, // passed into Field
