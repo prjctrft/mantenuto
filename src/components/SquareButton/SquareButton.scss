@@ -1,0 +1,9 @@
+@import '../../theme/variables.scss';
+
+.SquareButton {
+  border-radius: 5px;
+  width: 70%;
+  height: $button-height * 2.5;
+  font-size: 1rem; 
+  margin: 2rem 0;
+}
