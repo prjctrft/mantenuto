@@ -8,12 +8,13 @@ const RefitInput  = ({ size, disabled, placeholder, labelRequired, input, label,
 	const formGroupSize = size ? `form-group-${size}` : '';
 	const requiredLabel = labelRequired ? <span className="text-warning">*</span> : null;
 	return (
-  <div className={`form-group ${formGroupSize} ${touched ? 'has-feedback' : ''} ${valid && touched ? 'has-success' : '' } ${error && touched ? 'has-error' : ''}`}>
+  <div className={`form-group ${formGroupSize}`}>
     <label htmlFor={input.name}>{requiredLabel}{label}</label>
-    <input {...input} placeholder={placeholder} disabled={disabled} type={type} className='form-control' />
-    {valid && touched && <span className="glyphicon glyphicon-ok form-control-feedback" />}
-    {error && touched && <span className="glyphicon glyphicon-remove form-control-feedback" />}
-    {error && touched && <div className="text-danger"><strong>{error}</strong></div>}
+    <input {...input} placeholder={placeholder} disabled={disabled} type={type} className={`form-control ${valid && touched ? 'is-valid' : '' } ${error && touched ? 'is-invalid' : ''}`} />
+		{/* figure out how/if to implement with bootstrap 4 */}
+		{/* {valid && touched && <span className="glyphicon glyphicon-ok valid-feedback" />} */}
+    {/* {error && touched && <span className="glyphicon glyphicon-remove invalid-feedback" />} */}
+    {error && touched && <div className="invalid-feedback"><strong>{error}</strong></div>}
   </div>
   )
 }
@@ -21,7 +22,7 @@ const RefitInput  = ({ size, disabled, placeholder, labelRequired, input, label,
 RefitInput.propTypes = {
 	size: PropTypes.oneOf(['lg', 'sm']), // specifiy the size of the form-group
 	labelRequired: PropTypes.bool, // display an astreik in required fields
-	label: PropTypes.string.isRequired, // passed into Field
+	label: PropTypes.string, // passed into Field
 	type: PropTypes.string.isRequired, // passed into Field
 	disabled: PropTypes.bool, // passed into Field
 	placeholder: PropTypes.string, // passed into Field

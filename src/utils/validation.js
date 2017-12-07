@@ -2,9 +2,14 @@ const isEmpty = value => value === undefined || value === null || value === '';
 const join = rules => (value, data, params) => rules.map(rule => rule(value, data, params)).filter(error => !!error)[0];
 
 export function email(value) {
-  // Let's not start a debate on email regex. This is just for an example app!
   if (!isEmpty(value) && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
     return 'Invalid email address';
+  }
+}
+
+export function alphaNumeric(value) {
+  if (!isEmpty(value) && !/^[0-9A-Z]+$/i.test(value)) {
+    return 'Must contain only letters and numbers!'
   }
 }
 

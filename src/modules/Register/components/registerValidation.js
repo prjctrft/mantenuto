@@ -1,11 +1,12 @@
 import memoize from 'lru-memoize';
-import { createValidator, required, email } from 'utils/validation';
+import { alphaNumeric, createValidator, required, email, minLength } from 'utils/validation';
 
 const registerValidation = createValidator({
   first: required,
   last: required,
-  username: required,
+  username: [required, minLength(3), alphaNumeric],
   email: [required, email],
-  credential: required
+  verification: required,
+  type: required
 });
 export default memoize(10)(registerValidation);

@@ -1,4 +1,4 @@
-import app from 'app';
+import { restApp } from 'app';
 
 const REGISTER = 'chat/register/REGISTER';
 const REGISTER_SUCCESS = 'chat/register/REGISTER_SUCCESS';
@@ -32,10 +32,7 @@ export function registerReducer(state = initialState, action = {}) {
 export function register(data) {
   return {
     types: [REGISTER, REGISTER_SUCCESS, REGISTER_FAIL],
-    promise: () => app.service('users')
+    promise: () => restApp.service('users')
       .create(data)
-      .catch(() => {
-
-      })
   };
 }
