@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import CircleButton from '../CircleButton';
 import SquareButton from '../SquareButton';
 
@@ -30,18 +30,18 @@ class RefitButton extends Component {
 
   render() {
     const styles = require('./RefitButton.scss');
-    return ( this.state.width >= 768 ? 
-      <CircleButton 
+    return ( this.state.width >= 768 ?
+      <CircleButton
         onClick={this.props.onClick}
-        className={`${this.props.className}, ${styles.RefitButton}`} 
+        className={`${this.props.className} ${styles.RefitButton}`}
         content={this.props.content}
-      /> 
-      : 
-      <SquareButton 
+      />
+      :
+      <SquareButton
         onClick={this.props.onClick}
-        className={`${this.props.className}, ${styles.RefitButton}`} 
+        className={`${this.props.className} ${styles.RefitButton}`} 
         content={this.props.content}
-      /> 
+      />
     )
   }
 }
