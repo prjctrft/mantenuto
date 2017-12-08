@@ -1,14 +1,11 @@
 @import '~theme/variables.scss';
 
 .Authenticated {
-  min-height: 100vh;
+  min-height: calc(100vh - 8rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // @media (min-width: 768px) {
-  //   flex-direction: row;
-  // }
 }
 
 .RefitButtonContainer {
@@ -19,28 +16,14 @@
   align-items: center;
   margin: auto;
   width: 100%;
-  //padding: 1rem;
   @media (min-width: 768px) {
     flex-direction: row;
   }
   @media (min-width: 1024px) {
     justify-content: space-around;
-     width: 70%;
+    width: 70%;
   }
 }
-
-// .talk {
-//   color: $brand-white;
-//   background-color: $brand-darker-gray;
-// }
-
-// .listen {
-//   color: $brand-darker-gray;
-//   background-color: $brand-gray;
-//   &:hover {
-//     color: $brand-white;
-//   }
-// }
 
 .home {
   dd {
@@ -49,7 +32,6 @@
 }
 
 .masthead {
-  //background: $brand-black;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,7 +41,6 @@
   text-align: center;
 
   h1 {
-    //color: $brand-primary;
     color: $brand-black;
     font-size: 4em;
   }
@@ -74,8 +55,4 @@
   p {
     margin: 10px;
   }
-
-  // .github {
-  //   font-size: 1.5em;
-  // }
 }
