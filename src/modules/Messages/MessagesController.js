@@ -10,8 +10,14 @@ class MessagesController extends Component {
     // when MessagesController mounts
     app.service('messages')
       .on('created', (message) => {
-        this.props.addMessage(message);
+        this.addMessage(message)
       });
+  }
+
+  addMessage = (message) => {
+    this.props.addMessage(message);
+    const alert = new Audio(require('./assets/new-message.wav'));
+    alert.play();
   }
 
   render() {
