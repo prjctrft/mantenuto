@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import RemoteVideoPlaceholder from './RemoteVideoPlaceholder';
 
 const Video = (props) => {
   const styles = require('./Video.scss');
@@ -34,8 +35,7 @@ const Video = (props) => {
         </div> : null
       }
       <div className='embed-responsive-item'>
-        {/* {!props.callInProgress ? <i className='fa fa-5x fa-user' /> : null} */}
-        {props.callInProgress ? <video ref={attachRemoteStream} autoPlay muted /> : null}
+        {props.callInProgress ? <video ref={attachRemoteStream} autoPlay /> : <RemoteVideoPlaceholder />}
       </div>
       <div className={`${styles.LocalPlayer}`}>
         <video ref={attachLocalStream} autoPlay muted />

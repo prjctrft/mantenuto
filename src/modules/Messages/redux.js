@@ -43,7 +43,6 @@ export default (state = initialState, action = {}) => {
         ...state,
         unreadMessages
       }
-      debugger;
     case LOAD_MESSAGES:
     case PUSH_MESSAGE_FAIL:
     case PUSH_MESSAGE:
@@ -67,7 +66,6 @@ export function pushMessage(message) {
 export function loadMessages({from, to, skip=0}) {
   return (dispatch, getState) => {
     dispatch({type: LOAD_MESSAGES});
-    debugger;
     messageService.find({
       query: {
         $or: [
@@ -131,7 +129,6 @@ export function markMessagesRead() {
     if(messageIds.length > 0) {
       messageService.patch(null, {read: true}, {query: {_id: { $in: messageIds }}})
         .then((result) => {
-          debugger;
           // obviously this should be more robust...
           // for now, next time user visits page, messages will be marked as read
           dispatch({

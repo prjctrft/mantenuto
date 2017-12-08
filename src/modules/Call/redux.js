@@ -124,7 +124,7 @@ export const rejectCall = (callId) => {
   }
 };
 
-export const endCall = (CallId) => {
+export const endCall = (callId) => {
   app.service('calls').patch(callID, { ended: new Date() })
   return {
     type: END_CALL
@@ -173,7 +173,6 @@ export const startUserMedia = ({ audioOn = true, cameraOn = true } = {}) => {
 
 export const stopUserMedia = ({ audioOn = true, cameraOn = true} = {}) => {
   return (dispatch, getState) => {
-    debugger;
     const localStream = getState().calls.localStream;
     if(!audioOn) {
       localStream.getAudioTracks()[0].stop();

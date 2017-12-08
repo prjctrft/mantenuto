@@ -22,12 +22,34 @@ export class ControlsControllerComponent extends Component {
     super(props);
     this.defaultState = {
       cameraOn: false,
-      audioOn: true
+      audioOn: false,
+      controlsTouched: false
     };
     this.state = {
       ...this.defaultState
     };
     this.rtcConnection = false;
+  }
+
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.cleanup);
+  }
+
+  componentWillUnmount() {
+    this.cleanup();
+    if(this.state.cameraOn) {
+      this.stopVideo();
+    }
+    if(this.state.audioOn) {
+      this.stopAudio()
+    }
+    window.removeEventListener('beforeunload', this.cleanup);
+  }
+
+  cleanup = () => {
+    if(this.props.callInProgress) {
+      this.props.endCall(this.props.callId)
+    }
   }
 
   startVideo = () => {
@@ -36,11 +58,10 @@ export class ControlsControllerComponent extends Component {
     const audioOn = this.state.audioOn;
     this.setState({ cameraOn });
     this.props.startUserMedia({ cameraOn });
-      // .then(() => {
-      //   if (this.props.wasCallAccepted) {
-      //     this.createOffer({ audio: audioOn, video: cameraOn });
-      //   }
-      // });
+  }
+
+  touchControls = () => {
+    this.setState({ controlsTouched: true });
   }
 
   stopVideo = () => {
@@ -51,6 +72,9 @@ export class ControlsControllerComponent extends Component {
 
   toggleVideo = (e) => {
     e.preventDefault();
+    if(!this.state.controlsTouched) {
+      this.touchControls();
+    }
     if(this.state.cameraOn) {
       return this.stopVideo();
     }
@@ -62,11 +86,6 @@ export class ControlsControllerComponent extends Component {
     const cameraOn = this.state.cameraOn;
     this.setState({ audioOn });
     this.props.startUserMedia({ audioOn, cameraOn });
-      // .then(() => {
-      //   if (this.props.wasCallAccepted) {
-      //     createOffer({ audio: audioOn, video: cameraOn });
-      //   }
-      // });
   }
 
   stopAudio = () => {
@@ -76,6 +95,9 @@ export class ControlsControllerComponent extends Component {
 
   toggleAudio = (e) => {
     e.preventDefault();
+    if(!this.state.controlsTouched) {
+      this.touchControls();
+    }
     if(this.state.audioOn) {
       return this.stopAudio();
     }
@@ -88,27 +110,19 @@ export class ControlsControllerComponent extends Component {
     this.props.makeCall({ callerId, receiverId });
   }
 
-  acceptCallOnClick = (accept) => {
-    return (event) => {
-      if(accept) {
-        socket.emit('accept call');
-      }
-      this.setState({ ...this.state, receiveCallPrompt: false});
-    }
-  };
-
-  close = () => {
-    this.stopCall();
-    this.setState({ ...this.state, receiveCallPrompt: false });
-  };
-
   stopCall = () => {
-    debugger;
     this.setState({ ...this.defaultState });
     if (this.props.callInProgress) {
-      this.props.endCall();
+      this.props.endCall(this.props.callInProgress);
     }
     this.stopVideo();
+  }
+
+  toggleCall = () => {
+    if(this.props.callInProgress) {
+      return this.stopCall();
+    }
+    this.makeCall();
   }
 
   disableControlButtons = () => {
@@ -134,7 +148,7 @@ export class ControlsControllerComponent extends Component {
       toggleVideo={this.toggleVideo}
       toggleAudio={this.toggleAudio}
 
-      makeCall={this.makeCall}
+      toggleCall={this.toggleCall}
       stopCall={this.stopCall}
       disableCallButton={this.disableCallButton}
       acceptCallOnClick={this.acceptCallOnClick}
@@ -142,9 +156,7 @@ export class ControlsControllerComponent extends Component {
 
       cameraOn={this.state.cameraOn}
       audioOn={this.state.audioOn}
-      streamOpen={this.state.streamOpen}
       wasCallAccepted={this.props.wasCallAccepted}
-
     />)
   }
 }
@@ -158,7 +170,8 @@ export default connect((state)=> ({
   peerCheckedIn: state.rooms.peerCheckedIn,
   makingCall: state.calls.makingCall,
   incomingCall: state.calls.incomingCall,
-  callInProgress: state.calls.callInProgress
+  callInProgress: state.calls.callInProgress,
+  callId: state.calls.callId
 }), {
   patchRoom,
   // updateConnectionState,

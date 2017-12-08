@@ -64,12 +64,6 @@ export class CallController extends Component {
     }
   }
 
-  // TODO: end call
-  // componentWillUnmount() {
-  //   window.removeEventListener("beforeunload", this.checkout)
-  //   this.checkout();
-  // }
-
   createRTC = () => {
     this.localRTC = new RTCPeerConnection(null);
 
