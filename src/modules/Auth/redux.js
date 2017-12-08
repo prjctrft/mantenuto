@@ -27,7 +27,6 @@ const initialState = {
 };
 
 const catchValidation = error => {
-  debugger;
   if (error.message) {
     if (error.message === 'Validation failed' && error.data) {
       throw new SubmissionError(error.data);
@@ -112,7 +111,6 @@ export const tryRestAndSocketAuth = () => {
       }
     })
     .catch((err) =>{
-      debugger;
       dispatch({ type: TOKEN_NOT_FOUND });
     });
   }
