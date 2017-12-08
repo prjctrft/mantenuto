@@ -3,23 +3,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import CircleButton from 'components/CircleButton';
+import RefitButton from 'components/RefitButton';
 
 const Authenticated = (props) => {
   const styles = require('./Authenticated.scss');
   return (
     <div className={styles.Authenticated}>
-      <div className={styles.CircleButtonContainer}>
-        <CircleButton
+      <div className={styles.RefitButtonContainer}>
+        <RefitButton
           onClick={() => props.push('/talk')}
-          className={styles.talk}
+          //className={styles.talk}
           content={'Talk'}
         />
-      </div>
-      <div className={styles.CircleButtonContainer}>
-        <CircleButton
+        <RefitButton
           onClick={() => props.push('/listen')}
-          className={styles.listen}
+          //className={styles.listen}
           content={'Listen'}
         />
       </div>

@@ -7,7 +7,7 @@ const CircleButton = (props) => {
     <button
       onClick={props.onClick}
       className={
-        `btn btn-lg btn-primary btn-block btn-circle ${styles.CircleButton} ${props.className}`}
+        `btn btn-lg btn-primary btn-circle ${styles.CircleButton} ${props.className}`}
     >
       {props.content}
     </button>
