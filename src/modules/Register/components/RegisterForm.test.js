@@ -9,11 +9,11 @@ describe('<RegisterForm />', () => {
   let component;
   beforeEach(() => {
     const store = createStore({}, {}, {});
-    // const handleSubmit = jest.fn();
+    const props = {params: {type: 'foobar'}}
     component = mount(
       <Provider store={store}>
         {}
-        <RegisterForm />
+        <RegisterForm {...props}/>
       </Provider>
     );
   });

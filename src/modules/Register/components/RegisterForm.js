@@ -33,7 +33,6 @@ class RegisterForm extends Component {
   }
 
   register = data => {
-    debugger;
     return this.props.register(data)
       .then(this.success)
       .catch(this.fail)
@@ -85,7 +84,7 @@ class RegisterForm extends Component {
           <div className={styles.width}>
             <h1 className={styles.heading}>Register</h1>
             <FormComponent
-              type={this.props.type}
+              type={this.props.params.type}
               handleSubmit={this.props.handleSubmit(this.register)}
               validateUsername={this.validateUsername}
               onDrop={this.onDrop}
