@@ -31,17 +31,33 @@ export class ControlsControllerComponent extends Component {
     this.rtcConnection = false;
   }
 
+  componentDidMount() {
+    window.addEventListener('beforeunload', this.cleanup);
+  }
+
+  componentWillUnmount() {
+    this.cleanup();
+    if(this.state.cameraOn) {
+      this.stopVideo();
+    }
+    if(this.state.audioOn) {
+      this.stopAudio()
+    }
+    window.removeEventListener('beforeunload', this.cleanup);
+  }
+
+  cleanup = () => {
+    if(this.props.callInProgress) {
+      this.props.endCall(this.props.callId)
+    }
+  }
+
   startVideo = () => {
     this.props.localVideoOn();
     const cameraOn = true;
     const audioOn = this.state.audioOn;
     this.setState({ cameraOn });
     this.props.startUserMedia({ cameraOn });
-      // .then(() => {
-      //   if (this.props.wasCallAccepted) {
-      //     this.createOffer({ audio: audioOn, video: cameraOn });
-      //   }
-      // });
   }
 
   touchControls = () => {
@@ -70,11 +86,6 @@ export class ControlsControllerComponent extends Component {
     const cameraOn = this.state.cameraOn;
     this.setState({ audioOn });
     this.props.startUserMedia({ audioOn, cameraOn });
-      // .then(() => {
-      //   if (this.props.wasCallAccepted) {
-      //     createOffer({ audio: audioOn, video: cameraOn });
-      //   }
-      // });
   }
 
   stopAudio = () => {
@@ -99,24 +110,10 @@ export class ControlsControllerComponent extends Component {
     this.props.makeCall({ callerId, receiverId });
   }
 
-  // acceptCallOnClick = (accept) => {
-  //   return (event) => {
-  //     if(accept) {
-  //       socket.emit('accept call');
-  //     }
-  //     this.setState({ ...this.state, receiveCallPrompt: false});
-  //   }
-  // };
-
-  // close = () => {
-  //   this.stopCall();
-  //   this.setState({ ...this.state, receiveCallPrompt: false });
-  // };
-
   stopCall = () => {
     this.setState({ ...this.defaultState });
     if (this.props.callInProgress) {
-      this.props.endCall();
+      this.props.endCall(this.props.callInProgress);
     }
     this.stopVideo();
   }
@@ -173,7 +170,8 @@ export default connect((state)=> ({
   peerCheckedIn: state.rooms.peerCheckedIn,
   makingCall: state.calls.makingCall,
   incomingCall: state.calls.incomingCall,
-  callInProgress: state.calls.callInProgress
+  callInProgress: state.calls.callInProgress,
+  callId: state.calls.callId
 }), {
   patchRoom,
   // updateConnectionState,
