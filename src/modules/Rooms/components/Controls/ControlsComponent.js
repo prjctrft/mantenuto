@@ -3,6 +3,7 @@ import React from 'react';
 import Modal from 'reactstrap';
 
 import ControlButton from './ControlButton';
+import CallButton from './CallButton';
 
 export default (props) => {
 
@@ -19,41 +20,18 @@ export default (props) => {
           streamOpen={props.streamOpen}
           src={props.audioOn ? iconVoiceOn : iconVoiceOff}
         />
-        <ControlButton
-          onClick={props.toggleVideo}
-          streamOpen={props.streamOpen}
-          src={props.cameraOn ? iconVideoOn : iconVideoOff}
-        />
-        <ControlButton
-          onClick={props.makeCall}
+        <CallButton
+          onClick={props.toggleCall}
           streamOpen={props.streamOpen}
           controlOn={props.wasCallAccepted}
           className={() => this.props.disableCallButton()}
           faClass={'fa fa-phone fa-2x'}
         />
-        {/* <button onClick={this.startCall}
-          type="button"
-          className={
-            `${this.disableCallButton() ? 'disabled' : ''}
-            btn btn-default`
-          }
-          >
-          <i className='fa fa-phone' aria-hidden='true'></i>
-        </button> */}
         <ControlButton
-          onClick={props.stopCall}
-          streamOpen={props.wasCallAccepted}
-          controlOn={!props.wasCallAccepted}
-          faClass={'fa fa-times fa-2x'}
+          onClick={props.toggleVideo}
+          streamOpen={props.streamOpen}
+          src={props.cameraOn ? iconVideoOn : iconVideoOff}
         />
-        {/* <button onClick={this.stopCall}
-          type="button"
-          className={
-            `${this.disableControlButtons() ? 'disabled' : ''}
-            btn btn-default`
-          }>
-          <i className='fa fa-times' aria-hidden='true' />
-        </button> */}
       </div>
     </div>
   )
