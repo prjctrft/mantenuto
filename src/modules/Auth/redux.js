@@ -166,14 +166,12 @@ export function login(data) {
       password: data.password
     })
     .then(({ accessToken }) => {
-      socket.connect()
-      socket.on('connect', () => {
-        const socketId = socket.io.engine.id;
-        return app.authenticate({
-          strategy: 'jwt',
-          accessToken,
-          socketId
-        });
+      socket.connect();
+      const socketId = socket.io.engine.id;
+      return app.authenticate({
+        strategy: 'jwt',
+        accessToken,
+        socketId
       });
       return { accessToken };
     })
