@@ -53,7 +53,7 @@ export default class ProfileForm extends Component {
             </div>
             {error && <p className="text-danger"><strong>{error}</strong></p>}
             <p className='text-center'>
-              <button disabled={pristine || submitting} className="btn btn-default" type="submit">
+              <button disabled={pristine || submitting} className="btn btn-secondary" type="submit">
                 Update Profile
               </button>
             </p>
