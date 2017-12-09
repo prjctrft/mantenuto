@@ -166,6 +166,7 @@ export function login(data) {
       password: data.password
     })
     .then(({ accessToken }) => {
+      debugger;
       socket.connect();
       const socketId = socket.io.engine.id;
       return app.authenticate({
@@ -202,6 +203,8 @@ export function logout() {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
     promise: () => {
       return Promise.all([ app.logout(), restApp.logout() ])
+        // close socket AFTER, app has unauthenticated socket
+        .then(() => socket.close())
         .then(cleanStorage);
     }
   }
