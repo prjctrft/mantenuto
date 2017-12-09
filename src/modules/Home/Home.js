@@ -9,6 +9,7 @@ import { getCodes } from './redux';
 import SpeakeasyForm from './components/SpeakeasyForm';
 
 import gunners from './assets/ic_already_member.png';
+import title from './assets/ProjectRefitText.png';
 
 export class Home extends Component {
   static propTypes = {
@@ -38,7 +39,7 @@ export class Home extends Component {
           </Link>
         </div>
         <div className='col-xs-12 col-sm-6 text-center'>
-          <h1>Project Refit</h1>
+          <img src={title} className='img-fluid' alt='Project Refit logo title' />
           <h2>Where Warriors beat PTSD together</h2>
           <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} />
         </div>
