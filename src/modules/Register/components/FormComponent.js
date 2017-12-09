@@ -18,13 +18,13 @@ export default (props) => {
     let label;
     switch (props.type) {
       case 'provider':
-        label = 'Upload Credentials.'
+        label = 'Upload Mental Health Licenses or Credentials'
         break;
       case 'veteran':
-        label = 'Upload DD-214.'
+        label = 'Upload DD-214 or Veteran ID'
         break;
       case 'active':
-        label = 'Upload iD.'
+        label = 'Upload Military ID'
         break;
     }
     let validationClass;
@@ -36,7 +36,7 @@ export default (props) => {
         <div className='form-group'>
           <div className='col-xs-12'>
             <div className={styles.credentialBox}>
-              <div className={`${styles.labelWrapper} form-control ${validationClass}`}>
+              <div className={`${styles.labelWrapper} form-control text-center ${validationClass}`}>
                 {!input.value ? <img alt='verification' key='0' src={icUpload} /> : null }
                 {!input.value ? <h3 key='1'>{label}</h3> : null }
                 {input.value ? <h3 className='text-success'>Credentials ready!</h3> : null }
@@ -116,6 +116,7 @@ export default (props) => {
         </fieldset>
         <fieldset className={`${styles.flexColumn}`}>
           <Field onDrop={props.onDrop} name='verification' type='file' component={renderVerification} />
+          {props.type === 'provider' ? <small>No information shared with us will be kept on file or shared with anyone outside Project Refit</small> : null}
         </fieldset>
       </div>
       <div className={styles.submitDiv}>
