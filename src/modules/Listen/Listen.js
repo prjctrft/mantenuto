@@ -43,14 +43,18 @@ export class ListenComponent extends Component {
 
   startListening = () => {
     this.service.create({listener: this.props.user})
-      .then((onlineTalkers) => {
+      .then(({roomSlug, onlineTalkers}) => {
+        if(roomSlug) {
+          this.roomReady(roomSlug);
+        }
         this.setState({ onlineTalkers })
       });
   }
 
   roomReady = (roomSlug) => {
-    // this.setState({ pipeline: 'roomReady' });
-    setTimeout(() => this.props.push(`/rooms/${roomSlug}`), 3000)
+    setTimeout(() => {
+      window.open(`/rooms/${roomSlug}`, `Room ${roomSlug}`, `height=${window.innerHeight},width=${window.innerWidth}`);
+    }, 1500)
   }
 
   handleAnytime = () => {
@@ -62,8 +66,7 @@ export class ListenComponent extends Component {
   }
 
   render() {
-    // TODO don't display preferences if user has already chosen ANYTIME
-    if(!this.props.user.listener) {
+    if(this.props.user._id && !this.props.user.listener) {
       return <NotRegisteredListener />
     }
     return (

@@ -42,6 +42,9 @@ export class TryAuthComponent extends Component {
   }
 
   render() {
+    if(this.props.tryingAuth) {
+      return <h1>Loading...</h1>
+    }
     if(this.props.authenticated) {
       return (
         <div>
@@ -58,10 +61,14 @@ export class TryAuthComponent extends Component {
 
 export default connect((state) => {
   const userId = state.auth.user;
+  const { tryingAuth } = state.auth;
   const { userPopulated, userPopulating } = state.user;
   return {
     authenticated: !!state.auth.user,
-    userId, userPopulated, userPopulating
+    tryingAuth,
+    userId,
+    userPopulated,
+    userPopulating
   }
 }, {
   tryRestAuth,

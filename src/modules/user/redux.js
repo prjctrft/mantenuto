@@ -93,33 +93,3 @@ export function updateUser(id, data) {
 export function checkUsername(username) {
   return restApp.service('users/check-username').create({ username });
 }
-
-// function saveRooms(response) {
-//   return { rooms: response.data };
-// }
-
-// export function populateRooms(id, roomType) {
-//   const query = {
-//     $or: [
-//       { 'talker.user': id },
-//       { 'listener.user': id }
-//     ],
-//     $select: [
-//       'slug',
-//       'talker',
-//       'listener'
-//     ],
-//     $populate: [
-//       'talker.user',
-//       'listener.user'
-//     ]
-//   };
-//   // e.g. 'talker.user' or 'listener.user'
-//   // query[`${roomType}.user`] = id;
-//   return {
-//     types: [POPULATE_ROOMS, POPULATE_ROOMS_SUCCESS, POPULATE_FAIL],
-//     promise: () => app.service('rooms').find({query})
-//       .then(saveRooms)
-//       .catch(catchValidation)
-//   }
-// }

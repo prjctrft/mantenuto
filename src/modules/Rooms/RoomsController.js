@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import app from 'app';
 import { replace } from 'react-router-redux';
 import { notifSend } from 'modules/Notifs/redux';
+import { updateUser } from 'modules/user/redux';
 import RoomsLayout from './components/RoomsLayout';
 
 import {
@@ -41,6 +42,7 @@ export class RoomsControllerComponent extends Component {
 
   componentDidMount() {
     const roomSlug = this.props.params.slug;
+    this.props.updateUser(this.props.userId, { engaged: true });
     this.props.loadRoom(roomSlug)
       .then((room) => {
         const userId = this.props.userId;
@@ -62,19 +64,6 @@ export class RoomsControllerComponent extends Component {
           this.props.notifSend({kind: 'danger', message: 'There is a problem with this room.  Check the url!'});
         }
       });
-
-    // TODO: reroute through service
-    // socket.emit('join room', roomSlug, (peerCheckedIn) => {
-    //   if (peerCheckedIn) {
-    //     this.props.peerCheckIn();
-    //   }
-    // });
-    // socket.on('peer checked in', () => {
-    //   this.props.peerCheckIn();
-    // });
-    // socket.on('peer checked out', () => {
-    //   this.props.peerCheckOut();
-    // });
     this.registerListeners();
     window.addEventListener("beforeunload", this.checkout)
   }
@@ -86,10 +75,10 @@ export class RoomsControllerComponent extends Component {
     }
   }
 
-  // componentWillUnmount() {
-  //   window.removeEventListener("beforeunload", this.checkout)
-  //   this.checkout();
-  // }
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this.checkout)
+    this.checkout();
+  }
 
   registerListeners() {
     const roomService = app.service('rooms');
@@ -98,14 +87,9 @@ export class RoomsControllerComponent extends Component {
     });
   }
 
-  // checkout = () => {
-  //   if(this.props.isListener) {
-  //     this.props.checkOutListener()
-  //   }
-  //   if(this.props.isTalker) {
-  //     this.props.checkOutTalker()
-  //   }
-  // }
+  checkout = () => {
+    this.props.updateUser(this.props.userId, { engaged: false });
+  }
 
 
   render() {
@@ -134,27 +118,15 @@ const mapStateToProps = (state) => {
     user,
     room,
     userId
-    // checkedIn,
-    // isTalker,
-    // isListener,
-    // isRoomParsed
   };
 };
 
 export default connect(mapStateToProps, {
   replace,
   notifSend,
-
   loadRoom,
   setPeer,
   setIsTalker,
   setIsListener,
-  // roomPatched,
-  // checkInTalker,
-  // checkInListener,
-  // checkOutTalker,
-  // checkOutListener
-  // peerCheckIn,
-  // peerCheckOut,
-  // parsedRoom,
+  updateUser
 })(RoomsControllerComponent)
