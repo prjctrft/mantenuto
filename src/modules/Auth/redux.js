@@ -166,7 +166,6 @@ export function login(data) {
       password: data.password
     })
     .then(({ accessToken }) => {
-      debugger;
       socket.connect();
       const socketId = socket.io.engine.id;
       return app.authenticate({
