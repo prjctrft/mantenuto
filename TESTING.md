@@ -7,6 +7,7 @@ Setup integration tests by creating a `.env` file with the following:
 ```
 EMAIL=<YOUR_PROJECTREFIT_EMAIL>
 USERNAME=<YOUR_PROJECTREFIT_USERNAME>
+USER_ID=<YOUR_USER_ID>
 PW=<YOUR_PASSWORD>
 API_ENDPOINT=https://api.projectrefit.us
 # don't check this file in (duh)
