@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -62,7 +62,9 @@ export class TalkController extends Component {
 
   roomReady = (roomSlug) => {
     this.setState({ pipeline: 'roomReady' });
-    setTimeout(() => this.props.push(`/rooms/${roomSlug}`), 3000)
+    setTimeout(() => {
+      window.open(`/rooms/${roomSlug}`, `Room ${roomSlug}`, `height=${window.innerHeight},width=${window.innerWidth}`);
+    }, 1500)
   }
 
   listenerNotFound = (totalListeners) => {
