@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Link } from 'react-router';
 import Helmet from 'react-helmet';
-import { getCodes } from './redux';
+// import { getCodes } from './redux';
 
-import SpeakeasyForm from './components/SpeakeasyForm';
+import RefitButton from 'components/RefitButton';
+// import SpeakeasyForm from './components/SpeakeasyForm';
 
 import gunners from './assets/ic_already_member.png';
 import title from './assets/ProjectRefitText.png';
@@ -18,9 +19,9 @@ export class Home extends Component {
     codes: PropTypes.array.isRequired
   }
 
-  componentDidMount() {
-    this.props.getCodes();
-  }
+  // componentDidMount() {
+  //   this.props.getCodes();
+  // }
 
   goToRegister = () => {
     this.props.push('/register');
@@ -41,7 +42,8 @@ export class Home extends Component {
         <div className='col-xs-12 col-sm-6 text-center'>
           <img src={title} className='img-fluid' alt='Project Refit logo title' />
           <h2>Where Warriors beat PTSD together</h2>
-          <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} />
+          {/* <SpeakeasyForm onSubmit={this.goToRegister} codes={codes} /> */}
+          <RefitButton className='mx-auto' content='Register Now' onClick={this.goToRegister}/>
         </div>
       </div>
     );
@@ -51,4 +53,5 @@ export class Home extends Component {
 export default connect( state => ({
     user: state.auth.user,
     codes: state.home.codes
-  }), { push, getCodes })(Home);
+  // }), { push, getCodes })(Home);
+    }), { push })(Home);
