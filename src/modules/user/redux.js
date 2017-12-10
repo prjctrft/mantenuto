@@ -55,7 +55,7 @@ export function userReducer(state = defaultState, action = {}) {
     //     rooms: [...action.result.rooms, ...(state.rooms || [])]
     //   };
     case CLEAR_USER:
-      return {};
+      return defaultState;
     case POPULATE_FAIL:
     default:
       return state;

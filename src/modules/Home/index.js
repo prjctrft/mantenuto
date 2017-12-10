@@ -1,28 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Authenticated from './Authenticated';
 import ConnectHome from './Home';
 
 const HomeContainer = (props) => {
-  // NOTE: if we want more routes that allow a logged in version
-  // and a no logged in version, we can abstract this logic to
-  // /modules/Auth
-  if (props.tryingAuth || !props.triedAuth) {
-    // TODO: replace with spinner
-    return null;
-  }
   if (props.authenticated) {
     return (
       <Authenticated />
     );
   }
-  if (props.triedAuth) {
-    return (
-      <ConnectHome />
-    );
-  }
+  return <ConnectHome />
 }
 
 HomeContainer.propTypes = {
