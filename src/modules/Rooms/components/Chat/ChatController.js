@@ -72,6 +72,7 @@ class ChatController extends Component {
     };
     this.props.addMessage(message);
     this.props.pushMessage(message);
+    this.setState({content: ''});
   }
 
   loadMore = (e) => {
