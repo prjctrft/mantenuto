@@ -4,12 +4,14 @@
   margin-bottom: $footer-height;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  h1 {
+    text-align: center;
+  }
 }
 
 * {
   color: #5A5B5C;
 }
-
 
 .flexForm {
 	display: flex;
