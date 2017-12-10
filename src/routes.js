@@ -20,7 +20,6 @@ const Routes = () =>
   (
     <Route path='/' component={App}>
       <Route component={TryAuth}>
-        {/* <Route onEnter={tryAuth} path="/" component={App}> */}
         <IndexRoute component={Home} />
 
         {/* Routes requiring login */}
