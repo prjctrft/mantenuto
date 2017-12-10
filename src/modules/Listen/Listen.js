@@ -5,6 +5,8 @@ import { push } from 'react-router-redux';
 import client, { socket } from 'app';
 import { updateUser } from 'modules/user/redux';
 
+import PopupBlocked from 'components/PopupBlocked';
+
 import NotRegisteredListener from './components/NotRegisteredListener';
 import Connecting from './components/Connecting';
 import Preferences from './components/Preferences';
@@ -23,7 +25,8 @@ export class ListenComponent extends Component {
     super(props);
     this.service = client.service('listen');
     this.state = {
-      onlineTalkers: null
+      onlineTalkers: null,
+      popupBlocked: false
     }
   }
 
@@ -43,14 +46,35 @@ export class ListenComponent extends Component {
 
   startListening = () => {
     this.service.create({listener: this.props.user})
-      .then((onlineTalkers) => {
+      .then(({roomSlug, onlineTalkers}) => {
+        if(roomSlug) {
+          this.roomReady(roomSlug);
+        }
         this.setState({ onlineTalkers })
       });
   }
 
+  // roomReady = (roomSlug) => {
+  //   debugger;
+  //   setTimeout(() => {
+  //     window.open(`/rooms/${roomSlug}`, `Room ${roomSlug}`, `height=${window.innerHeight},width=${window.innerWidth}`);
+  //   }, 1500)
+  // }
+
   roomReady = (roomSlug) => {
-    // this.setState({ pipeline: 'roomReady' });
-    setTimeout(() => this.props.push(`/rooms/${roomSlug}`), 3000)
+    this.setState({ pipeline: 'roomReady', roomSlug });
+    setTimeout(() => {
+      const roomWindow = this.openRoom();
+      if(!roomWindow) {
+        return this.setState({pipeline: 'popupBlocked'});
+      }
+      this.props.push('/');
+    }, 1500)
+  }
+
+  openRoom = () => {
+    const roomSlug = this.state.roomSlug;
+    return window.open(`/rooms/${roomSlug}`, `Room ${roomSlug}`, `height=${window.innerHeight},width=${window.innerWidth}`);
   }
 
   handleAnytime = () => {
@@ -62,13 +86,13 @@ export class ListenComponent extends Component {
   }
 
   render() {
-    // TODO don't display preferences if user has already chosen ANYTIME
-    if(!this.props.user.listener) {
+    if(this.props.user._id && !this.props.user.listener) {
       return <NotRegisteredListener />
     }
     return (
       <div>
         <Connecting onlineTalkers={this.state.onlineTalkers}/>
+        {this.state.popupBlocked ? <PopupBlocked openWindow={this.openWindow} /> : null }
         {!this.props.user.listenAnytime ?
           <Preferences handleNow={this.handleNow} handleAnytime={this.handleAnytime} />
           : null

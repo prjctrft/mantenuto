@@ -11,13 +11,14 @@ describe('<ListenComponent />', () => {
 
   beforeEach(() => {
     user = {
-      id: 1234
+      _id: 1234,
+      listener: false
     };
     updateUser = jest.fn();
     component = mount(<ListenComponent updateUser={updateUser} user={user} />);
   })
 
-  it('should render <NotRegisteredListener /> when the user is not a "listener"', () => {
+  it('should render <NotRegisteredListener /> when the user is not a "listener" but is populated', () => {
     expect(component.find('NotRegisteredListener').exists()).to.be.true;
   });
 

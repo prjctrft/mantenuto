@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
@@ -12,7 +12,9 @@ export class TalkController extends Component {
     this.service = client.service('talk');
     this.state = {
       pipeline: null,
-      totalListeners: null
+      totalListeners: null,
+      popupBlocked: null,
+      roomSlug: null
     };
   }
 
@@ -30,13 +32,14 @@ export class TalkController extends Component {
         this.service.create({talker: this.props.user});
       })
     }
+    window.addEventListener("beforeunload", this.removeConnect)
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if(this.state.pipeline === null && nextProps.socketAuthenticated) {
-  //     this.service.create({talker: this.props.user});
-  //   }
-  // }
+  componentWillUnmount() {
+    debugger;
+    window.removeEventListener("beforeunload", this.removeConnect)
+    this.removeConnect();
+  }
 
   registerSocketListeners = () => {
     this.service.on('created', this.createdConnect)
@@ -56,13 +59,28 @@ export class TalkController extends Component {
     this.setState({ pipeline: 'looking'})
   }
 
+  removeConnect = () => {
+    this.service.remove(this.props.user);
+  }
+
   listenerFound = () => {
     this.setState({ pipeline: 'listenerFound' });
   }
 
   roomReady = (roomSlug) => {
-    this.setState({ pipeline: 'roomReady' });
-    setTimeout(() => this.props.push(`/rooms/${roomSlug}`), 3000)
+    this.setState({ pipeline: 'roomReady', roomSlug });
+    setTimeout(() => {
+      const roomWindow = this.openRoom();
+      if(!roomWindow) {
+        return this.setState({pipeline: 'popupBlocked'});
+      }
+      this.props.push('/');
+    }, 1500)
+  }
+
+  openRoom = () => {    
+    const roomSlug = this.state.roomSlug;
+    return window.open(`/rooms/${roomSlug}`, `Room ${roomSlug}`, `height=${window.innerHeight},width=${window.innerWidth}`);
   }
 
   listenerNotFound = (totalListeners) => {
@@ -73,7 +91,11 @@ export class TalkController extends Component {
     if (this.state.pipeline === null) {
       return null;
     }
-    return <Talk totalListeners={this.state.totalListeners} pipeline={this.state.pipeline} />
+    return <Talk
+      totalListeners={this.state.totalListeners}
+      pipeline={this.state.pipeline}
+      openRoom={this.openRoom}
+    />
   }
 }
 

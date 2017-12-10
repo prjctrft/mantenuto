@@ -15,7 +15,9 @@ describe('<Home />', () => {
     component = shallow(<Home {...props} />);
   })
 
-  it('should render correctly', () => {expect(component.exists()).to.be.true});
+  it('should render', () => {
+    expect(component.exists()).to.be.true
+  });
 
   it('should render div with class home', () => {
     const home = component.find('.home');
@@ -27,11 +29,4 @@ describe('<Home />', () => {
     expect(component.find('img').exists()).to.be.true;
   });
 
-  it('should render proper text under image', () => {
-    expect(component.find('Link').childAt(1).text()).to.equal('Already a member?');
-  });
-
-  it('should render h1 element', () => {
-    expect(component.find('h1')).to.have.length(1);
-  });
 });

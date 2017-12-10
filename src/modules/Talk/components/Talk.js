@@ -1,10 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
 import Looking from './Looking';
 import ListenerFound from './ListenerFound';
 import RoomReady from './RoomReady';
 import ListenerNotFound from './ListenerNotFound';
+import PopupBlocked from 'components/PopupBlocked';
 
 const Talk = (props) => {
   const styles = require('./Talk.scss');
@@ -17,6 +18,7 @@ const Talk = (props) => {
             {props.pipeline === 'listenerFound' ? <ListenerFound /> : null}
             {props.pipeline === 'roomReady' ? <RoomReady /> : null}
             {props.pipeline === 'listenerNotFound' ? <ListenerNotFound totalListeners={props.totalListeners} /> : null}
+            {props.pipeline === 'popupBlocked' ? <PopupBlocked openWindow={props.openWindow} /> : null}
           </div>
         </div>
       </div>
