@@ -7,7 +7,6 @@ class Compatibility extends Component {
     this.state = {
       modal: false
     };
-    this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
@@ -19,7 +18,9 @@ class Compatibility extends Component {
   render() {
     return (
       <div> {/* not sure if we need this container div*/}
-        {/*<Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>*/}
+        {/*<Button color="danger" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+        don't think we need this button, was in reactstrap example
+        */}
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Project Refit Uses WebRTC</ModalHeader>
           <ModalBody>

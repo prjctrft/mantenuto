@@ -46,7 +46,13 @@ export class TryAuthComponent extends Component {
 
     // check if browswer is WebRTC compatible
     // if so, do nothing
-    // if not, setState({browserIsWebRTCcompatible === !this.state.browswerIsWebRTCcompatible})
+    // if not, set this.state.browserIsWebRTCcompatible to false;
+
+    /* if(!window.mozRTCPeerConnection || !window.webkitRTCPeerConnection) {
+      this.setState({browserIsWebRTCcompatible === !this.state.browserIsWebRTCcompatible});
+    }
+    ** see https://stackoverflow.com/questions/14774386/how-can-i-check-webrtc-datachannel-compatibility-using-javascript-in-client-side **
+    */
   }
 
   render() {
