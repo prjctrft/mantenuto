@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field, propTypes } from 'redux-form';
+import {
+  reduxForm,
+  Field,
+  propTypes,
+  startAsyncValidation,
+  stopAsyncValidation,
+  touch
+} from 'redux-form';
 import profileValidation from './profileValidation';
 import { RefitInput } from 'components';
 import { match, email } from 'utils/validation';
@@ -25,14 +32,17 @@ export default class ProfileForm extends Component {
 
   validateUsername = (e) => {
     const username = e.target.value;
+    if(username === this.props.profile.initial.username) {
+      return
+    };
     this.props.dispatch(startAsyncValidation('register'));
     return checkUsername(username).then(({ message }) => {
       const errors = {};
-      this.props.dispatch(touch('register', 'username'))
+      this.props.dispatch(touch('profile', 'username'))
       if(message) {
         errors.username = message;
       }
-      this.props.dispatch(stopAsyncValidation('register', errors));
+      this.props.dispatch(stopAsyncValidation('profile', errors));
     })
   };
 
