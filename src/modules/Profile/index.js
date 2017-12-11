@@ -35,7 +35,7 @@ export default class Profile extends Component {
   }
 
   updateProfile = (data) => {
-    const initial = this.props.user.user;
+    const initial = this.props.user;
     const patch =  {};
     for(let key in data) {
       const d = data[key];
