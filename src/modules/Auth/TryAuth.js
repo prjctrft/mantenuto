@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Compatibility from './components/Compatibility';
+import Compatibility from 'modules/Compatibility';
 import Notifs from 'modules/Notifs';
 import Call from 'modules/Call';
 import Messages from 'modules/Messages';
@@ -31,10 +31,6 @@ export class TryAuthComponent extends Component {
     if(__CLIENT__) {
       this.props.tryRestAndSocketAuth();
     }
-
-    this.state = {
-      browserIsWebRTCcompatible: true
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,16 +39,6 @@ export class TryAuthComponent extends Component {
         this.props.populateUser(nextProps.userId);
       }
     }
-
-    // check if browswer is WebRTC compatible
-    // if so, do nothing
-    // if not, set this.state.browserIsWebRTCcompatible to false;
-
-    /* if(!window.mozRTCPeerConnection || !window.webkitRTCPeerConnection) {
-      this.setState({browserIsWebRTCcompatible === !this.state.browserIsWebRTCcompatible});
-    }
-    ** see https://stackoverflow.com/questions/14774386/how-can-i-check-webrtc-datachannel-compatibility-using-javascript-in-client-side **
-    */
   }
 
   render() {
@@ -60,22 +46,16 @@ export class TryAuthComponent extends Component {
       return <h1>Loading...</h1>
     }
     if(this.props.authenticated) {
-
-      // insert Compatibility conditional here
-      // if this.state.browserIsWebRTCcompatible === true
-      // return the below
-
       return (
         <div>
           <Notifs />
           <Call />
           <Messages />
+          <Compatibility />
           {this.props.children}
         </div>
       )
     }
-      // if this.state.browserIsWebRTCcompatible === false
-      // return <Compatibility />
 
     return <div>{this.props.children}</div>
   }
