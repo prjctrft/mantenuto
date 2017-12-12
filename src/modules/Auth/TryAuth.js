@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import Compatibility from 'modules/Compatibility';
 import Notifs from 'modules/Notifs';
 import Call from 'modules/Call';
 import Messages from 'modules/Messages';
@@ -51,10 +51,12 @@ export class TryAuthComponent extends Component {
           <Notifs />
           <Call />
           <Messages />
+          <Compatibility />
           {this.props.children}
         </div>
       )
     }
+
     return <div>{this.props.children}</div>
   }
 }
