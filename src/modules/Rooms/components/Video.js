@@ -18,11 +18,25 @@ const Video = (props) => {
     }
   }
 
-  const localVideoOn = () => {
+  const remoteVideoOn = () => {
     // TODO: fix this to properly account for video not playing
+    if(!props.remoteStream) {
+      return false;
+    }
+    if(props.remoteStream.getVideoTracks().length === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  const localVideoOn = () => {
     if(!props.localStream) {
       return false;
     }
+    if(props.localStream.getVideoTracks().length === 0) {
+      return false;
+    }
+    return true;
   }
 
   const { callStarted, callAccepted, connectionState } = props;
@@ -35,7 +49,7 @@ const Video = (props) => {
         </div> : null
       }
       <div className='embed-responsive-item'>
-        {props.callInProgress ? <video ref={attachRemoteStream} autoPlay /> : <RemoteVideoPlaceholder />}
+        {remoteVideoOn() ? <video ref={attachRemoteStream} autoPlay /> : <RemoteVideoPlaceholder />}
       </div>
       <div className={`${styles.LocalPlayer}`}>
         <video ref={attachLocalStream} autoPlay muted />
