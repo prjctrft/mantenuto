@@ -3,6 +3,9 @@ import app from 'app';
 import { connect } from 'react-redux';
 
 import {
+  createRTC,
+  createOffer,
+  receiveOffer,
   cancelCall,
   callIncoming,
   acceptCall,
@@ -25,37 +28,39 @@ export class CallController extends Component {
 
   componentDidMount() {
     require('webrtc-adapter');
+    this.createRTC();
     // use service for call data that needs to persists
     app.service('calls')
       .on('created', (Call) => {
         this.props.callIncoming();
       })
-    // use socket for signalling and call data that does not need to persist
-    // custom event listeners are defined on the backend so that only sockets in
-    // the room and on the call can receive webRTC session descriptions, streams, etc.
-    socket.on('ice candidate', (candidate) => {
-      if(candidate) {
-        this.localRTC.addIceCandidate(candidate).then(() => {
-          console.log('ICE candidate added: ', candidate);
-        }).catch(() => {
-          console.log('ICE candidate failed: ', candidate);
-        })
-      }
-    });
-
-    socket.on('call accepted', () => {
-      this.props.callAccepted();
-      this.createOffer({ audioOn: true, cameraOn: true });
-    });
-
-    socket.on('receive offer', (description) => {
-      this.receiveOffer(description);
-    });
-
-    socket.on('receive description', (description) => {
-      const desc = new RTCSessionDescription(description);
-      this.localRTC.setRemoteDescription(desc);
-    });
+    // // use socket for signalling and call data that does not need to persist
+    // // custom event listeners are defined on the backend so that only sockets in
+    // // the room and on the call can receive webRTC session descriptions, streams, etc.
+    // socket.on('ice candidate', (candidate) => {
+    //   if(candidate) {
+    //     this.props.localRTC.addIceCandidate(candidate).then(() => {
+    //       console.log('ICE candidate added: ', candidate);
+    //     }).catch(() => {
+    //       console.log('ICE candidate failed: ', candidate);
+    //     })
+    //   }
+    // });
+    //
+    // socket.on('call accepted', () => {
+    //   this.props.callAccepted();
+    //   this.createOffer();
+    // });
+    //
+    // socket.on('receive offer', (peerDescription) => {
+    //   this.receiveOffer(peerDescription)
+    //   .then((localDescription) => socket.emit('send description', localDescription));
+    // });
+    //
+    // socket.on('receive description', (description) => {
+    //   const desc = new RTCSessionDescription(description);
+    //   this.props.localRTC.setRemoteDescription(desc);
+    // });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -65,89 +70,9 @@ export class CallController extends Component {
   }
 
   createRTC = () => {
-    this.localRTC = new RTCPeerConnection({
-      iceServers: [{
-        urls: [
-          'stun:stun.l.google.com:19302',
-          'stun:stun1.l.google.com:19302',
-          'stun:stun2.l.google.com:19302',
-          'stun:stun3.l.google.com:19302',
-          'stun:stun4.l.google.com:19302'
-        ]
-      }]
-    });
+    this.props.createRTC();
+  };
 
-    this.localRTC.ontrack = (e) => {
-      const remoteStream = e.streams[0];
-      this.props.updateRemoteStream(remoteStream);
-      // const videoTracks = remoteStream.getVideoTracks();
-      // // debugger;
-      // if(videoTracks.length > 0) {
-      //   this.props.hoistRemoteStream(this.remoteStream);
-      // }
-    }
-
-    this.localRTC.oniceconnectionstatechange = (e) => {
-      console.log('ICE state change event: ', this.localRTC.iceConnectionState);
-    }
-
-    this.localRTC.onicecandidate = (event) => {
-      socket.emit('ice candidate', event.candidate);
-    }
-
-    // this.localRTC.oniceconnectionstatechange = (event) => {}
-
-  }
-
-  createOffer = ({ audioOn, cameraOn }) => {
-    this.createRTC();
-    const offerToReceiveAudio = audioOn ? 1 : 0;
-    const offerToReceiveVideo = cameraOn ? 1 : 0;
-    this.props.startUserMedia({audioOn, cameraOn})
-      .then(() => {
-        this.props.localStream.getTracks().forEach((track) => {
-          this.localRTC.addTrack(track, this.props.localStream)
-        })
-      })
-      .then(() => {
-        return this.localRTC.createOffer({
-          offerToReceiveAudio,
-          offerToReceiveVideo,
-          voiceActivityDetection: false
-        })
-      })
-      .then((description) => {
-        return this.localRTC.setLocalDescription(description);
-      })
-      .then(() => {
-        const description = this.localRTC.localDescription;
-        socket.emit('create offer', description);
-      });
-  }
-
-  receiveOffer = (description) => {
-    this.createRTC();
-    const desc = new RTCSessionDescription(description);
-    this.props.startUserMedia().then(() => {
-      // const stream = this.localStream;
-      this.props.localStream.getTracks().forEach(track => {
-        this.localRTC.addTrack(track, this.props.localStream)
-      });
-    })
-    this.localRTC.setRemoteDescription(desc).then(() => {
-      return this.props.startUserMedia({});
-    })
-    .then(() => {
-      return this.localRTC.createAnswer();
-    })
-    .then((description) => {
-      return this.localRTC.setLocalDescription(description);
-    })
-    .then(() => {
-      const description = this.localRTC.localDescription;
-      socket.emit('send description', description);
-    });
-  }
   // user/caller
   cancelCall = () => {
     this.props.cancelCall(this.props.callId);
@@ -161,6 +86,7 @@ export class CallController extends Component {
   rejectCall = () => {
     this.props.rejectCall(this.props.callId)
   }
+
   render() {
     return (
       <div>
@@ -196,5 +122,8 @@ export default connect(mapStateToProps, {
   rejectCall,
   startUserMedia,
   callAccepted,
-  updateRemoteStream
+  updateRemoteStream,
+  createRTC,
+  createOffer,
+  receiveOffer
 })(CallController)
