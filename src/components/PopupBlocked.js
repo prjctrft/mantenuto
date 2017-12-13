@@ -2,7 +2,7 @@ import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import RefitButton from 'components/RefitButton';
 
-const PopupBlocked = () =>
+const PopupBlocked = (props) =>
 (
   <div>
     <h3>Your room will open up in a new window.  Make sure you turn off your browser's popup blocker!</h3>
