@@ -32,7 +32,7 @@ export class CallController extends Component {
     // use service for call data that needs to persists
     app.service('calls')
       .on('created', (Call) => {
-        this.props.callIncoming();
+        this.props.callIncoming(Call);
       })
     // // use socket for signalling and call data that does not need to persist
     // // custom event listeners are defined on the backend so that only sockets in
@@ -80,6 +80,7 @@ export class CallController extends Component {
 
   // peer/receiver
   acceptCall = () => {
+    debugger;
     socket.emit('accept call');
     this.props.acceptCall(this.props.callId)
   }

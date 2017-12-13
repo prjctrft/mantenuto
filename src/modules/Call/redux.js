@@ -33,7 +33,7 @@ const defaultState = {
   makingCall: false,
   incomingCall: false,
   callInProgress: false,
-  Call: null,
+  _Call: null,
   callId: null,
   localStream: null,
   remoteStream: null,
@@ -43,15 +43,16 @@ const defaultState = {
 };
 
 export default (state = defaultState, action = {}) => {
+  const {_Call, callId} = action;
   switch (action.type) {
     case MAKE_CALL:
-      return {...state, makingCall: true, Call: action.Call, callId: action.Call._id}
+      return {...state, makingCall: true, _Call, callId }
     case CALL_CANCELED:
       return {...state, makingCall: false}
     case CALL_ACCEPTED:
       return {...state, makingCall: false, callInProgress: true}
     case INCOMING_CALL:
-      return {...state, incomingCall: true}
+      return {...state, incomingCall: true, _Call, callId}
     case ACCEPT_INCOMING_CALL:
       return {...state, incomingCall: false, callInProgress: true}
     case REJECT_INCOMING_CALL:
@@ -149,9 +150,10 @@ export const createRTC = () => {
 export const makeCall = ({callerId, receiverId}) => {
   return ( dispatch, getState) => {
     app.service('calls').create({ caller: callerId, receiver: receiverId, status: 'calling' })
-      .then((Call) => {
+      .then((_Call) => {
         dispatch({
-          Call,
+          _Call,
+          callId: _Call._id,
           type: MAKE_CALL
         })
       })
@@ -180,9 +182,11 @@ export const callAccepted = () => {
   }
 };
 
-export const callIncoming = () => {
+export const callIncoming = (_Call) => {
   return {
-    type: INCOMING_CALL
+    type: INCOMING_CALL,
+    _Call,
+    callId: _Call._id
   }
 };
 
