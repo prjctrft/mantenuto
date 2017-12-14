@@ -5,7 +5,7 @@ import { Tooltip } from 'reactstrap';
 
 import { toggleMicTooltip } from '../../redux';
 
-class MicButton extends Component {
+export class MicButtonComponent extends Component {
   // constructor(props) {
   //    super(props);
   //    this.state = {
@@ -47,4 +47,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { toggleMicTooltip })(MicButton)
+export default connect(mapStateToProps, { toggleMicTooltip })(MicButtonComponent)
