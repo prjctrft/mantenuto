@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-class Compatibility extends Component {
+export class CompatibilityComponent extends Component {
   constructor(props) {
     super(props);
     this.inCompatableRoutes = ['talk', 'listen', 'rooms']
@@ -86,4 +86,4 @@ const mapStateToProps = (state) => {
   return { pathname }
 }
 
-export default connect(mapStateToProps, { push })(Compatibility);
+export default connect(mapStateToProps, { push })(CompatibilityComponent);
