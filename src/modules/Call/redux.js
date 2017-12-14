@@ -37,8 +37,8 @@ const defaultState = {
   callId: null,
   localStream: null,
   remoteStream: null,
-  remoteVideo: false,
-  remoteAudio: false,
+  remoteVideo: false, // is remote video on
+  remoteAudio: false, // is remote audio on
   pc: null
 };
 
@@ -61,7 +61,10 @@ export default (state = defaultState, action = {}) => {
       return {...state, makingCall: false}
     case END_CALL:
     case CALL_ENDED:
-      return {...state, callInProgress: false}
+      return {
+        ...state,
+        callInProgress: false
+      }
     case UPDATE_LOCAL_STREAM:
       return {...state, localStream: action.stream}
     case UPDATE_REMOTE_STREAM:
@@ -99,7 +102,7 @@ export const createRTC = () => {
       dispatch(updateRemoteStream(remoteStream));
     }
 
-    pc.onremovestream
+    // pc.onremovestream
 
     pc.oniceconnectionstatechange = (e) => {
       console.log('ICE state change event: ', pc.iceConnectionState);
@@ -141,6 +144,9 @@ export const createRTC = () => {
       pc.setRemoteDescription(desc);
     });
 
+    socket.on('call ended', () => {
+      dispatch(callEnded())
+    });
 
     return dispatch({pc, type: CREATE_PC})
 
@@ -206,20 +212,36 @@ export const rejectCall = (callId) => {
 
 export const endCall = () => {
   return (dispatch, getState) => {
-    const callId = getState().calls.callId;
+    const state = getState().calls;
+    const callId = state.callId;
     app.service('calls')
-      .patch(callID, { ended: new Date() })
+      .patch(callId, { ended: new Date() })
       .then(() => {
         dispatch({
           type: END_CALL
         })
+        // remove remote stream and reset remotes to defaults
+        dispatch({
+          type: UPDATE_REMOTE_STREAM,
+          remoteStream: null,
+          remoteVideo: false,
+          remoteAudio: false
+        })
+        socket.emit('end call', {});
+        pc.close();
       })
     }
 };
 
 export const callEnded = () => {
-  return {
-    type: CALL_ENDED
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_REMOTE_STREAM,
+      remoteStream: null,
+      remoteVideo: false,
+      remoteAudio: false
+    });
+    dispatch({type: CALL_ENDED})
   }
 }
 

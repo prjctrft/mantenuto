@@ -30,10 +30,6 @@ export class ControlsControllerComponent extends Component {
     this.rtcConnection = false;
   }
 
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.cleanup);
-  }
-
   componentWillUnmount() {
     this.cleanup();
     if(this.state.cameraOn) {
@@ -42,7 +38,6 @@ export class ControlsControllerComponent extends Component {
     if(this.state.audioOn) {
       this.stopAudio()
     }
-    window.removeEventListener('beforeunload', this.cleanup);
   }
 
   cleanup = () => {
@@ -120,7 +115,6 @@ export class ControlsControllerComponent extends Component {
     if (this.props.callInProgress) {
       this.props.endCall();
     }
-    this.stopVideo();
   }
 
   toggleCall = () => {
