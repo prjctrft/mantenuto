@@ -26,11 +26,17 @@ const PARSE_ROOM = 'rooms/PARSE_ROOM';
 
 const CLEAR_CALL_STATE = 'rooms/CLEAR_CALL_STATE';
 
-const LOCAL_VIDEO_ON = 'rooms/LOCAL_VIDEO_ON';
+const UPDATE_CONTROLS = 'rooms/UPDATE_CONTROLS';
+
+const LOCAL_VIDEO_ON = 'rooms/LOCAL_VIDEO_ON'; // TODO - depreicate in favor of camerOn boolean
 const LOCAL_VIDEO_OFF = 'rooms/LOCAL_VIDEO_OFF';
 
+const TOGGLE_MIC_TOOLTIP = 'rooms/TOGGLE_MIC_TOOLTIP';
 
 const initialState = {
+  audioOn: false, // is the mic on, managed by this state for UI purposes and passed to "Call" module
+  cameraOn: false, // is the camera on, managed by this state for UI purposes and passed to "Call" module
+  videoOn: false, //TODO - depricate, use camerOn instead
   loading: false, // if room is loading
   loaded: false, // if room is loaded
   userCheckingIn: false, // if user is checking in
@@ -44,6 +50,19 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
+    case UPDATE_CONTROLS: {
+      const { audioOn, camerOn } = action;
+      return {
+        ...state,
+        audioOn,
+        camerOn
+      }
+    }
+    case TOGGLE_MIC_TOOLTIP:
+      return {
+        ...state,
+        micTooltip: !state.micTooltip
+      }
     case LOAD_ROOM:
       return {
         ...state,
@@ -140,6 +159,20 @@ export default (state = initialState, action = {}) => {
       return state;
   }
 };
+
+export const updateControls = ({audioOn, cameraOn}) => {
+  return {
+    type: UPDATE_CONTROLS,
+    audioOn,
+    cameraOn
+  }
+}
+
+export const toggleMicTooltip = () => {
+  return {
+    type: TOGGLE_MIC_TOOLTIP
+  }
+}
 
 export const loadRoom = (slug, user) => {
   return (dispatch) => {

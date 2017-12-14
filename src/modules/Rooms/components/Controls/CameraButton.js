@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default (props) => {
+const CameraButton = (props) => {
   return (
     <button
       onClick={props.onClick} type="button"
@@ -12,3 +13,5 @@ export default (props) => {
     </button>
   )
 }
+
+export default connect(null)(CameraButton)

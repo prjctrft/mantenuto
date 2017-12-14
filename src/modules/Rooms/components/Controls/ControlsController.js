@@ -8,6 +8,7 @@ import { makeCall,
 import {
   patchRoom,
   updateConnectionState,
+  updateControls,
   localVideoOn,
   localVideoOff,
   // remoteVideoOn,
@@ -20,22 +21,21 @@ export class ControlsControllerComponent extends Component {
   constructor(props) {
     super(props);
     this.defaultState = {
-      cameraOn: false,
-      audioOn: false,
+      // cameraOn: false,
+      // audioOn: false,
       controlsTouched: false
     };
     this.state = {
       ...this.defaultState
     };
-    this.rtcConnection = false;
   }
 
   componentWillUnmount() {
     this.cleanup();
-    if(this.state.cameraOn) {
+    if(this.props.cameraOn) {
       this.stopVideo();
     }
-    if(this.state.audioOn) {
+    if(this.props.audioOn) {
       this.stopAudio()
     }
   }
@@ -53,10 +53,10 @@ export class ControlsControllerComponent extends Component {
       // turn audioOn when video is turned on for the first time
       newState.audioOn = true;
     } else {
-      newState.audioOn = this.state.audioOn;
+      newState.audioOn = this.props.audioOn;
     }
     this.props.localVideoOn();
-    this.setState({ ...newState });
+    this.props.updateControls({... newState});
     this.props.updateUserMedia({ ...newState });
   }
 
@@ -66,14 +66,14 @@ export class ControlsControllerComponent extends Component {
 
   stopVideo = () => {
     const cameraOn = false;
-    const audioOn = this.state.audioOn;
-    this.setState({ cameraOn });
+    this.props.updateControls({ cameraOn });
+    const audioOn = this.props.audioOn;
     this.props.updateUserMedia({ cameraOn, audioOn });
   }
 
   toggleVideo = (e) => {
     e.preventDefault();
-    if(this.state.cameraOn) {
+    if(this.props.cameraOn) {
       return this.stopVideo();
     }
     this.startVideo();
@@ -81,15 +81,15 @@ export class ControlsControllerComponent extends Component {
 
   startAudio = () => {
     const audioOn = true;
-    const cameraOn = this.state.cameraOn;
-    this.setState({ audioOn });
+    this.props.updateControls({ audioOn });
+    const cameraOn = this.props.cameraOn;
     this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
   stopAudio = () => {
     const audioOn = false;
-    const cameraOn = this.state.cameraOn;
-    this.setState({ audioOn });
+    this.props.updateControls({ audioOn });
+    const cameraOn = this.props.cameraOn;
     this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
@@ -98,7 +98,7 @@ export class ControlsControllerComponent extends Component {
     if(!this.state.controlsTouched) {
       this.touchControls();
     }
-    if(this.state.audioOn) {
+    if(this.props.audioOn) {
       return this.stopAudio();
     }
     this.startAudio();
@@ -153,25 +153,30 @@ export class ControlsControllerComponent extends Component {
       acceptCallOnClick={this.acceptCallOnClick}
       close={this.close}
 
-      cameraOn={this.state.cameraOn}
-      audioOn={this.state.audioOn}
       wasCallAccepted={this.props.wasCallAccepted}
     />)
   }
 }
 
-export default connect((state)=> ({
-  room: state.rooms.room,
-  isTalker: state.rooms.isTalker,
-  isListener: state.rooms.isListener,
-  user: state.user.user,
-  peer: state.rooms.peer,
-  peerCheckedIn: state.rooms.peerCheckedIn,
-  makingCall: state.calls.makingCall,
-  incomingCall: state.calls.incomingCall,
-  callInProgress: state.calls.callInProgress,
-  callId: state.calls.callId
-}), {
+const mapStateToProps = (state)=> {
+  const { audioOn, cameraOn, peer, room, isTalker, isListener, peerCheckedIn } = state.rooms;
+  return {
+    room,
+    audioOn,
+    cameraOn,
+    isTalker,
+    isListener,
+    peer,
+    peerCheckedIn,
+    user: state.user.user,
+    makingCall: state.calls.makingCall,
+    incomingCall: state.calls.incomingCall,
+    callInProgress: state.calls.callInProgress,
+    callId: state.calls.callId
+  }
+}
+
+export default connect(mapStateToProps, {
   patchRoom,
   // updateConnectionState,
   makeCall,
@@ -179,6 +184,7 @@ export default connect((state)=> ({
   endCall,
   // callAccepted,
   // clearCallState,
-  localVideoOn,
-  localVideoOff,
+  localVideoOn, // -- TODO: depricate in favor of cameraOn boolean
+  localVideoOff,// -- TODO: depricate in favor of cameraOn boolean
+  updateControls
 })(ControlsControllerComponent)
