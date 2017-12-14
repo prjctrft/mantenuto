@@ -154,6 +154,9 @@ export const loadRoom = (slug, user) => {
         return restApp.service('rooms')
           .get(slug)
           .then((room) => dispatch(parseRoom(room)))
+          .catch((err) => {
+            debugger;
+          })
       }
     });
   }
