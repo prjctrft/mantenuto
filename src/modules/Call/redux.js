@@ -256,7 +256,7 @@ export const updateUserMedia = ({ audioOn, cameraOn} = {}) => {
     }
     // if user turns of mic and camera getUserMedia will error
     if(!audioOn && !cameraOn) {
-      return Proimse.resolve();
+      return Promise.resolve();
     }
     return navigator.mediaDevices.getUserMedia({
       video: cameraOn,

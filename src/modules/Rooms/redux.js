@@ -54,11 +54,11 @@ const initialState = {
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case UPDATE_CONTROLS: {
-      const { audioOn, camerOn } = action;
+      const { audioOn, cameraOn } = action;
       return {
         ...state,
         audioOn,
-        camerOn
+        cameraOn
       }
     }
     case TOGGLE_MIC_TOOLTIP:

@@ -66,8 +66,8 @@ export class ControlsControllerComponent extends Component {
 
   stopVideo = () => {
     const cameraOn = false;
-    this.props.updateControls({ cameraOn });
     const audioOn = this.props.audioOn;
+    this.props.updateControls({ cameraOn, audioOn });
     this.props.updateUserMedia({ cameraOn, audioOn });
   }
 
@@ -81,15 +81,15 @@ export class ControlsControllerComponent extends Component {
 
   startAudio = () => {
     const audioOn = true;
-    this.props.updateControls({ audioOn });
     const cameraOn = this.props.cameraOn;
+    this.props.updateControls({ audioOn, cameraOn });
     this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
   stopAudio = () => {
     const audioOn = false;
-    this.props.updateControls({ audioOn });
     const cameraOn = this.props.cameraOn;
+    this.props.updateControls({ audioOn, cameraOn });
     this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
@@ -140,21 +140,13 @@ export class ControlsControllerComponent extends Component {
   }
 
   render() {
-    return (<ControlsComponent
-      peer={this.props.peer}
-      user={this.props.user}
-
-      toggleVideo={this.toggleVideo}
-      toggleAudio={this.toggleAudio}
-
-      toggleCall={this.toggleCall}
-      stopCall={this.stopCall}
-      disableCallButton={this.disableCallButton}
-      acceptCallOnClick={this.acceptCallOnClick}
-      close={this.close}
-
-      wasCallAccepted={this.props.wasCallAccepted}
-    />)
+    return (
+      <ControlsComponent
+        toggleVideo={this.toggleVideo}
+        toggleAudio={this.toggleAudio}
+        toggleCall={this.toggleCall}
+      />
+    )
   }
 }
 
