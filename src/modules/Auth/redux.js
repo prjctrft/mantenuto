@@ -59,11 +59,18 @@ export function authReducer(state = initialState, action = {}) {
         triedSocketAuth: true
       }
     case JWT_LOGIN_SUCCESS:
-    case LOGIN_SUCCESS:
       return {
         ...state,
         token: action.result.token,
         user: action.result.user,
+        tryingAuth: false,
+        triedAuth: true
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        token: action.token,
+        user: action.user,
         tryingAuth: false,
         triedAuth: true
       };
@@ -153,29 +160,31 @@ function saveAuth(response) {
     .then(payload => {
       const id = payload.userId;
       cookie.save('feathers-jwt', token);
-      return { user: id, token };
+      return { user: id, token }
     });
 }
 
 export function login(data) {
-  return {
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: () => restApp.authenticate({
+  return (dispatch) => {
+    debugger;
+    dispatch({ type: LOGIN });
+    return restApp.authenticate({
       strategy: 'local',
       lookup: data.lookup,
       password: data.password
     })
-    .then(({ accessToken }) => {
+    .then(saveAuth)
+    .then(({token, user}) => {
+      debugger;
+      dispatch({type: LOGIN_SUCCESS, token, user});
       socket.connect();
       const socketId = socket.io.engine.id;
       return app.authenticate({
         strategy: 'jwt',
-        accessToken,
+        accessToken: token,
         socketId
       });
-      return { accessToken };
     })
-    .then(saveAuth)
     .catch(catchValidation)
   }
 }

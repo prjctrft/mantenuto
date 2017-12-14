@@ -42,7 +42,9 @@ export class TryAuthComponent extends Component {
   }
 
   render() {
-    if(this.props.tryingAuth) {
+    // Important: triedAuth indicates that auth has already been tried at least once
+    // in the case of login -> then socketAuth, we don't want to rerender
+    if(this.props.tryingAuth && !this.props.triedAuth) {
       return <h1>Loading...</h1>
     }
     if(this.props.authenticated) {
@@ -63,10 +65,11 @@ export class TryAuthComponent extends Component {
 
 export default connect((state) => {
   const userId = state.auth.user;
-  const { tryingAuth } = state.auth;
+  const { tryingAuth, triedAuth } = state.auth;
   const { userPopulated, userPopulating } = state.user;
   return {
     authenticated: !!state.auth.user,
+    triedAuth,
     tryingAuth,
     userId,
     userPopulated,
