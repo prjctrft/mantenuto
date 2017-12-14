@@ -32,7 +32,7 @@ const UPDATE_CONTROLS = 'rooms/UPDATE_CONTROLS';
 // const LOCAL_VIDEO_OFF = 'rooms/LOCAL_VIDEO_OFF';
 
 const TOGGLE_MIC_TOOLTIP = 'rooms/TOGGLE_MIC_TOOLTIP';
-const TOGGLE_CAMERA_TOOLTIP = 'rooms/TOGGLE_MIC_TOOLTIP';
+const TOGGLE_CAMERA_TOOLTIP = 'rooms/TOGGLE_CAMERA_TOOLTIP';
 
 const initialState = {
   micTooltip: false, // display tooltip to let user know mic is off
@@ -179,6 +179,12 @@ export const updateControls = ({audioOn, cameraOn}) => {
 export const toggleMicTooltip = () => {
   return {
     type: TOGGLE_MIC_TOOLTIP
+  }
+}
+
+export const toggleCameraTooltip = () => {
+  return {
+    type: TOGGLE_CAMERA_TOOLTIP
   }
 }
 

@@ -29,7 +29,7 @@ export class MicButtonComponent extends Component {
       >
         <img className='img-fluid' src={this.props.audioOn ? iconVoiceOn : iconVoiceOff} aria-hidden="true" />
         {!this.props.audioOn ?
-          <Tooltip placement="top-start" innerClassName={styles.tooltip} isOpen={this.props.micTooltip} target="MicButton" toggle={this.toggle}>
+          <Tooltip placement="left-start" className={styles.Tooltip} isOpen={this.props.micTooltip} target="MicButton" toggle={this.toggle}>
             Click to unmute your mic!
           </Tooltip>
           : null
