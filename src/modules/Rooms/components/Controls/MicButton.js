@@ -1,7 +1,7 @@
+/* eslint-disable */
 import React from 'react';
-import { connect } from 'react-redux';
 
-const CallButton = (props) => {
+export default (props) => {
   return (
     <button
       onClick={props.onClick} type="button"
@@ -12,10 +12,3 @@ const CallButton = (props) => {
     </button>
   )
 }
-
-const mapStateToProps = (state) => {
-  const peerCheckedIn = state.rooms.peerCheckedIn;
-  return { peerCheckedIn }
-}
-
-export default connect(mapStateToProps)(CallButton)

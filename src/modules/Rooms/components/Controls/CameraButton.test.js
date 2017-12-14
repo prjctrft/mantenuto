@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import createStore from 'redux/create';
-import ControlButton from './ControlButton';
+import CameraButton from './CameraButton';
 
 describe('<ControlButton />', () => {
   let component;
@@ -13,7 +13,7 @@ describe('<ControlButton />', () => {
     component = mount(
       <Provider store={store}>
         {}
-        <ControlButton />
+        <CameraButton />
       </Provider>
     );
   });
