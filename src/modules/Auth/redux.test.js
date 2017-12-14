@@ -55,19 +55,28 @@ describe('auth reducer', () => {
 
   const successActions = [JWT_LOGIN_SUCCESS, LOGIN_SUCCESS];
   describe('', () => {
-    successActions.map((type) => {
-      it(`${type} should return expected state`, () => {
-        const result = {token: 'foo', user: 'Bob'};
-        const newState = {tryingAuth: false, triedAuth: true };
-        const action = {
-          type,
-          result,
-          ...newState
-        };
-        const state = authReducer(undefined, action);
-        const expectedState = {...initialState, ...newState, ...result};
-        expect(state).to.deep.equal(expectedState);
-      });
+    it(`${JWT_LOGIN_SUCCESS} should return expected state`, () => {
+      const result = {token: 'foo', user: 'Bob'};
+      const newState = {tryingAuth: false, triedAuth: true };
+      const action = {
+        type: JWT_LOGIN_SUCCESS,
+        result,
+        ...newState
+      };
+      const state = authReducer(undefined, action);
+      const expectedState = {...initialState, ...newState, ...result};
+      expect(state).to.deep.equal(expectedState);
+    });
+    it(`${LOGIN_SUCCESS} should return expected state`, () => {
+      const newState = {tryingAuth: false, triedAuth: true, token: 'foo', user: 'Bob'};
+      const action = {
+        type: LOGIN_SUCCESS,
+        ...newState
+      };
+      const state = authReducer(undefined, action);
+      const expectedState = {...initialState, ...newState};
+      debugger;
+      expect(state).to.deep.equal(expectedState);
     });
   });
 

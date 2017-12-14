@@ -14,7 +14,8 @@ describe('<RequireLoggedInComponent />', () => {
       push: jest.fn(),
       authenticated: true,
       tryingAuth: false,
-      triedAuth: false
+      triedAuth: false,
+      location: {pathname: '/'}
     }
     component = mount(
       <RequireLoggedInComponent {...props} />
@@ -62,10 +63,13 @@ describe('<RequireLoggedInComponent />', () => {
   })
 
   it('should push route "/login" if authentication has been tried', () => {
-    const newProps = {tryingAuth: false, authenticated: false, triedAuth: true};
-    component.setProps(newProps);
+    const localProps = {...props, tryingAuth: false, authenticated: false, triedAuth: true};
+    component = mount(
+      <RequireLoggedInComponent {...localProps} />
+    );
+    debugger;
     expect(props.push.mock.calls).to.have.length(1);
-    expect(props.push.mock.calls[0][0]).to.equal('/login');
+    expect(props.push.mock.calls[0][0]).to.deep.equal({pathname: '/login', query: {next: '/'}});
   })
 
 
