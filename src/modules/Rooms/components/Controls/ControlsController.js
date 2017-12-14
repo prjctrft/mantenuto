@@ -9,8 +9,8 @@ import {
   patchRoom,
   updateConnectionState,
   updateControls,
-  localVideoOn,
-  localVideoOff,
+  // localVideoOn,
+  // localVideoOff,
   // remoteVideoOn,
   // remoteVideoOff
 } from '../../redux';
@@ -55,7 +55,7 @@ export class ControlsControllerComponent extends Component {
     } else {
       newState.audioOn = this.props.audioOn;
     }
-    this.props.localVideoOn();
+    // this.props.localVideoOn();
     this.props.updateControls({... newState});
     this.props.updateUserMedia({ ...newState });
   }
@@ -184,7 +184,7 @@ export default connect(mapStateToProps, {
   endCall,
   // callAccepted,
   // clearCallState,
-  localVideoOn, // -- TODO: depricate in favor of cameraOn boolean
-  localVideoOff,// -- TODO: depricate in favor of cameraOn boolean
+  // localVideoOn, // -- TODO: depricate in favor of cameraOn boolean
+  // localVideoOff,// -- TODO: depricate in favor of cameraOn boolean
   updateControls
 })(ControlsControllerComponent)

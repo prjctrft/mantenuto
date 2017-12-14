@@ -28,8 +28,8 @@ const CLEAR_CALL_STATE = 'rooms/CLEAR_CALL_STATE';
 
 const UPDATE_CONTROLS = 'rooms/UPDATE_CONTROLS';
 
-const LOCAL_VIDEO_ON = 'rooms/LOCAL_VIDEO_ON'; // TODO - depreicate in favor of camerOn boolean
-const LOCAL_VIDEO_OFF = 'rooms/LOCAL_VIDEO_OFF';
+// const LOCAL_VIDEO_ON = 'rooms/LOCAL_VIDEO_ON'; // TODO - depreicate in favor of camerOn boolean
+// const LOCAL_VIDEO_OFF = 'rooms/LOCAL_VIDEO_OFF';
 
 const TOGGLE_MIC_TOOLTIP = 'rooms/TOGGLE_MIC_TOOLTIP';
 const TOGGLE_CAMERA_TOOLTIP = 'rooms/TOGGLE_MIC_TOOLTIP';
@@ -156,12 +156,12 @@ export default (state = initialState, action = {}) => {
         room,
         peerCheckedIn
       }
-    case LOCAL_VIDEO_ON:
-    case LOCAL_VIDEO_OFF:
-      return {
-        ...state,
-        localVideoOn: action.localVideoOn
-      }
+    // case LOCAL_VIDEO_ON:
+    // case LOCAL_VIDEO_OFF:
+    //   return {
+    //     ...state,
+    //     localVideoOn: action.localVideoOn
+    //   }
     case ROOM_PATCHED:
     default:
       return state;
