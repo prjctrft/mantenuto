@@ -19,10 +19,15 @@ const Video = (props) => {
   }
 
   const localVideoOn = () => {
-    // TODO: fix this to properly account for video not playing
     if(!props.localStream) {
       return false;
     }
+    // TODO: put this is redux state
+    // no reason for this logic here
+    if(props.localStream.getVideoTracks().length === 0) {
+      return false;
+    }
+    return true;
   }
 
   const { callStarted, callAccepted, connectionState } = props;
@@ -35,7 +40,7 @@ const Video = (props) => {
         </div> : null
       }
       <div className='embed-responsive-item'>
-        {props.callInProgress ? <video ref={attachRemoteStream} autoPlay /> : <RemoteVideoPlaceholder />}
+        {props.remoteVideo ? <video ref={attachRemoteStream} autoPlay /> : <RemoteVideoPlaceholder />}
       </div>
       <div className={`${styles.LocalPlayer}`}>
         <video ref={attachLocalStream} autoPlay muted />
@@ -46,13 +51,23 @@ const Video = (props) => {
   )
 }
 
-const mapStateToProps = (state) => state => ({
-  callStarted: state.rooms.callStarted,
-  callAccepted: state.rooms.callAccepted,
-  connectionState: state.rooms.connectionState,
-  localStream: state.calls.localStream,
-  remoteStream: state.calls.remoteStream,
-  callInProgress: state.calls.callInProgress
-});
+const mapStateToProps = (state) => state => {
+  const {
+    localStream,
+    remoteStream,
+    // remoteAudio, TODO: indicator that remote audio is on?
+    remoteVideo
+  } = state.calls;
+  return {
+    // TODO: style to represent call state and connection state
+    // callStarted: state.rooms.callStarted,
+    // callAccepted: state.rooms.callAccepted,
+    // connectionState: state.rooms.connectionState,
+    // callInProgress
+    localStream,
+    remoteStream,
+    remoteVideo
+  }
+};
 
 export default connect(mapStateToProps)(Video);

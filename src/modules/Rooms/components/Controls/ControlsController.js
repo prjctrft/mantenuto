@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import app from 'app';
 import { makeCall,
-  startUserMedia,
-  stopUserMedia,
+  updateUserMedia,
   endCall
 } from 'modules/Call/redux';
 import {
@@ -31,10 +30,6 @@ export class ControlsControllerComponent extends Component {
     this.rtcConnection = false;
   }
 
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.cleanup);
-  }
-
   componentWillUnmount() {
     this.cleanup();
     if(this.state.cameraOn) {
@@ -43,7 +38,6 @@ export class ControlsControllerComponent extends Component {
     if(this.state.audioOn) {
       this.stopAudio()
     }
-    window.removeEventListener('beforeunload', this.cleanup);
   }
 
   cleanup = () => {
@@ -53,11 +47,17 @@ export class ControlsControllerComponent extends Component {
   }
 
   startVideo = () => {
+    const newState = {cameraOn: true};
+    if(!this.state.controlsTouched) {
+      this.touchControls();
+      // turn audioOn when video is turned on for the first time
+      newState.audioOn = true;
+    } else {
+      newState.audioOn = this.state.audioOn;
+    }
     this.props.localVideoOn();
-    const cameraOn = true;
-    const audioOn = this.state.audioOn;
-    this.setState({ cameraOn });
-    this.props.startUserMedia({ cameraOn });
+    this.setState({ ...newState });
+    this.props.updateUserMedia({ ...newState });
   }
 
   touchControls = () => {
@@ -66,15 +66,13 @@ export class ControlsControllerComponent extends Component {
 
   stopVideo = () => {
     const cameraOn = false;
+    const audioOn = this.state.audioOn;
     this.setState({ cameraOn });
-    this.props.stopUserMedia({ cameraOn });
+    this.props.updateUserMedia({ cameraOn, audioOn });
   }
 
   toggleVideo = (e) => {
     e.preventDefault();
-    if(!this.state.controlsTouched) {
-      this.touchControls();
-    }
     if(this.state.cameraOn) {
       return this.stopVideo();
     }
@@ -85,12 +83,14 @@ export class ControlsControllerComponent extends Component {
     const audioOn = true;
     const cameraOn = this.state.cameraOn;
     this.setState({ audioOn });
-    this.props.startUserMedia({ audioOn, cameraOn });
+    this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
   stopAudio = () => {
-    this.setState({ audioOn: false });
-    this.props.stopUserMedia({ audioOn: false });
+    const audioOn = false;
+    const cameraOn = this.state.cameraOn;
+    this.setState({ audioOn });
+    this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
   toggleAudio = (e) => {
@@ -113,9 +113,8 @@ export class ControlsControllerComponent extends Component {
   stopCall = () => {
     this.setState({ ...this.defaultState });
     if (this.props.callInProgress) {
-      this.props.endCall(this.props.callInProgress);
+      this.props.endCall();
     }
-    this.stopVideo();
   }
 
   toggleCall = () => {
@@ -176,8 +175,7 @@ export default connect((state)=> ({
   patchRoom,
   // updateConnectionState,
   makeCall,
-  startUserMedia,
-  stopUserMedia,
+  updateUserMedia,
   endCall,
   // callAccepted,
   // clearCallState,
