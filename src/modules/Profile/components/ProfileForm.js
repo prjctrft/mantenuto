@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, Field, propTypes } from 'redux-form';
+import {
+  reduxForm,
+  Field,
+  propTypes,
+  startAsyncValidation,
+  stopAsyncValidation,
+  touch
+} from 'redux-form';
 import profileValidation from './profileValidation';
 import { RefitInput } from 'components';
+import { match, email } from 'utils/validation';
+import { checkUsername } from 'modules/user/redux';
 
 @connect(state => ({
   profile: state.form.profile
@@ -21,6 +30,55 @@ export default class ProfileForm extends Component {
     return <input className={className} />
   }
 
+  validateUsername = (e) => {
+    const username = e.target.value;
+    if(username === this.props.profile.initial.username) {
+      return
+    };
+    this.props.dispatch(startAsyncValidation('register'));
+    return checkUsername(username).then(({ message }) => {
+      const errors = {};
+      this.props.dispatch(touch('profile', 'username'))
+      if(message) {
+        errors.username = message;
+      }
+      this.props.dispatch(stopAsyncValidation('profile', errors));
+    })
+  };
+
+  resetEmailField = () => {
+    this.props.profile.values.email = this.props.profile.initial.email;
+  }
+
+  renderConfirmEmail = () => {
+    const form = this.props.profile;
+    if(form && form.fields) {
+      if(form.fields.email) {
+        if(form.initial.email !== form.values.email) {
+          return (
+            <div>
+              <Field name='confirmEmail' validate={this.validateConfirm} type='text' component={RefitInput} label='Confirm Email' />
+              <p className='text-center'>
+                <button onClick={this.resetEmailField} className='btn btn-danger'>Cancel?</button>
+              </p>
+            </div>
+          )
+        }
+      }
+    }
+    return null;
+  }
+
+  validateConfirm = (value, allValues, props) => {
+    let error;
+    error = match('email')(value, allValues)
+    error = email(value);
+    if(!value) {
+      error =  'Confirm Email is required when changing your Email address.'
+    }
+    return error;
+  }
+
   render() {
     const { user, pristine, submitting, handleSubmit, error, initialValues } = this.props; //eslint-disable-line no-unused-vars
     const styles = require('./ProfileForm.scss')
@@ -31,9 +89,9 @@ export default class ProfileForm extends Component {
             <Field name='first' type='text' component={RefitInput} label='First Name' />
             <Field name='last' type='text' component={RefitInput} label='Last Name' />
             <Field name='mos' type='text' component={RefitInput} label='MOS' />
-            <Field name='username' type='text' component={RefitInput} label='Username' />
+            <Field name='username' onChange={this.validateUsername} type='text' component={RefitInput} label='Username' />
             <Field name='email' type='text' component={RefitInput} label='Email' />
-            <Field name='confirmEmail' type='text' component={RefitInput} label='Confirm Email' />
+            {this.renderConfirmEmail()}
             <div className={`${styles.checkbox} text-center`}>
               <p>Injury <span>(optional)</span></p>
               <div className='row justify-content-center'>

@@ -4,13 +4,13 @@ const LOAD_ROOM = 'rooms/LOAD_ROOM';
 const LOAD_ROOM_SUCCESS = 'rooms/LOAD_ROOM_SUCCESS';
 const LOAD_ROOM_FAIL = 'rooms/LOAD_ROOM_FAIL';
 
- const CHECKIN = 'rooms/CHECKIN';
- const CHECKIN_SUCCESS = 'rooms/CHECKIN_SUCCESS';
- const CHECKIN_FAIL = 'rooms/CHECKIN_FAIL';
+const CHECKIN = 'rooms/CHECKIN';
+const CHECKIN_SUCCESS = 'rooms/CHECKIN_SUCCESS';
+const CHECKIN_FAIL = 'rooms/CHECKIN_FAIL';
 
- const CHECKOUT = 'rooms/CHECKOUT';
- const CHECKOUT_SUCCESS = 'rooms/CHECKOUT_SUCCESS';
- const CHECKOUT_FAIL = 'rooms/CHECKOUT_FAIL';
+const CHECKOUT = 'rooms/CHECKOUT';
+const CHECKOUT_SUCCESS = 'rooms/CHECKOUT_SUCCESS';
+const CHECKOUT_FAIL = 'rooms/CHECKOUT_FAIL';
 
 const SET_IS_TALKER = 'rooms/SET_IS_TALKER';
 const SET_IS_LISTENER = 'rooms/SET_IS_LISTENER';
@@ -22,7 +22,7 @@ const ROOM_PATCHED = 'rooms/ROOM_PATCHED';
 
 const SET_PEER = 'rooms/SET_PEER';
 
-const PARSED_ROOM = 'rooms/PARSED_ROOM';
+const PARSE_ROOM = 'rooms/PARSE_ROOM';
 
 const CLEAR_CALL_STATE = 'rooms/CLEAR_CALL_STATE';
 
@@ -31,13 +31,15 @@ const LOCAL_VIDEO_OFF = 'rooms/LOCAL_VIDEO_OFF';
 
 
 const initialState = {
-  loaded: false,
-  checkedIn: false,
-  roomPatched: false,
-  isTalker: true,
-  isListener: false,
-  room: {},
-  peer: {}
+  loading: false, // if room is loading
+  loaded: false, // if room is loaded
+  userCheckingIn: false, // if user is checking in
+  userCheckedIn: false, // if user is checked in
+  peerCheckedIn: false, // if peer is checked in
+  isTalker: false, // if user is talker
+  isListener: false, // if user is listener
+  room: {}, // the room object
+  peer: {} // the peer object (comes from room.talker or room.listener)
 };
 
 export default (state = initialState, action = {}) => {
@@ -51,8 +53,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         loading: false,
-        loaded: true,
-        room: action.result
+        loaded: true
       };
     case LOAD_ROOM_FAIL:
       return {
@@ -70,8 +71,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         checkingIn: false,
-        checkedIn: true,
-        room: action.result,
+        checkedIn: true
       };
     case CHECKIN_FAIL:
       return {
@@ -80,17 +80,29 @@ export default (state = initialState, action = {}) => {
         checkedIn: false,
         error: action.error
       };
+    case CHECKOUT:
+      return {
+        ...state,
+        checkingOut: true
+      };
+    case CHECKOUT_SUCCESS:
+      return {
+        ...state,
+        userCheckingOut: false,
+        userCheckedIn: false
+      };
+    case CHECKOUT_FAIL:
+      return {
+        ...state,
+        userCheckingOut: false,
+        userCheckedIn: false,
+        error: action.error
+      };
     case PEER_CHECKED_OUT:
     case PEER_CHECKED_IN:
       return {
         ...state,
         peerCheckedIn: action.peerCheckedIn
-      }
-    case ROOM_PATCHED:
-      return {
-        ...state,
-        room: action.room,
-        roomPatched: true
       }
     case SET_IS_TALKER:
       return {
@@ -110,10 +122,12 @@ export default (state = initialState, action = {}) => {
         peer: action.peer,
         peerId: action.peerId
       }
-    case PARSED_ROOM:
+    case PARSE_ROOM:
+      const { room, peerCheckedIn} = action;
       return {
         ...state,
-        isRoomParsed: true
+        room,
+        peerCheckedIn
       }
     case LOCAL_VIDEO_ON:
     case LOCAL_VIDEO_OFF:
@@ -121,13 +135,16 @@ export default (state = initialState, action = {}) => {
         ...state,
         localVideoOn: action.localVideoOn
       }
+    case ROOM_PATCHED:
     default:
       return state;
   }
 };
 
 export const loadRoom = (slug, user) => {
-  return {
+  return (dispatch) => {
+    debugger;
+    return dispatch({
       types: [
         LOAD_ROOM,
         LOAD_ROOM_SUCCESS,
@@ -136,25 +153,73 @@ export const loadRoom = (slug, user) => {
       promise: () => {
         return restApp.service('rooms')
           .get(slug)
+          .then((room) => dispatch(parseRoom(room)))
       }
-    };
+    });
+  }
 }
 
 export function roomPatched(room) {
-  return {
-    type: ROOM_PATCHED,
-    room
+  return (dispatch) => {
+    dispatch({
+      type: ROOM_PATCHED,
+    });
+    dispatch(parseRoom(room))
+  }
+}
+
+function parseRoom(room) {
+  // update important state properties from room object,
+  // 1) on initial load,
+  // 2) when room object is updated by peer
+  return (dispatch, getState) => {
+    const state = getState();
+    const userId = state.auth.user;
+    let peer;
+    let peerCheckedIn;
+    if (userId === room.talker._id) {
+      dispatch(setIsTalker());
+      peer = room.listener;
+      if(room.listenerCheckedIn) {
+        peerCheckedIn = true;
+      }
+    }
+    if (userId === room.listener._id) {
+      dispatch(setIsListener());
+      if(room.talkerCheckedIn) {
+        peerCheckedIn = true;
+      }
+      peer = room.talker;
+    }
+    // this.checkIn();
+    dispatch(setPeer(peer));
+    dispatch({type: PARSE_ROOM, room, peerCheckedIn})
   }
 }
 
 function checkIn(slug, patch) {
-  return {
-    types: [
-      CHECKIN,
-      CHECKIN_SUCCESS,
-      CHECKIN_FAIL
-    ],
-    promise: () => restApp.service('rooms').patch(slug, patch)
+  return (dispatch) => {
+    return dispatch({
+      types: [
+        CHECKIN,
+        CHECKIN_SUCCESS,
+        CHECKIN_FAIL
+      ],
+      promise: () => restApp.service('rooms').patch(slug, patch)
+    });
+  }
+}
+
+function checkOut(slug, patch) {
+  return (dispatch) => {
+    return dispatch({
+      types: [
+        CHECKOUT,
+        CHECKOUT_SUCCESS,
+        CHECKOUT_FAIL
+      ],
+      promise: () => restApp.service('rooms').patch(slug, patch)
+    });
   };
 }
 
@@ -171,26 +236,15 @@ export function checkInListener(slug) {
 }
 
 
-function checkout(slug, patch) {
-  return {
-    types: [
-      CHECKOUT,
-      CHECKOUT_SUCCESS,
-      CHECKOUT_FAIL
-    ],
-    promise: () => roomService.patch(slug, patch)
-  };
-}
-
 export function checkOutTalker(slug) {
   return (dispatch) => {
-    dispatch(checkOut(slug, { talkerCheckedIn: false }))
+    return dispatch(checkOut(slug, { talkerCheckedIn: false }))
   }
 }
 
 export function checkOutListener(slug) {
   return (dispatch) => {
-    dispatch(checkOut(slug, { listenerCheckedIn: false }))
+    return dispatch(checkOut(slug, { listenerCheckedIn: false }))
   }
 }
 
@@ -215,22 +269,16 @@ export function setPeer(peer) {
   }
 }
 
-export function parsedRoom() {
-  return {
-    type: PARSED_ROOM
-  }
-}
-
-export function localVideoOn() {
-  return {
-    type: LOCAL_VIDEO_ON,
-    localVideoOn: true
-  }
-}
-
-export function localVideoOff() {
-  return {
-    type: LOCAL_VIDEO_OFF,
-    localVideoOn: false
-  }
-}
+// export function localVideoOn() {
+//   return {
+//     type: LOCAL_VIDEO_ON,
+//     localVideoOn: true
+//   }
+// }
+//
+// export function localVideoOff() {
+//   return {
+//     type: LOCAL_VIDEO_OFF,
+//     localVideoOn: false
+//   }
+// }

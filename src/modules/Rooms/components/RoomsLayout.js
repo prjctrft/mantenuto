@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import { Slide } from 'components';
 
+import PeerStatus from './PeerStatus';
 import Chat from './Chat';
 import ChatIconButton from './ChatIconButton';
 import Controls from './Controls';
 import Video from './Video';
 import Stats from './Stats';
-
 
 export default class RoomsLayout extends Component {
   constructor(props) {
@@ -31,9 +31,11 @@ export default class RoomsLayout extends Component {
 
   render() {
     const styles = require('./RoomsLayout.scss');
+    debugger;
     return (
       <div className={`${styles.RoomsLayout} container-fluid`}>
         <div className='row justify-content-end py-5'>
+          <PeerStatus />
           <div className='col-12 col-md-8 col-xl-6'>
             {/* <Stats peer={this.props.peer} user={this.props.user} styles={styles} /> */}
             <Video />

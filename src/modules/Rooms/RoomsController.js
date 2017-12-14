@@ -15,11 +15,11 @@ import {
   setIsTalker,
   setIsListener,
 
-  // checkInTalker,
-  // checkInListener,
+  checkInTalker,
+  checkInListener,
 
-  // checkOutTalker,
-  // checkOutListener,
+  checkOutTalker,
+  checkOutListener,
 
   roomPatched,
 } from './redux';
@@ -34,38 +34,26 @@ export class RoomsControllerComponent extends Component {
     }),
     loaded: PropTypes.bool,
     loadRoom: PropTypes.func.isRequired,
-    // peerCheckIn: PropTypes.func.isRequired,
-    // peerCheckOut: PropTypes.func.isRequired,
-    setPeer: PropTypes.func.isRequired,
-    // isTalkerUpdate: PropTypes
+    isTalker: PropTypes.bool.isRequired, // logged in user is the talker, peer is listener
+    isListener: PropTypes.bool.isRequired, // logged in user is the listener, peer is the talker
+    setPeer: PropTypes.func.isRequired, // sets the state.rooms.peer property to the peer user
+    checkInTalker: PropTypes.func.isRequired, // sets 'talkerCheckedIn' to true on the room and notifies peer with event
+    checkInListener: PropTypes.func.isRequired, // sets 'listenerCheckedIn' to true on the room and notifies peer with event
+    checkOutTalker: PropTypes.func.isRequired, // sets 'talkerCheckedIn' to false on the room and notifies peer with event
+    checkOutListener: PropTypes.func.isRequired, // sets 'listenerCheckedIn' to false on the room and notifies peer with event
+    roomPatched: PropTypes.func.isRequired // updates state with new room object when event listener receives 'patched' event
   }
 
   componentDidMount() {
     const roomSlug = this.props.params.slug;
-    this.props.updateUser(this.props.userId, { engaged: true });
     this.props.loadRoom(roomSlug)
-      .then((room) => {
-        const userId = this.props.userId;
-        let peer;
-        if (userId === room.talker._id) {
-          this.props.setIsTalker();
-          // this.props.checkInTalker(roomSlug);
-          peer = room.listener;
-        }
-        if (userId === room.listener._id) {
-          this.props.setIsListener();
-          // this.props.checkInListener(roomSlug);
-          peer = room.talker;
-        }
-        return this.props.setPeer(peer);
-      })
+      .then(this.checkIn)
       .catch((err) => {
         if(err) {
           this.props.notifSend({kind: 'danger', message: 'There is a problem with this room.  Check the url!'});
         }
       });
     this.registerListeners();
-    window.addEventListener("beforeunload", this.checkout)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -76,7 +64,6 @@ export class RoomsControllerComponent extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("beforeunload", this.checkout)
     this.checkout();
   }
 
@@ -87,10 +74,47 @@ export class RoomsControllerComponent extends Component {
     });
   }
 
-  checkout = () => {
-    this.props.updateUser(this.props.userId, { engaged: false });
+  checkIn = () => {
+    this.props.updateUser(this.props.userId, { engaged: true });
+    if(this.props.isTalker) {
+      this.checkInTalker();
+    }
+    if(this.props.isListener) {
+      this.checkInListener();
+    }
   }
 
+  checkInTalker = () => {
+    const roomSlug = this.props.params.slug;
+    this.props.checkInTalker(roomSlug);
+  }
+
+  checkInListener = () => {
+    const roomSlug = this.props.params.slug;
+    this.props.checkInListener(roomSlug);
+  }
+
+  checkout = (event) => {
+    event.preventDefault();
+    const promises = [];
+    this.props.updateUser(this.props.userId, { engaged: false });
+    if(this.props.isListener) {
+      this.checkOutListener()
+    }
+    if(this.props.isTalker) {
+      this.checkOutTalker()
+    }
+  }
+
+  checkOutTalker = () => {
+    const roomSlug = this.props.params.slug;
+    return this.props.checkOutTalker(roomSlug);
+  }
+
+  checkOutListener = () => {
+    const roomSlug = this.props.params.slug;
+    return this.props.checkOutListener(roomSlug);
+  }
 
   render() {
     return <RoomsLayout />
@@ -112,6 +136,8 @@ const mapStateToProps = (state) => {
   const userId = state.auth.user;
   return {
     error,
+    isTalker,
+    isListener,
     loaded,
     // peerCheckedIn,
     peer,
@@ -128,5 +154,10 @@ export default connect(mapStateToProps, {
   setPeer,
   setIsTalker,
   setIsListener,
-  updateUser
+  updateUser,
+  checkInTalker,
+  checkInListener,
+  checkOutTalker,
+  checkOutListener,
+  roomPatched
 })(RoomsControllerComponent)
