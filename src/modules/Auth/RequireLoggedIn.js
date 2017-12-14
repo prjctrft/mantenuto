@@ -15,15 +15,23 @@ export class RequireLoggedInComponent extends Component {
     push: PropTypes.func.isRequired
   }
 
-
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.tryingAuth || nextProps.authenticated) {
+  componentDidMount() {
+    // authenticated, don't redirect
+    if(this.props.authenticated) {
       return;
     }
-    if (nextProps.triedAuth) {
-      return this.props.push('/login');
+    // if auth has been tried OR auth won't be tried, redirect
+    if(this.props.triedAuth ||
+      !this.props.triedAuth && !this.props.tryingAuth) {
+      this.redirect()
     }
+  }
+
+  redirect = () => {
+    this.props.push({
+      pathname: '/login',
+      query: {next: this.props.location.pathname}
+    });
   }
 
   render() {
@@ -33,9 +41,6 @@ export class RequireLoggedInComponent extends Component {
     if (this.props.tryingAuth) {
       // change to spinner
       return <h1>Loading...</h1>;
-    }
-    if (this.props.triedAuth) {
-      return null;
     }
     return null;
   }
