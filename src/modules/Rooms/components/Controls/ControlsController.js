@@ -150,8 +150,9 @@ export class ControlsControllerComponent extends Component {
   }
 }
 
-const mapStateToProps = (state)=> {
+const mapStateToProps = (state) => {
   const { audioOn, cameraOn, peer, room, isTalker, isListener, peerCheckedIn } = state.rooms;
+  const { makingCall, incomingCall, callInProgress, callId } = state.calls;
   return {
     room,
     audioOn,
@@ -161,10 +162,10 @@ const mapStateToProps = (state)=> {
     peer,
     peerCheckedIn,
     user: state.user.user,
-    makingCall: state.calls.makingCall,
-    incomingCall: state.calls.incomingCall,
-    callInProgress: state.calls.callInProgress,
-    callId: state.calls.callId
+    makingCall,
+    incomingCall,
+    callInProgress,
+    callId
   }
 }
 
