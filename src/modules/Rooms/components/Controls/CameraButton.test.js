@@ -1,24 +1,17 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { Provider } from 'react-redux';
-import createStore from 'redux/create';
-import CameraButton from './CameraButton';
+import { CameraButtonComponent } from './CameraButton';
 
-describe('<ControlButton />', () => {
+describe('<CameraButtonComponent />', () => {
+
   let component;
   beforeEach(() => {
-    const store = createStore({}, {}, {});
-    // const handleSubmit = jest.fn();
-    component = mount(
-      <Provider store={store}>
-        {}
-        <CameraButton />
-      </Provider>
-    );
-  });
+    component = shallow(<CameraButtonComponent />);
+  })
 
   it('should render', () => {
     expect(component.exists()).to.be.true;
   });
+
 });
