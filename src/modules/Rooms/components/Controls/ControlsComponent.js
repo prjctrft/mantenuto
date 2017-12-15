@@ -17,7 +17,6 @@ export default (props) => {
         />
         <CallButton
           onClick={props.toggleCall}
-          faClass={'fa fa-phone fa-2x'}          
         />
         <CameraButton
           onClick={props.toggleVideo}

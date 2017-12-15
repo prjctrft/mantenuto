@@ -30,10 +30,10 @@ const Video = (props) => {
     return true;
   }
 
-  const { callStarted, callAccepted, connectionState, peerCheckedIn } = props;
-  
+  const { callStarted, callAccepted, connectionState, callInProgress } = props;
+
   return (
-    <div className={`embed-responsive embed-responsive-4by3 ${styles.embedResponsive} ${peerCheckedIn ? styles.glow : ''}`}>
+    <div className={`embed-responsive embed-responsive-4by3 ${styles.embedResponsive} ${callInProgress ? styles.glow : ''}`}>
       {callStarted || callAccepted ?
         <div className={styles.CallState}>
           {callStarted ? <span>... <i className='fa fa-volume-control-phone fa-3x' /></span>: null }
@@ -52,24 +52,19 @@ const Video = (props) => {
   )
 }
 
-const mapStateToProps = (state) => state => {
-  const peerCheckedIn = state.rooms.peerCheckedIn;
+const mapStateToProps = (state) => {
   const {
+    callInProgress,
     localStream,
     remoteStream,
     // remoteAudio, TODO: indicator that remote audio is on?
     remoteVideo
   } = state.calls;
   return {
-    // TODO: style to represent call state and connection state
-    // callStarted: state.rooms.callStarted,
-    // callAccepted: state.rooms.callAccepted,
-    // connectionState: state.rooms.connectionState,
-    // callInProgress
     localStream,
     remoteStream,
     remoteVideo,
-    peerCheckedIn
+    callInProgress
   }
 };
 
