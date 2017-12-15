@@ -22,7 +22,8 @@ export class CallController extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modalOpen: false
+      modalOpen: false,
+      ring: null
     }
   }
 
@@ -34,39 +35,46 @@ export class CallController extends Component {
       .on('created', (Call) => {
         this.props.callIncoming(Call);
       })
-    // // use socket for signalling and call data that does not need to persist
-    // // custom event listeners are defined on the backend so that only sockets in
-    // // the room and on the call can receive webRTC session descriptions, streams, etc.
-    // socket.on('ice candidate', (candidate) => {
-    //   if(candidate) {
-    //     this.props.localRTC.addIceCandidate(candidate).then(() => {
-    //       console.log('ICE candidate added: ', candidate);
-    //     }).catch(() => {
-    //       console.log('ICE candidate failed: ', candidate);
-    //     })
-    //   }
-    // });
-    //
-    // socket.on('call accepted', () => {
-    //   this.props.callAccepted();
-    //   this.createOffer();
-    // });
-    //
-    // socket.on('receive offer', (peerDescription) => {
-    //   this.receiveOffer(peerDescription)
-    //   .then((localDescription) => socket.emit('send description', localDescription));
-    // });
-    //
-    // socket.on('receive description', (description) => {
-    //   const desc = new RTCSessionDescription(description);
-    //   this.props.localRTC.setRemoteDescription(desc);
-    // });
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.makingCall || nextProps.incomingCall && !this.state.modalOpen) {
       this.setState({ modalOpen: true });
     }
+    if(nextProps.makingCall || nextProps.incomingCall) {
+      this.startRing();
+    }
+    if((this.props.makingCall && !nextProps.makingCall) ||
+      (this.props.incomingCall && !nextProps.incomingCall)) {
+      this.stopRing();
+    }
+  }
+
+  startRing = () => {
+    debugger;
+    let { ring } = this.state;
+    // if the ring does not exist already (if a call has not yet been made)
+    // load it
+    if(!ring) {
+      ring = new Audio(require('./assets/calling_ring.mp3'));
+      this.setState({ ring });
+    }
+    ring.addEventListener('ended', this.loopAudio, false)
+    ring.play();
+  }
+
+  stopRing = () => {
+    const { ring } = this.state;
+    // remove the ring loop
+    ring.removeEventListener('ended', this.loopAudio, false)
+    // stop the ring loop
+    ring.pause();
+    ring.currentTime = 0;
+  }
+
+  loopAudio() {
+    this.currentTime = 0;
+    this.play();
   }
 
   createRTC = () => {
@@ -80,10 +88,9 @@ export class CallController extends Component {
 
   // peer/receiver
   acceptCall = () => {
-    debugger;
-    socket.emit('accept call');
     this.props.acceptCall(this.props.callId)
   }
+
   rejectCall = () => {
     this.props.rejectCall(this.props.callId)
   }

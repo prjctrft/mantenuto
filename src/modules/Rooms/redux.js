@@ -190,7 +190,6 @@ export const toggleCameraTooltip = () => {
 
 export const loadRoom = (slug, user) => {
   return (dispatch) => {
-    debugger;
     return dispatch({
       types: [
         LOAD_ROOM,
