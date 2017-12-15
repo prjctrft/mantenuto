@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-
+import { ClipLoader } from 'react-spinners';
 import { populateUser } from 'modules/user/redux';
 
 export class RequireLoggedInComponent extends Component {
@@ -35,12 +35,13 @@ export class RequireLoggedInComponent extends Component {
   }
 
   render() {
+    const styles = require('./Loader.scss');
     if (this.props.authenticated) {
       return <div>{ this.props.children }</div>
     }
     if (this.props.tryingAuth) {
       // change to spinner
-      return <h1>Loading...</h1>;
+      return <ClipLoader color={styles.brandPrimary} loading />;
     }
     return null;
   }
