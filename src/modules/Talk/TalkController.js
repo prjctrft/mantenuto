@@ -23,7 +23,7 @@ export class TalkController extends Component {
     this.registerSocketListeners();
     // coming from another page
     if (socket.authenticated) {
-      this.service.create({talker: this.props.user});
+      this.startSearch();
     }
     // coming directly on page load
     // wait for socket to authenticate
@@ -39,6 +39,10 @@ export class TalkController extends Component {
     debugger;
     window.removeEventListener("beforeunload", this.removeConnect)
     this.removeConnect();
+  }
+
+  startSearch = () => {
+    this.service.create({talker: this.props.user});
   }
 
   registerSocketListeners = () => {
@@ -67,6 +71,10 @@ export class TalkController extends Component {
     this.setState({ pipeline: 'listenerFound' });
   }
 
+  listenerNotFound = (totalListeners) => {
+    this.setState({ pipeline: 'listenerNotFound', totalListeners });
+  }
+
   roomReady = (roomSlug) => {
     this.setState({ pipeline: 'roomReady', roomSlug });
     setTimeout(() => {
@@ -78,13 +86,9 @@ export class TalkController extends Component {
     }, 1500)
   }
 
-  openRoom = () => {    
+  openRoom = () => {
     const roomSlug = this.state.roomSlug;
     return window.open(`/rooms/${roomSlug}`, `Room ${roomSlug}`, `height=${window.innerHeight},width=${window.innerWidth}`);
-  }
-
-  listenerNotFound = (totalListeners) => {
-    this.setState({ pipeline: 'listenerNotFound', totalListeners });
   }
 
   render() {
@@ -92,6 +96,7 @@ export class TalkController extends Component {
       return null;
     }
     return <Talk
+      startSearch={this.startSearch}
       totalListeners={this.state.totalListeners}
       pipeline={this.state.pipeline}
       openRoom={this.openRoom}

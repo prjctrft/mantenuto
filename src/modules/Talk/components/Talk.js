@@ -17,7 +17,7 @@ const Talk = (props) => {
             {props.pipeline === 'looking' ? <Looking /> : null}
             {props.pipeline === 'listenerFound' ? <ListenerFound /> : null}
             {props.pipeline === 'roomReady' ? <RoomReady /> : null}
-            {props.pipeline === 'listenerNotFound' ? <ListenerNotFound totalListeners={props.totalListeners} /> : null}
+            {props.pipeline === 'listenerNotFound' ? <ListenerNotFound startSearch={props.startSearch} totalListeners={props.totalListeners} /> : null}
             {props.pipeline === 'popupBlocked' ? <PopupBlocked openWindow={props.openRoom} /> : null}
           </div>
         </div>
