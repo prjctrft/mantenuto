@@ -7,11 +7,12 @@ const CREATE_PC = 'calls/CREATE_PC';
 // User initiates call
 const MAKE_CALL = 'calls/MAKE_CALL';
 // User cancels call
-const CALL_CANCELED = 'calls/CALL_CANCELED';
+const CANCEL_CALL = 'calls/CANCEL_CALL';
+const INCOMING_CALL_CANCELED = 'calls/INCOMING_CALL_CANCELED'; // on peer
 // Peer accepts call
 const CALL_ACCEPTED = 'calls/CALL_ACCEPTED';
 // Peer initiates call
-const INCOMING_CALL = 'calls/START_CALL';
+const INCOMING_CALL = 'calls/INCOMING_CALL';
 // User accepts call
 const ACCEPT_INCOMING_CALL = 'calls/ACCEPT_INCOMING_CALL';
 // User rejects call
@@ -48,7 +49,7 @@ export default (state = defaultState, action = {}) => {
   switch (action.type) {
     case MAKE_CALL:
       return {...state, makingCall: true, _Call, callId }
-    case CALL_CANCELED:
+    case CANCEL_CALL:
       return {...state, makingCall: false}
     case CALL_ACCEPTED:
       return {...state, makingCall: false, callInProgress: true}
@@ -57,6 +58,8 @@ export default (state = defaultState, action = {}) => {
     case ACCEPT_INCOMING_CALL:
       return {...state, incomingCall: false, callInProgress: true}
     case REJECT_INCOMING_CALL:
+      return {...state, incomingCall: false}
+    case INCOMING_CALL_CANCELED:
       return {...state, incomingCall: false}
     case CALL_REJECTED:
       return {...state, makingCall: false}
@@ -135,6 +138,14 @@ export const createRTC = () => {
       dispatch(createOffer());
     });
 
+    socket.on('call canceled', () => {
+      dispatch(callCanceled());
+    })
+
+    socket.on('call rejected', () => {
+      dispatch(callRejected());
+    })
+
     socket.on('receive offer', (peerDescription) => {
       dispatch(receiveOffer(peerDescription))
       .then((localDescription) => socket.emit('send description', localDescription));
@@ -173,15 +184,31 @@ export const makeCall = ({callerId, receiverId}) => {
     }
 };
 
+// caller
 export const cancelCall = (callId) => {
+  socket.emit('cancel call');
   return (dispatch) => app.service('calls')
     .patch(callId, { status: 'canceled' })
     .then(() => {
       dispatch({
-        type: CALL_CANCELED
+        type: CANCEL_CALL
       });
     });
 };
+
+// peer/receiver
+const callCanceled = () => {
+  return {
+    type: INCOMING_CALL_CANCELED
+  }
+}
+
+// peer/receiver
+const callRejected = () => {
+  return {
+    type: CALL_REJECTED
+  }
+}
 
 export const callAccepted = () => {
   return {
@@ -198,6 +225,7 @@ export const callIncoming = (_Call) => {
 };
 
 export const acceptCall = (callId) => {
+  socket.emit('accept call');
   app.service('calls').patch(callId, {started: new Date(), status: 'started' });
   return {
     type: ACCEPT_INCOMING_CALL
@@ -205,6 +233,7 @@ export const acceptCall = (callId) => {
 };
 
 export const rejectCall = (callId) => {
+  socket.emit('reject call');
   app.service('calls').patch(callId, {status: 'rejected' });
   return {
     type: REJECT_INCOMING_CALL
