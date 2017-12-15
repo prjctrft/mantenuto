@@ -8,8 +8,9 @@ import { makeCall,
 import {
   patchRoom,
   updateConnectionState,
-  localVideoOn,
-  localVideoOff,
+  updateControls,
+  // localVideoOn,
+  // localVideoOff,
   // remoteVideoOn,
   // remoteVideoOff
 } from '../../redux';
@@ -20,22 +21,21 @@ export class ControlsControllerComponent extends Component {
   constructor(props) {
     super(props);
     this.defaultState = {
-      cameraOn: false,
-      audioOn: false,
+      // cameraOn: false,
+      // audioOn: false,
       controlsTouched: false
     };
     this.state = {
       ...this.defaultState
     };
-    this.rtcConnection = false;
   }
 
   componentWillUnmount() {
     this.cleanup();
-    if(this.state.cameraOn) {
+    if(this.props.cameraOn) {
       this.stopVideo();
     }
-    if(this.state.audioOn) {
+    if(this.props.audioOn) {
       this.stopAudio()
     }
   }
@@ -53,10 +53,10 @@ export class ControlsControllerComponent extends Component {
       // turn audioOn when video is turned on for the first time
       newState.audioOn = true;
     } else {
-      newState.audioOn = this.state.audioOn;
+      newState.audioOn = this.props.audioOn;
     }
-    this.props.localVideoOn();
-    this.setState({ ...newState });
+    // this.props.localVideoOn();
+    this.props.updateControls({... newState});
     this.props.updateUserMedia({ ...newState });
   }
 
@@ -66,14 +66,14 @@ export class ControlsControllerComponent extends Component {
 
   stopVideo = () => {
     const cameraOn = false;
-    const audioOn = this.state.audioOn;
-    this.setState({ cameraOn });
+    const audioOn = this.props.audioOn;
+    this.props.updateControls({ cameraOn, audioOn });
     this.props.updateUserMedia({ cameraOn, audioOn });
   }
 
   toggleVideo = (e) => {
     e.preventDefault();
-    if(this.state.cameraOn) {
+    if(this.props.cameraOn) {
       return this.stopVideo();
     }
     this.startVideo();
@@ -81,15 +81,15 @@ export class ControlsControllerComponent extends Component {
 
   startAudio = () => {
     const audioOn = true;
-    const cameraOn = this.state.cameraOn;
-    this.setState({ audioOn });
+    const cameraOn = this.props.cameraOn;
+    this.props.updateControls({ audioOn, cameraOn });
     this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
   stopAudio = () => {
     const audioOn = false;
-    const cameraOn = this.state.cameraOn;
-    this.setState({ audioOn });
+    const cameraOn = this.props.cameraOn;
+    this.props.updateControls({ audioOn, cameraOn });
     this.props.updateUserMedia({ audioOn, cameraOn });
   }
 
@@ -98,7 +98,7 @@ export class ControlsControllerComponent extends Component {
     if(!this.state.controlsTouched) {
       this.touchControls();
     }
-    if(this.state.audioOn) {
+    if(this.props.audioOn) {
       return this.stopAudio();
     }
     this.startAudio();
@@ -140,38 +140,36 @@ export class ControlsControllerComponent extends Component {
   }
 
   render() {
-    return (<ControlsComponent
-      peer={this.props.peer}
-      user={this.props.user}
-
-      toggleVideo={this.toggleVideo}
-      toggleAudio={this.toggleAudio}
-
-      toggleCall={this.toggleCall}
-      stopCall={this.stopCall}
-      disableCallButton={this.disableCallButton}
-      acceptCallOnClick={this.acceptCallOnClick}
-      close={this.close}
-
-      cameraOn={this.state.cameraOn}
-      audioOn={this.state.audioOn}
-      wasCallAccepted={this.props.wasCallAccepted}
-    />)
+    return (
+      <ControlsComponent
+        toggleVideo={this.toggleVideo}
+        toggleAudio={this.toggleAudio}
+        toggleCall={this.toggleCall}
+      />
+    )
   }
 }
 
-export default connect((state)=> ({
-  room: state.rooms.room,
-  isTalker: state.rooms.isTalker,
-  isListener: state.rooms.isListener,
-  user: state.user.user,
-  peer: state.rooms.peer,
-  peerCheckedIn: state.rooms.peerCheckedIn,
-  makingCall: state.calls.makingCall,
-  incomingCall: state.calls.incomingCall,
-  callInProgress: state.calls.callInProgress,
-  callId: state.calls.callId
-}), {
+const mapStateToProps = (state) => {
+  const { audioOn, cameraOn, peer, room, isTalker, isListener, peerCheckedIn } = state.rooms;
+  const { makingCall, incomingCall, callInProgress, callId } = state.calls;
+  return {
+    room,
+    audioOn,
+    cameraOn,
+    isTalker,
+    isListener,
+    peer,
+    peerCheckedIn,
+    user: state.user.user,
+    makingCall,
+    incomingCall,
+    callInProgress,
+    callId
+  }
+}
+
+export default connect(mapStateToProps, {
   patchRoom,
   // updateConnectionState,
   makeCall,
@@ -179,6 +177,7 @@ export default connect((state)=> ({
   endCall,
   // callAccepted,
   // clearCallState,
-  localVideoOn,
-  localVideoOff,
+  // localVideoOn, // -- TODO: depricate in favor of cameraOn boolean
+  // localVideoOff,// -- TODO: depricate in favor of cameraOn boolean
+  updateControls
 })(ControlsControllerComponent)

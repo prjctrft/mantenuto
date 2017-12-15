@@ -1,0 +1,11 @@
+@import '~theme/variables.scss';
+
+.PeerStatus {
+  i {
+    color: $brand-success;
+  }
+  .username {
+    color: $brand-white;
+    margin-left: 10px;
+  }
+}

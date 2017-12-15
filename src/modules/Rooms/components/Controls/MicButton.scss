@@ -1,0 +1,10 @@
+@import '~theme/variables.scss';
+
+.Tooltip {
+  :global {
+    .tooltip-inner {
+      color: $brand-white;
+      background-color: $brand-success;
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import app from 'app';
 import { notifSend } from 'modules/Notifs/redux';
+import { toggleMicTooltip, toggleCameraTooltip } from 'modules/Rooms/redux';
 
 // create RTC Client
 const CREATE_PC = 'calls/CREATE_PC';
@@ -256,7 +257,7 @@ export const updateUserMedia = ({ audioOn, cameraOn} = {}) => {
     }
     // if user turns of mic and camera getUserMedia will error
     if(!audioOn && !cameraOn) {
-      return Proimse.resolve();
+      return Promise.resolve();
     }
     return navigator.mediaDevices.getUserMedia({
       video: cameraOn,
@@ -293,7 +294,6 @@ export const stopLocalStream = ({localStream}) => {
 };
 
 export const updateRemoteStream = (stream) => {
-  debugger;
   let remoteAudio = false;
   let remoteVideo = false;
   if(stream.getAudioTracks().length > 0) {
@@ -311,16 +311,10 @@ export const updateRemoteStream = (stream) => {
 }
 
 export const createOffer = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const offerToReceiveAudio = 1;
     const offerToReceiveVideo = 1;
-
-    if(pc.getLocalStreams().length === 0) {
-      console.log('prompt audio/video on');
-      // this.props.localStream.getTracks().forEach((track) => {
-      //   this.props.pc.addTrack(track, this.props.localStream)
-      // })
-    }
+    dispatch(promptControls());
     pc.createOffer({
       offerToReceiveAudio,
       offerToReceiveVideo,
@@ -341,11 +335,7 @@ export const receiveOffer = (remoteDescription) => {
     const pc = getState().calls.pc
     const remoteDesc = new RTCSessionDescription(remoteDescription);
     if(pc.getLocalStreams().length === 0) {
-      console.log('prompt audio/video on');
-      // return this.props.updateUserMedia({audioOn, cameraOn})
-      // this.props.localStream.getTracks().forEach((track) => {
-      //   this.props.pc.addTrack(track, this.props.localStream)
-      // })
+      dispatch(promptControls())
     }
     return pc.setRemoteDescription(remoteDesc)
     .then(() => {
@@ -357,5 +347,17 @@ export const receiveOffer = (remoteDescription) => {
     .then(() => {
       return pc.localDescription;
     });
+  }
+}
+
+const promptControls = () => {
+  return (dispatch, getState) => {
+    const state = getState().rooms;
+    if(!state.cameraOn) {
+      dispatch(toggleCameraTooltip())
+    }
+    if(!state.audioOn) {
+      dispatch(toggleMicTooltip())
+    }
   }
 }

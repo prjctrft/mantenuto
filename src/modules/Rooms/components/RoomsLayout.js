@@ -31,12 +31,11 @@ export default class RoomsLayout extends Component {
 
   render() {
     const styles = require('./RoomsLayout.scss');
-    debugger;
     return (
       <div className={`${styles.RoomsLayout} container-fluid`}>
         <div className='row justify-content-end py-5'>
-          <PeerStatus />
           <div className='col-12 col-md-8 col-xl-6'>
+            <PeerStatus />
             {/* <Stats peer={this.props.peer} user={this.props.user} styles={styles} /> */}
             <Video />
             <Controls />
