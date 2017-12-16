@@ -33,12 +33,15 @@ export default class RoomsLayout extends Component {
     const styles = require('./RoomsLayout.scss');
     return (
       <div className={`${styles.RoomsLayout} container-fluid`}>
-        <div className='row justify-content-end py-5'>
-          <div className='col-12 col-md-8 col-xl-6'>
+        <div className='row align-items-center pt-5 pb-2'>
+          <div className='col-12'>
             <PeerStatus />
+          </div>
+        </div>
+        <div className='row justify-content-end pb-5'>
+          <div className='col-12 col-md-8 col-xl-6'>
             {/* <Stats peer={this.props.peer} user={this.props.user} styles={styles} /> */}
             <Video />
-            <Controls />
           </div>
           <div className={`${styles.chatCol} ${this.chatClasses()}`}>
             <Slide slideIn={this.state.renderChat} duration={1000}>
@@ -46,10 +49,17 @@ export default class RoomsLayout extends Component {
                 <Chat renderChat={this.state.renderChat} toggleChat={this.toggleChat} />
               </div>
             </Slide>
-            <ChatIconButton className='mt-3' toggleChat={this.toggleChat} />
           </div>
           {/* <div className='col-md-3'> */}
           {/* </div> */}
+        </div>
+        <div className='row justify-content-end'>
+          <div className='col-12 col-md-8 col-xl-6'>
+            <Controls />
+          </div>
+          <div className={`${styles.chatCol} ${this.chatClasses()}`}>
+            <ChatIconButton className='mt-3' toggleChat={this.toggleChat} />
+          </div>
         </div>
       </div>
     );

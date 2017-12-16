@@ -2,6 +2,8 @@
 
 
 .ChatList {
+  overflow: auto;
+  padding: 0 10px;
   li {
     list-style: none;
   }
@@ -25,13 +27,15 @@
 
 
 .MessageBody {
+
   display: flex;
   flex-direction: column;
   div {
-    color: $brand-gray;
+    color: $brand-black;
   }
-  small {
+  .time {
     margin-right: 1rem;
+    caret-color: $brand-darkest-gray;
   }
   p {
     color: $brand-white;
@@ -42,26 +46,12 @@
 
 .MessageInput {
   color: $brand-black;
-  textarea {
-    border-top: $brand-gray 1px solid;
+  textarea.form-control {
+    border-top: $brand-black 1px solid;
     border-radius: 0;
+    resize: none;
+    &:focus {
+      background-color: $brand-darker-gray !important;
+    }
   }
 }
-
-// ::-webkit-scrollbar-track
-// {
-//     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-//     background-color: #F5F5F5;
-// }
-//
-// ::-webkit-scrollbar
-// {
-//     width: 12px;
-//     background-color: #F5F5F5;
-// }
-//
-// ::-webkit-scrollbar-thumb
-// {
-//     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-//     background-color: #555;
-// }

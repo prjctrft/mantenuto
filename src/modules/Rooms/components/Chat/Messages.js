@@ -44,7 +44,7 @@ const Messages = (props) => {
         <li key={i} className={styles[side]}>
           <div className={styles.MessageBody}>
             <div>
-              <small className="text-muted"><span className="glyphicon glyphicon-time" />{' '}{displayTime}</small>
+              <small className={styles.time}><span className="glyphicon glyphicon-time" />{' '}{displayTime}</small>
               <strong className="primary-font">{sender.username || ''}</strong>
             </div>
             <p>

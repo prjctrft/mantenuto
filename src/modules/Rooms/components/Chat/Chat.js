@@ -18,7 +18,7 @@ export default (props) => {
         <button
           disabled={props.disableLoadMore}
           onClick={props.loadMore}
-          className='btn btn-default btn-sm btn-outline-secondary'>
+          className='btn btn-default btn-sm btn-outline-dark'>
           ...
         </button>
       </p>
