@@ -7,6 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect } from 'redux-connect';
 import { AppContainer as HotEnabler } from 'react-hot-loader'; // eslint-disable-line  import/no-extraneous-dependencies
 import { useScroll } from 'react-router-scroll';
+import ReactGA from 'react-ga';
 import createStore from './redux/create';
 import getRoutes from './routes';
 import client, { socket } from './app';
@@ -25,11 +26,18 @@ const renderRouter = props => (<ReduxAsyncConnect
   render={applyRouterMiddleware(useScroll())}
 />);
 
+ReactGA.initialize('UA-111261926-1');
+
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname + window.location.search });
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
+
 const render = routes => {
   ReactDOM.render(
     <HotEnabler warnings={false}>
       <Provider store={store} key="provider">
-        <Router history={history} render={renderRouter}>
+        <Router history={history} render={renderRouter} onUpdate={logPageView}>
           {routes}
         </Router>
       </Provider>
