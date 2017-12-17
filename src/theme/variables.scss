@@ -3,11 +3,12 @@
 // Custom Colors
 $brand-black: #2C2D2F;
 $brand-gray: #C2C3C6;
-$brand-darker-gray: #2c2d2f;
+$brand-darker-gray: #A1A1A1;
+$brand-darkest-gray: #2c2d2f;
 $brand-white: #fff;
 
 $brand-success: #00C851;
-$brand-danger: #e98585;
+$brand-danger: #CC0000;
 
 $text-color-light: $brand-gray;
 $text-color-dark: #67676a;
@@ -21,13 +22,11 @@ $footer-height: 4rem;
 
 // Bootstrap Variables
 $brand-primary: #55acf6;
-$brand-secondary: #e25139;
+// $brand-secondary: #e25139;
 $brand-warning: #f0ad4e;
-//$brand-danger: #d9534f;
 $brand-info: #5bc0de;
 
 $text-color: #333;
-
 
 $font-size-base: 1rem;
 // $font-family-sans-serif: "Helvetica Neue", Helvetica, sans-serif;
@@ -47,3 +46,14 @@ $box-shadow: 2px 2px 2px $brand-gray;
 $blue: $brand-primary;
 $green: $brand-success;
 $navbar-dark-color: $brand-gray;
+
+$theme-colors: (
+  primary: $blue,
+  secondary: $brand-darker-gray,
+  success: $green,
+  info: $brand-info,
+  warning: $brand-warning,
+  danger: $brand-danger,
+  light: $brand-gray,
+  dark: $brand-darkest-gray
+) !default;

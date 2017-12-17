@@ -1,9 +1,7 @@
 @import '~theme/variables.scss';
 
-$player-background: #A1A1A1;
-
 .embedResponsive {
-  background-color: $player-background;
+  background-color: $brand-darker-gray;
   border-radius: 1px;
   .LocalPlayer {
     display: flex;
@@ -18,7 +16,7 @@ $player-background: #A1A1A1;
     left: inherit;
     top: inherit;
     margin: 10px;
-    background: $player-background;
+    background: $brand-darker-gray;
     i {
       color: #000;
     }
@@ -28,7 +26,7 @@ $player-background: #A1A1A1;
     width: 100%;
     position: absolute;
     top: 100px;
-    color: $brand-gray;
+    color: $brand-darker-gray;
     font-size: 20px;
   }
 }
