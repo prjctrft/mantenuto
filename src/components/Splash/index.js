@@ -5,7 +5,7 @@ import { ClipLoader } from 'react-spinners';
 const Splash = () => {
   const styles = require('./Splash.scss');
   return (
-    <div className={styles.SplashContainer}>
+    <div className={styles.Splash}>
       <ClipLoader color={styles.brandPrimary} loading />
     </div>
   )
