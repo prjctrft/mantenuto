@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { ClipLoader } from 'react-spinners';
+import Splash from 'components/Splash';
 import Compatibility from 'modules/Compatibility';
 import Notifs from 'modules/Notifs';
 import Call from 'modules/Call';
@@ -45,10 +45,8 @@ export class TryAuthComponent extends Component {
   render() {
     // Important: triedAuth indicates that auth has already been tried at least once
     // in the case of login -> then socketAuth, we don't want to rerender
-    const styles = require('./Loader.scss');
     if(this.props.tryingAuth && !this.props.triedAuth) {
-      // return <h1>Loading...</h1>
-      return <ClipLoader color={styles.brandPrimary} loading />;
+      return <Splash />;
     }
     if(this.props.authenticated) {
       return (
