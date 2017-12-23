@@ -10,7 +10,7 @@ const Connecting = (props) => {
     <Wrapper>
       <div className='container'>
         <div className='row'>
-          <div className='col-xs-12 text-center'>
+          <div className='col-12 text-center'>
             {props.onlineTalkers ? <h2>There are currently {props.onlineTalkers} vets online wanting to chat.</h2> : null}
             <p className='lead'>Finding someone that needs your ears now!</p>
             <ClipLoader
